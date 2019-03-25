@@ -1,0 +1,51 @@
+{
+  "name": "tog",
+  "version": "1.0.0",
+  "description": "Tournament of games",
+  "main": "gulpfile.js",
+  "author": "PR",
+  "license": "ISC",
+  "devDependencies": {
+    "@htmlacademy/editorconfig-cli": "^1.0.0",
+    "autoprefixer": "^9.5.0",
+    "browser-sync": "^2.26.3",
+    "del": "^3.0.0",
+    "gulp": "^4.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-csso": "^3.0.1",
+    "gulp-imagemin": "^5.0.3",
+    "gulp-plumber": "^1.2.1",
+    "gulp-postcss": "^8.0.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-uglify": "^3.0.1",
+    "gulp-webp": "^4.0.1",
+    "pump": "^3.0.0",
+    "stylelint": "^9.10.1",
+    "stylelint-config-htmlacademy": "^0.1.1",
+    "svgo": "^1.1.1"
+  },
+  "scripts": {
+    "editorconfig": "editorconfig-cli",
+    "stylelint": "stylelint \"source/sass/**/*.scss\" --syntax scss",
+    "test": "npm run editorconfig && npm run stylelint",
+    "build": "gulp build",
+    "start": "gulp start"
+  },
+  "editorconfig-cli": [
+    "*.json",
+    "*.js",
+    "source/*.html",
+    "source/js/**/*.js",
+    "source/img/**/*.svg",
+    "source/sass/**/*.{sass,scss}"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PapkaRimskyi/tog.git"
+  },
+  "bugs": {
+    "url": "https://github.com/PapkaRimskyi/tog/issues"
+  },
+  "homepage": "https://github.com/PapkaRimskyi/tog#readme"
+}
