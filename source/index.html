@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tournament of Games</title>
+  <link href="fonts/CeraStencilPRO-Light.woff" rel="preload" as="font">
+  <link href="fonts/CeraStencilPRO-Regular.woff" rel="preload" as="font">
+  <link href="fonts/CeraStencilPRO-Bold.woff" rel="preload" as="font">
+  <link href="css/style-min.css" rel="stylesheet">
+</head>
+
+<body>
+  <header class="tog-header">
+    <h1 class="tog-header__title">Tournament of Games</h1>
+    <div class="tog-header__container">
+      <section class="time-and-data">
+        <h2 class="visually-hidden">Дата и время</h2>
+        <p class="time-and-data__info">Дата/время</p>
+      </section>
+      <nav class="header-nav">
+        <ul class="header-nav__list">
+          <li class="header-nav__item">
+            <a class="header-nav__link rules-js" href="#">Правила</a>
+          </li>
+          <li class="header-nav__item">
+            <a class="header-nav__link" href="#">Плеер</a>
+          </li>
+          <li class="header-nav__item">
+            <a class="header-nav__link" href="#">История победителей</a>
+          </li>
+          <li class="header-nav__item">
+            <a class="header-nav__link" href="#">Гороскоп</a>
+          </li>
+        </ul>
+      </nav>
+      <section class="participants">
+        <h2 class="visually-hidden">Добавить участников</h2>
+        <a class="participants__link participants-js" href="#">Вписать участников</a>
+      </section>
+      <section class="rules-popup">
+        <div class="rules-popup__container">
+          <a class="popup__close rules-close" href="#">
+            <svg class="popup__close-svg" xmlns="http://www.w3.org/2000/svg" width="34.31" height="38.25" viewBox="0 0 35 39" fill="none" stroke="#242424" stroke-width="2">
+              <path d="M.99 35.94L31.77 1.02m-29.24 0L33.3 35.94"/>
+            </svg>
+          </a>
+          <h2 class="rules-popup__headline">Список правил</h2>
+          <ol class="rules-popup__list">
+            <li class="rules-popup__item">
+              <p class="rules-popup__text">Если вас 3 - по 2 игры от каждого.<br> ИЛИ <br> Если вас 2 - по 3 игры от каждого.</p>
+            </li>
+            <li class="rules-popup__item">
+              <p class="rules-popup__text">Рандом определяет участников.</p>
+            </li>
+            <li class="rules-popup__item">
+              <p class="rules-popup__text">Числа рандомятся 3 раза, но в финале 5 раз.</p>
+            </li>
+            <li class="rules-popup__item">
+              <p class="rules-popup__text">Игра, занявшая первое место, побеждает в турнире. Условие игры в игры, которые займут 2 и 3 место обговариваются ДО начала турнира.</p>
+            </li>
+            <li class="rules-popup__item">
+              <p class="rules-popup__text">Мошнить на победителя нельзя. Отказаться тоже.</p>
+            </li>
+          </ol>
+        </div>
+      </section>
+      <section class="enter-participants-popup">
+        <div class="enter-participants-popup__container">
+          <a class="popup__close participants-close" href="#">
+            <svg class="popup__close-svg" xmlns="http://www.w3.org/2000/svg" width="34.31" height="38.25" viewBox="0 0 35 39" fill="none" stroke="#242424" stroke-width="2">
+              <path d="M.99 35.94L31.77 1.02m-29.24 0L33.3 35.94"/>
+            </svg>
+          </a>
+          <h2 class="enter-participants-popup__headline">Хотите вписать участников турнира?</h2>
+          <div class="enter-participants-popup__input-container">
+            <input class="enter-participants-popup__participants-list">
+            <button class="enter-participants-popup__send-participants-list" type="button">Отправить!</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </header>
+  <main class="tog-main">
+    <section class="tournament-stages">
+      <section class="tournament-stages__group tournament-stages__group--1">
+        <div class="tournament-stages__stage-container">
+          <input class="tournament-stages__input">
+          <input class="tournament-stages__input">
+        </div>
+        <div class="tournament-stages__stage-container">
+          <input class="tournament-stages__input">
+          <input class="tournament-stages__input">
+        </div>
+        <div class="tournament-stages__stage-container">
+          <input class="tournament-stages__input">
+          <input class="tournament-stages__input">
+        </div>
+        <button class="tournament-stages__button tournament-stages__button--group-1" type="button">Начать!</button>
+      </section>
+      <section class="tournament-stages__group tournament-stages__group--2">
+        <div class="tournament-stages__stage-container">
+          <input class="tournament-stages__input">
+          <input class="tournament-stages__input">
+        </div>
+        <button class="tournament-stages__button tournament-stages__button--group-2" type="button">Начать!</button>
+      </section>
+      <section class="tournament-stages__group tournament-stages__group--3">
+        <div class="tournament-stages__stage-container">
+          <input class="tournament-stages__input">
+          <input class="tournament-stages__input">
+        </div>
+        <button class="tournament-stages__button tournament-stages__button--group-3" type="button">Начать!</button>
+        <div class="tournament-stages__stage-container tournament-stages__stage-container--winner">
+          <p class="tournament-stages__the-winner">Победитель!</p>
+          <input class="tournament-stages__input">
+        </div>
+      </section>
+    </section>
+  </main>
+  <footer class="tog-footer">
+    <section class="copyright">
+      <p class="copyright__text">Придумано компанией ЛГД в 2019 году. Все права защищены &#169;.</p>
+    </section>
+  </footer>
+  <script src="js/javascript-min.js"></script>
+</body>
+
+</html>

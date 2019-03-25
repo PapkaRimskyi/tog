@@ -1,0 +1,50 @@
+@font-face {
+  font-family: "CeraStencilPRO";
+  src: url("../fonts/CeraStencilPRO-Light.woff") format("woff");
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "CeraStencilPRO";
+  src: url("../fonts/CeraStencilPRO-Regular.woff") format("woff");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "CeraStencilPRO";
+  src: url("../fonts/CeraStencilPRO-Bold.woff") format("woff");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+body {
+  margin: $margin-auto;;
+  min-width: 1200px;
+  max-width: 1600px;
+  font-size: 18px;
+  font-family: "CeraStencilPRO", "Open Sans", sans-serif;
+  font-weight: 400;
+  line-height: 24px;
+  color: $black-color;
+  background-color: #f2f2f2;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+.popup--display {
+  display: block;
+}
