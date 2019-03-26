@@ -1,6 +1,13 @@
 .header-nav {
-  margin-left: 55px;
   width: 500px;
+}
+
+.header-nav--margin-left {
+  margin-left: 55px;
+}
+
+.header-nav--margin-right {
+  margin-right: 24px;
 }
 
 .header-nav__list {
@@ -8,6 +15,7 @@
   padding: 0;
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   list-style-type: none;
 }
 

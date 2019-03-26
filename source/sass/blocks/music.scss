@@ -1,0 +1,16 @@
+.music {
+  position: absolute;
+  top: 40px;
+  left: 28%;
+  display: none;
+  background-color: grey;
+  border-radius: 20px;
+}
+
+.music__audio {
+  display: flex;
+}
+
+.music--display {
+  display: block;
+}
