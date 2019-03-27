@@ -82,10 +82,10 @@
             </svg>
           </a>
           <h2 class="enter-participants-popup__headline">Хотите вписать участников турнира?</h2>
-          <div class="enter-participants-popup__input-container">
-            <input class="enter-participants-popup__participants-list">
-            <button class="enter-participants-popup__send-participants-list" type="button">Отправить!</button>
-          </div>
+          <form class="enter-participants-popup__form" action="localhost:3000" method="post" enctype="multipart/form-data">
+            <input class="enter-participants-popup__participants-list" type="text" name="games" placeholder="Список игр">
+            <button class="enter-participants-popup__send-participants-list" type="submit">Отправить!</button>
+          </form>
         </div>
       </section>
     </div>
@@ -96,37 +96,37 @@
       <section class="tournament-stages__group tournament-stages__group--1">
         <h2 class="visually-hidden">Первый групповой этап</h2>
         <div class="tournament-stages__stage-container">
-          <input class="tournament-stages__input">
-          <input class="tournament-stages__input">
+          <input class="tournament-stages__input" disabled>
+          <input class="tournament-stages__input" disabled>
         </div>
         <div class="tournament-stages__stage-container">
-          <input class="tournament-stages__input">
-          <input class="tournament-stages__input">
+          <input class="tournament-stages__input" disabled>
+          <input class="tournament-stages__input" disabled>
         </div>
         <div class="tournament-stages__stage-container">
-          <input class="tournament-stages__input">
-          <input class="tournament-stages__input">
+          <input class="tournament-stages__input" disabled>
+          <input class="tournament-stages__input" disabled>
         </div>
         <button class="tournament-stages__button tournament-stages__button--group-1" type="button">Начать!</button>
       </section>
       <section class="tournament-stages__group tournament-stages__group--2">
         <h2 class="visually-hidden">Полуфинал</h2>
         <div class="tournament-stages__stage-container">
-          <input class="tournament-stages__input">
-          <input class="tournament-stages__input">
+          <input class="tournament-stages__input" disabled>
+          <input class="tournament-stages__input" disabled>
         </div>
         <button class="tournament-stages__button tournament-stages__button--group-2" type="button">Начать!</button>
       </section>
       <section class="tournament-stages__group tournament-stages__group--3">
         <h2 class="visually-hidden">Финал</h2>
         <div class="tournament-stages__stage-container">
-          <input class="tournament-stages__input">
-          <input class="tournament-stages__input">
+          <input class="tournament-stages__input" disabled>
+          <input class="tournament-stages__input" disabled>
         </div>
         <button class="tournament-stages__button tournament-stages__button--group-3" type="button">Начать!</button>
         <div class="tournament-stages__stage-container tournament-stages__stage-container--winner">
           <p class="tournament-stages__the-winner">Победитель!</p>
-          <input class="tournament-stages__input">
+          <input class="tournament-stages__input" disabled>
         </div>
       </section>
     </section>
@@ -137,7 +137,7 @@
       <p class="copyright__text">Придумано компанией ЛГД в 2019 году. Все права защищены &#169;.</p>
     </section>
   </footer>
-  <script src="js/javascript-min.js"></script>
+  <script src="js/javascript.js"></script>
 </body>
 
 </html>
