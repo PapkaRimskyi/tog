@@ -9,9 +9,14 @@
   var inputStage1 = document.querySelectorAll('.tournament-stages__group--1 .tournament-stages__input');
   var audioPlayer = document.querySelector('.music__audio');
   var form = document.querySelector('.enter-participants-popup__form');
+  var buttonGroup1 = document.querySelector('.tournament-stages__button--group-1');
 
   var changeBorder = function () {
     inputParticipantsList.style.borderColor = 'red';
+  }
+
+  var sortGameNames = function () {
+    return Math.random() - 0.5;
   }
 
   var openedParticipantsWindow = function () {
@@ -86,13 +91,14 @@
   }
 
   var writeName = function () {
-    var namesArray = takeArrayFromInput();
+    var namesArray = takeArrayFromInput().sort(sortGameNames);
     for (var i = 0; i <  inputStage1.length; i++) {
       inputStage1[i].value = namesArray[i];
     }
     closeParticipantsPopup();
     audioPlayer.play();
     audioPlayer.volume = 0.3;
+    buttonGroup1.disabled = false;
   }
 
   form.addEventListener('submit', writeName);
@@ -100,7 +106,7 @@
 
   participantsOpenPopup.addEventListener('click', function (evt) {
     evt.preventDefault();
-    participantsPopup.classList.add('popup--display');
+    participantsPopup.classList.toggle('popup--display');
     form.addEventListener('submit', writeName);
     inputParticipantsList.addEventListener('input', checkNamesArray);
   });
@@ -111,4 +117,8 @@
     form.removeEventListener('submit', writeName);
     inputParticipantsList.removeEventListener('input', checkNamesArray);
   });
+
+  window.enterParticipantsPopup = {
+    inputStage1: inputStage1
+  }
 })();
