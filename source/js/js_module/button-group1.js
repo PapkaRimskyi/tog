@@ -7,6 +7,8 @@
   var inputStage3 = document.querySelectorAll('.tournament-stages__group--3 .tournament-stages__input');
 
   var throwCollection = ['throw1', 'throw2', 'throw3'];
+  window.participantsStage2 = [];
+  window.participantsFinal = [];
 
   var comparisonFunction = function (a, b) {
     if (b.totalPoints < a.totalPoints) {
@@ -53,6 +55,8 @@
       inputStage2[i].value = whoHasWonStage1[i + 1].gameName;
     }
     inputStage3[0].value = whoHasWonStage1[0].gameName;
+    window.participantsStage2 = whoHasWonStage1.slice(1, 3);
+    window.participantsFinal = whoHasWonStage1.slice(0, 1);
     buttonGroup2.disabled = false;
   }
 
@@ -63,4 +67,8 @@
   }
 
   buttonGroup1.addEventListener('click', distributionParticipants);
+
+  window.buttonGroup1 = {
+    throwCollection: throwCollection
+  }
 })();
