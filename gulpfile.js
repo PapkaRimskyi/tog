@@ -15,9 +15,19 @@ var svgo = require('svgo');
 var uglify = require('gulp-uglify');
 var pump = require('pump');
 var concat = require('gulp-concat');
+var order = require('gulp-order');
 
 gulp.task('js_min', function () {
   return gulp.src('source/js/js_module/*.js')
+    .pipe(order([
+      'selectorCollection.js',
+      'randomNumber.js',
+      'generalInteraction.js',
+      'enter-participants-popup.js',
+      'button-group1.js',
+      'button-group2.js',
+      'button-group3.js',
+    ]))
   .pipe(concat('javascript.js'))
   .pipe(gulp.dest('build/js'))
   .pipe(uglify())

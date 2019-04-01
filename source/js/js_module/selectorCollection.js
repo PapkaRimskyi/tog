@@ -1,0 +1,28 @@
+'use strict';
+
+var dateSpan = document.querySelector('.time-and-data__info--date');
+var timeSpan = document.querySelector('.time-and-data__info--time');
+var headerNav = document.querySelector('.header-nav');
+var rulesPopupOpen = document.querySelector('.rules-js');
+var rulesPopup = document.querySelector('.rules-popup');
+var rulesPopupClose = document.querySelector('.rules-close');
+var audioPlayer = document.querySelector('.audio-player');
+var music = document.querySelector('.music');
+var musicAudio = document.querySelector('.music__audio');
+var participantsPopup = document.querySelector('.enter-participants-popup');
+var participantsOpenPopup = document.querySelector('.participants-js');
+var participantsPopupClose = document.querySelector('.participants-close');
+var inputParticipantsList = document.querySelector('.enter-participants-popup__participants-list');
+var sendParticipantsButton = document.querySelector('.enter-participants-popup__send-participants-list');
+var inputStage1 = document.querySelectorAll('.tournament-stages__group--1 .tournament-stages__input');
+var inputStage2 = document.querySelectorAll('.tournament-stages__group--2 .tournament-stages__input');
+var inputStage3 = document.querySelectorAll('.tournament-stages__group--3 .tournament-stages__input');
+var form = document.querySelector('.enter-participants-popup__form');
+var buttonGroupStage1 = document.querySelector('.tournament-stages__button--group-1');
+var buttonGroupStage2 = document.querySelector('.tournament-stages__button--group-2');
+var buttonGroupStage3 = document.querySelector('.tournament-stages__button--group-3');
+var throwResultsStage1 = document.querySelectorAll('.tournament-stages__group--1 .tournament-stages__points');
+var throwResultsStage2 = document.querySelectorAll('.tournament-stages__group--2 .tournament-stages__points');
+var throwResultsFinal = document.querySelectorAll('.tournament-stages__group--3 .tournament-stages__points');
+var winnerInput = document.querySelector('.tournament-stages__stage-container--winner .tournament-stages__winner-input');
+var winnerContainer = document.querySelector('.tournament-stages__stage-container--winner');

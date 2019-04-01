@@ -1,16 +1,6 @@
 'use strict';
 
 (function () {
-  var participantsPopup = document.querySelector('.enter-participants-popup');
-  var participantsOpenPopup = document.querySelector('.participants-js');
-  var participantsPopupClose = document.querySelector('.participants-close');
-  var inputParticipantsList = document.querySelector('.enter-participants-popup__participants-list');
-  var sendParticipantsButton = document.querySelector('.enter-participants-popup__send-participants-list');
-  var inputStage1 = document.querySelectorAll('.tournament-stages__group--1 .tournament-stages__input');
-  var audioPlayer = document.querySelector('.music__audio');
-  var form = document.querySelector('.enter-participants-popup__form');
-  var buttonGroup1 = document.querySelector('.tournament-stages__button--group-1');
-
   var changeBorder = function () {
     inputParticipantsList.style.borderColor = 'red';
   }
@@ -96,9 +86,9 @@
       inputStage1[i].value = namesArray[i];
     }
     closeParticipantsPopup();
-    audioPlayer.play();
-    audioPlayer.volume = 0.3;
-    buttonGroup1.disabled = false;
+    musicAudio.play();
+    musicAudio.volume = 0.3;
+    buttonGroupStage1.disabled = false;
   }
 
   form.addEventListener('submit', writeName);
@@ -117,8 +107,4 @@
     form.removeEventListener('submit', writeName);
     inputParticipantsList.removeEventListener('input', checkNamesArray);
   });
-
-  window.enterParticipantsPopup = {
-    inputStage1: inputStage1
-  }
 })();

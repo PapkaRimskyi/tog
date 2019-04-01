@@ -1,10 +1,6 @@
 'use strict';
 
 (function () {
-  var dateSpan = document.querySelector('.time-and-data__info--date');
-  var timeSpan = document.querySelector('.time-and-data__info--time');
-  var headerNav = document.querySelector('.header-nav');
-
   headerNav.classList.remove('header-nav--margin-left');
   headerNav.classList.add('header-nav--margin-right');
 
@@ -37,4 +33,21 @@
   }, 90);
 
   date();
+
+  audioPlayer.addEventListener('click', function (evt) {
+    evt.preventDefault();
+    music.classList.toggle('music--display');
+  });
+
+  rulesPopupOpen.addEventListener('click', function (evt) {
+    evt.preventDefault();
+    rulesPopup.classList.add('popup--display');
+  });
+
+  var removePopup = function () {
+    rulesPopup.classList.remove('popup--display');
+    rulesPopupClose.removeEventListener('click', removePopup);
+  }
+
+  rulesPopupClose.addEventListener('click', removePopup);
 })();

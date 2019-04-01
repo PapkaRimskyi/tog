@@ -11,7 +11,7 @@
 }
 
 .tournament-stages__stage-container {
-  margin-bottom: 30px;
+  margin-bottom: 15px;
   width: 360px;
   display: flex;
   justify-content: space-between;
@@ -28,6 +28,24 @@
 
 .tournament-stages__stage-container--winner-display {
   display: flex;
+}
+
+.tournament-stages__input,
+.tournament-stages__winner-input {
+  text-align: center;
+}
+
+.tournament-stages__points-container {
+  margin-top: 5px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.tournament-stages__points {
+  margin: 0;
+  font-size: 14px;
+  line-height: 14px;
 }
 
 .tournament-stages__button {
