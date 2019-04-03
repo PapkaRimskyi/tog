@@ -7,7 +7,9 @@
     var secondTotalPoints = window.participantsFinal[1].totalPoints;
     if (firstTotalPoints > secondTotalPoints) {
       winnerInput.value = window.participantsFinal[0].gameName;
+      window.buttonGroup1.markWhoWon(inputStage3, 0, window.buttonGroup1.tr);
     } else {
+      window.buttonGroup1.markWhoWon(inputStage3, 0);
       winnerInput.value = window.participantsFinal[1].gameName;
     }
     winnerContainer.classList.add('tournament-stages__stage-container--winner-display');

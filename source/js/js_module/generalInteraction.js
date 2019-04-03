@@ -4,6 +4,8 @@
   headerNav.classList.remove('header-nav--margin-left');
   headerNav.classList.add('header-nav--margin-right');
 
+  var REFRESH_TIME = 90;
+
   var getNewDate = function () {
     var now = new Date();
     return now;
@@ -29,8 +31,8 @@
     allTime += ((minutes < 10) ? ':0' : ':') + minutes;
     allTime += ((seconds < 10) ? ':0' : ':') + seconds;
     timeSpan.innerHTML = allTime;
-    time = setTimeout(refresh, 90);
-  }, 90);
+    time = setTimeout(refresh, REFRESH_TIME);
+  }, REFRESH_TIME);
 
   date();
 

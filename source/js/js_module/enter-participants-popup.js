@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  var MAXGAMES = 6;
+
   var changeBorder = function () {
     inputParticipantsList.style.borderColor = 'red';
   }
@@ -52,11 +54,11 @@
       inputParticipantsList.setCustomValidity('Нет участников. И как тут выбирать?');
       changeBorder();
       return;
-    } else if (namesArray.length < 6) {
+    } else if (namesArray.length < MAXGAMES) {
       inputParticipantsList.setCustomValidity('Что-то мало кандидатов (НЕ МЕНЬШЕ 6). Текущее количество: ' + namesArray.length);
       changeBorder();
       return;
-    } else if (namesArray.length > 6) {
+    } else if (namesArray.length > MAXGAMES) {
       inputParticipantsList.setCustomValidity('С количеством игр вы явно перебрали (НЕ БОЛЬШЕ 6). Текущее количество: ' + namesArray.length);
       changeBorder();
       return;
