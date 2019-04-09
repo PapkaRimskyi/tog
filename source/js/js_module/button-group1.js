@@ -2,12 +2,24 @@
 
 (function () {
   var throwCollection = ['throw1', 'throw2', 'throw3'];
+  var extraThrowCollection = ['throw4', 'throw5'];
   window.participantsStage1 = [];
   window.participantsStage2 = [];
   window.participantsFinal = [];
   var tr = true;
 
   var MAX_THROWS = 3;
+  var COUNT_OF_WINNERS_FIRST_STAGE = 3;
+
+  var comparisonFunction = function (a, b) {
+    if (b.totalPoints < a.totalPoints) {
+      return -1;
+    }
+    if (a.totalPoints > b.totalPoints) {
+      return 1;
+    }
+    return 0;
+  }
 
   var markWhoWon = function (stageInfo, inputStg, inputStgLeight) {
     for (var i = 0; i < inputStgLeight; i+=2) {
@@ -37,8 +49,8 @@
           }
           stageInfo[i + j].totalPoints = points;
           points = 0;
+          throwResultsStage1[i + j].innerHTML = stageInfo[i + j].throw1 + '/' + stageInfo[i + j].throw2 + '/' + stageInfo[i + j].throw3 + '=' + stageInfo[i + j].totalPoints;
         }
-        throwResultsStage1[i].innerHTML = stageInfo[i].throw1 + '/' + stageInfo[i].throw2 + '/' + stageInfo[i].throw3 + '=' + stageInfo[i].totalPoints;
       }
     }
   }
@@ -62,11 +74,51 @@
     }
   }
 
+  var haveSortingArraySameThrows = function (srtArray) {
+    if (srtArray[0].totalPoints === srtArray[1].totalPoints) {
+      for (var i = 0; i < srtArray.length - 1; i++) {
+        var points = srtArray[i].totalPoints;
+        for (var j = 0; j < extraThrowCollection.length - 1; j++) {
+          var randomThrow = window.randomNumber(1, 6);
+          srtArray[i][extraThrowCollection[j]] = randomThrow;
+          points += srtArray[i][extraThrowCollection[j]];
+        }
+        srtArray[i].totalPoints = points;
+        throwResultsStage1[i].innerHTML = srtArray[i].throw1 + '/' + srtArray[i].throw2 + '/' + srtArray[i].throw3 + '=' + srtArray[i].totalPoints;
+      }
+      srtArray.sort(comparisonFunction);
+    }
+  }
+
+  var getWinnerStage = function (stageInfoLength, stageInfo, inputStg) {
+    var sortingArray = [];
+    for (var i = 0; i < stageInfoLength; i++) {
+      if (inputStg[i].style.borderColor === 'green') {
+        sortingArray.push(stageInfo[i]);
+      }
+    }
+    sortingArray.sort(comparisonFunction);
+    haveSortingArraySameThrows(sortingArray);
+    return sortingArray;
+  }
+
+  var distributionOfParticipants = function () {
+    var sortingArray = getWinnerStage(participantsStage1.length, participantsStage1, inputStage1);
+    participantsFinal = sortingArray.slice(0, 1);
+    participantsStage2 = sortingArray.slice(1, 3);
+    for (var i = 0; i < participantsStage2.length; i++) {
+      inputStage2[i].value = participantsStage2[i].gameName;
+    }
+    for (var j = 0; j < participantsFinal.length; j++) {
+      inputStage3[j].value = participantsFinal[j].gameName;
+    }
+  }
+
   buttonGroupStage1.addEventListener('click', function (evt) {
     evt.preventDefault();
     getThreeRandomThrows(inputStage1.length, participantsStage1, tr);
+    distributionOfParticipants();
     buttonGroupStage1.disabled = true;
-    console.log(participantsStage1);
   });
 
   // var comparisonFunction = function (a, b) {
