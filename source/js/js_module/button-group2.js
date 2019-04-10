@@ -1,36 +1,26 @@
 'use strict';
 
 (function () {
-  var makeThrowsSemifinalAndFinal = function (groupStage, participantsInfo, throwNumberCollection, gameStage) {
-    for (var i = 0; i < groupStage.length; i++) {
-      for (var j = 0; j < window.buttonGroup1.maxThrows; j++) {
-        var randomThrow = window.randomNumber(1, 6);
-        participantsInfo[i][throwNumberCollection[j]] = randomThrow;
-        window.buttonGroup1.insertThrowsValue(j, gameStage, i, participantsInfo, throwNumberCollection);
+
+  var getWinnerStage = function (inputStg, stageInfo, nextGroup) {
+    for (var i = 0; i < inputStg.length; i++) {
+      if (inputStg[i].style.borderColor === 'green') {
+       nextGroup.push(stageInfo[i]);
+       inputStage3[1].value = stageInfo[i].gameName;
+       throwResultsFinal[1].innerHTML = 'Набрал ' + stageInfo[i].totalPoints + '(о)';
       }
     }
   }
 
-  var getWinnerStage2 = function () {
-    makeThrowsSemifinalAndFinal(inputStage2, window.participantsStage2, window.buttonGroup1.throwCollection, throwResultsStage2);
-    for (var i = 0; i < inputStage2.length; i+=2) {
-      var firstTotalPoints = window.participantsStage2[i].totalPoints;
-      var secondTotalPoints = window.participantsStage2[i + 1].totalPoints;
-      window.buttonGroup1.comparison(firstTotalPoints, secondTotalPoints, window.participantsFinal, window.participantsStage2, inputStage2, i, window.buttonGroup1.tr);
-    }
-    inputStage3[1].value = window.participantsFinal[1].gameName;
-    buttonGroupStage3.disabled = false;
-  }
-
-  var distributionGroupStage2 = function () {
-    getWinnerStage2();
+  var button2ClickFunction = function () {
+    window.buttonGroup1.getThreeRandomThrows(inputStage2.length, participantsStage2, throwResultsStage2, window.buttonGroup1.threeThrows);
+    window.buttonGroup1.rerollThrows(inputStage2.length, participantsStage2, throwResultsStage2);
+    window.buttonGroup1.markWhoWon(participantsStage2, inputStage2, inputStage2.length);
+    getWinnerStage(inputStage2, participantsStage2, participantsFinal);
     buttonGroupStage2.disabled = true;
-    buttonGroupStage2.removeEventListener('click', distributionGroupStage2);
+    buttonGroupStage3.disabled = false;
+    buttonGroupStage2.removeEventListener('click', button2ClickFunction);
   }
 
-  buttonGroupStage2.addEventListener('click', distributionGroupStage2);
-
-  window.buttonGroup2 = {
-    makeThrowsSemifinalAndFinal: makeThrowsSemifinalAndFinal
-  }
+  buttonGroupStage2.addEventListener('click', button2ClickFunction);
 })();

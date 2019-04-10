@@ -1,25 +1,24 @@
 'use strict';
 
 (function () {
-  var getWinnerFinalStage = function () {
-    window.buttonGroup2.makeThrowsSemifinalAndFinal(inputStage3, window.participantsFinal, window.buttonGroup1.throwCollection, throwResultsFinal);
-    var firstTotalPoints = window.participantsFinal[0].totalPoints;
-    var secondTotalPoints = window.participantsFinal[1].totalPoints;
-    if (firstTotalPoints > secondTotalPoints) {
-      winnerInput.value = window.participantsFinal[0].gameName;
-      window.buttonGroup1.markWhoWon(inputStage3, 0, window.buttonGroup1.tr);
-    } else {
-      window.buttonGroup1.markWhoWon(inputStage3, 0);
-      winnerInput.value = window.participantsFinal[1].gameName;
+
+  var getWinnerOfThisGame = function () {
+    for (var i = 0; i < inputStage3.length; i++) {
+      if (inputStage3[i].style.borderColor === 'green') {
+       winnerInput.value = participantsFinal[i].gameName;
+       winnerContainer.classList.add('tournament-stages__stage-container--winner-display');
+      }
     }
-    winnerContainer.classList.add('tournament-stages__stage-container--winner-display');
   }
 
-  var distributionGroupFinalStage = function () {
-    getWinnerFinalStage();
+  var button3ClickFunction = function () {
+    window.buttonGroup1.getThreeRandomThrows(inputStage3.length, participantsFinal, throwResultsFinal, window.buttonGroup1.fiveThrows);
+    window.buttonGroup1.rerollThrows(inputStage3.length, participantsFinal, throwResultsFinal);
+    window.buttonGroup1.markWhoWon(participantsFinal, inputStage3, inputStage3.length);
+    getWinnerOfThisGame();
     buttonGroupStage3.disabled = true;
-    buttonGroupStage3.removeEventListener('click', distributionGroupFinalStage);
+    buttonGroupStage3.removeEventListener('click', button3ClickFunction);
   }
 
-  buttonGroupStage3.addEventListener('click', distributionGroupFinalStage);
+  buttonGroupStage3.addEventListener('click', button3ClickFunction);
 })();
