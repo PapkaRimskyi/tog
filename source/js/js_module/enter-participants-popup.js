@@ -88,7 +88,7 @@
       inputStage1[i].value = namesArray[i];
     }
     closeParticipantsPopup();
-    // musicAudio.play();
+    musicAudio.play();
     musicAudio.volume = 0.3;
     buttonGroupStage1.disabled = false;
   }

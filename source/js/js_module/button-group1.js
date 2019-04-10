@@ -1,14 +1,15 @@
 'use strict';
 
 (function () {
-  var throwCollection = ['throw1', 'throw2', 'throw3'];
-  var extraThrowCollection = ['throw4', 'throw5'];
+  var throwsCollection = ['throw1', 'throw2', 'throw3', 'throw4', 'throw5'];
+  var extraThrowCollection = ['throw4'];
   window.participantsStage1 = [];
   window.participantsStage2 = [];
   window.participantsFinal = [];
   var tr = true;
 
-  var MAX_THROWS = 3;
+  var THREE_THROWS = 3;
+  var FIVE_THROWS = 5;
   var COUNT_OF_WINNERS_FIRST_STAGE = 3;
 
   var comparisonFunction = function (a, b) {
@@ -45,42 +46,44 @@
     }
   }
 
-  var rerollThrows = function (inputStg, stageInfo) {
+  var rerollThrows = function (inputStg, stageInfo, resultInput) {
     for (var i = 0; i < inputStg; i+=2) {
       var firstInput = stageInfo[i].totalPoints;
       var secondInput = stageInfo[i + 1].totalPoints;
       if (firstInput === secondInput) {
         var points = 0;
         for (var j = 0; j < 2; j++) {
-          for (var k = 0; k < MAX_THROWS; k++) {
+          for (var k = 0; k < THREE_THROWS; k++) {
             var randomThrow = window.randomNumber(1, 10);
-            stageInfo[i + j][throwCollection[k]] = randomThrow;
-            points += stageInfo[i + j][throwCollection[k]];
+            stageInfo[i + j][throwsCollection[k]] = randomThrow;
+            points += stageInfo[i + j][throwsCollection[k]];
           }
           stageInfo[i + j].totalPoints = points;
           points = 0;
-          throwResultsStage1[i + j].innerHTML = stageInfo[i + j].throw1 + '/' + stageInfo[i + j].throw2 + '/' + stageInfo[i + j].throw3 + '=' + stageInfo[i + j].totalPoints + '(П)';
+          resultInput[i + j].innerHTML = stageInfo[i + j].throw1 + '/' + stageInfo[i + j].throw2 + '/' + stageInfo[i + j].throw3 + '=' + stageInfo[i + j].totalPoints + '(П)';
         }
       }
     }
   }
 
-  var getThreeRandomThrows = function (inputStg, stageInfo, stg1) {
-    if (stg1) {
-      for (var i = 0; i < inputStg; i++) {
-        var points = 0;
+  var getThreeRandomThrows = function (inputStg, stageInfo, resultInput, maxThrows, stg1) {
+    for (var i = 0; i < inputStg; i++) {
+      var points = 0;
+      if (stg1) {
         var participantsInfo = {gameName: inputStage1[i].value};
         participantsStage1.push(participantsInfo);
-        for (var j = 0; j < MAX_THROWS; j++) {
-          var randomThrow = window.randomNumber(1, 10);
-          stageInfo[i][throwCollection[j]] = randomThrow;
-          points += stageInfo[i][throwCollection[j]];
-        }
-        stageInfo[i].totalPoints = points;
-        throwResultsStage1[i].innerHTML = stageInfo[i].throw1 + '/' + stageInfo[i].throw2 + '/' + stageInfo[i].throw3 + '=' + stageInfo[i].totalPoints;
       }
-      rerollThrows(inputStg, stageInfo);
-      markWhoWon(stageInfo, inputStage1, inputStage1.length);
+      for (var j = 0; j < maxThrows; j++) {
+        var randomThrow = window.randomNumber(1, 10);
+        stageInfo[i][throwsCollection[j]] = randomThrow;
+        points += stageInfo[i][throwsCollection[j]];
+      }
+      stageInfo[i].totalPoints = points;
+      if (maxThrows === THREE_THROWS) {
+        resultInput[i].innerHTML = stageInfo[i].throw1 + '/' + stageInfo[i].throw2 + '/' + stageInfo[i].throw3 + '=' + stageInfo[i].totalPoints;
+      } else {
+        resultInput[i].innerHTML = stageInfo[i].throw1 + '/' + stageInfo[i].throw2 + '/' + stageInfo[i].throw3 + '/' + stageInfo[i].throw4 + '/' + stageInfo[i].throw5 + '=' + stageInfo[i].totalPoints;
+      }
     }
   }
 
@@ -129,117 +132,25 @@
     }
   }
 
-  buttonGroupStage1.addEventListener('click', function (evt) {
-    evt.preventDefault();
-    getThreeRandomThrows(inputStage1.length, participantsStage1, tr);
+  var button1ClickFunction = function () {
+    getThreeRandomThrows(inputStage1.length, participantsStage1, throwResultsStage1, THREE_THROWS, tr);
+    rerollThrows(inputStage1.length, participantsStage1, throwResultsStage1);
+    markWhoWon(participantsStage1, inputStage1, inputStage1.length);
     distributionOfParticipants(haveWinnersStageSameTotalPoints());
     buttonGroupStage1.disabled = true;
-  });
+    buttonGroupStage2.disabled = false;
+    buttonGroupStage1.removeEventListener('click', button1ClickFunction);
+  }
 
-  // var comparisonFunction = function (a, b) {
-  //   if (b.totalPoints < a.totalPoints) {
-  //     return -1;
-  //   }
-  //   if (a.totalPoints > b.totalPoints) {
-  //     return 1;
-  //   }
-  //   return 0;
-  // }
-  //
-  // var markWhoWon = function (inputStage, i, firstWin) {
-  //   if (firstWin) {
-  //     inputStage[i].style.borderColor = 'green';
-  //     inputStage[i + 1].style.borderColor = 'red';
-  //   } else {
-  //     inputStage[i + 1].style.borderColor = 'green';
-  //     inputStage[i].style.borderColor = 'red';
-  //   }
-  // }
-  //
-  // var insertThrowsValue = function (c, fieldWithPoints, index, participantsThrow, throwIndex, stage1) {
-  //   if (stage1 === true) {
-  //     if (c !== MAX_THROWS - 1) {
-  //       fieldWithPoints[index].innerHTML += participantsThrow[throwIndex[c]] + '/';
-  //     } else {
-  //       fieldWithPoints[index].innerHTML += participantsThrow[throwIndex[c]];
-  //       participantsThrow.totalPoints = participantsThrow.throw1 + participantsThrow.throw2 + participantsThrow.throw3;
-  //       fieldWithPoints[index].innerHTML += '=' + participantsThrow.totalPoints;
-  //     }
-  //   } else {
-  //     if (c !== MAX_THROWS - 1) {
-  //       fieldWithPoints[index].innerHTML += participantsThrow[index][throwIndex[c]] + '/';
-  //     } else {
-  //       fieldWithPoints[index].innerHTML += participantsThrow[index][throwIndex[c]];
-  //       participantsThrow[index].totalPoints = participantsThrow[index].throw1 + participantsThrow[index].throw2 + participantsThrow[index].throw3;
-  //       fieldWithPoints[index].innerHTML += '=' + participantsThrow[index].totalPoints;
-  //     }
-  //   }
-  // }
-  //
-  // var makeThrowsStage1 = function (participantsInfo, throwNumberCollection, i) {
-  //   for (var j = 0; j < MAX_THROWS; j++) {
-  //     var randomThrow = window.randomNumber(1, 6);
-  //     participantsInfo[throwNumberCollection[j]] = randomThrow;
-  //     insertThrowsValue(j, throwResultsStage1, i, participantsInfo, throwNumberCollection, tr);
-  //   }
-  //   return participantsInfo;
-  // }
-  //
-  // var getThreeRandomThrows = function () {
-  //   var infoAboutAllParticipants = [];
-  //   for (var i = 0; i < inputStage1.length; i++) {
-  //     var aboutParticipant = {gameName: inputStage1[i].value};
-  //     infoAboutAllParticipants.push(makeThrowsStage1(aboutParticipant, throwCollection, i));
-  //   }
-  //   return infoAboutAllParticipants;
-  // }
-  //
-  // var comparison = function (firstTotal, secondTotal, listWinners, participantsInfo, stage, i, tr) {
-  //   if (firstTotal > secondTotal) {
-  //     listWinners.push(participantsInfo[i]);
-  //     markWhoWon(stage, i, tr);
-  //   } else {
-  //     listWinners.push(participantsInfo[i + 1]);
-  //     markWhoWon(stage, i);
-  //   }
-  // }
-  //
-  // var startComparisonThrows = function () {
-  //   var whoHasWonStage1 = [];
-  //   var infoAboutAllParticipants = getThreeRandomThrows();
-  //   for (var i = 0; i < inputStage1.length; i+=2) {
-  //     var firstTotalPoints = infoAboutAllParticipants[i].totalPoints;
-  //     var secondTotalPoints = infoAboutAllParticipants[i + 1].totalPoints;
-  //     comparison(firstTotalPoints, secondTotalPoints, whoHasWonStage1, infoAboutAllParticipants, inputStage1, i, tr);
-  //   }
-  //   return whoHasWonStage1.sort(comparisonFunction);
-  // }
-  //
-  // var nextGroup = function () {
-  //   var whoHasWonStage1 = startComparisonThrows();
-  //   for (var i = 0; i < inputStage2.length; i++) {
-  //     inputStage2[i].value = whoHasWonStage1[i + 1].gameName;
-  //   }
-  //   inputStage3[0].value = whoHasWonStage1[0].gameName;
-  //   window.participantsStage2 = whoHasWonStage1.slice(1, 3);
-  //   window.participantsFinal = whoHasWonStage1.slice(0, 1);
-  //   buttonGroupStage2.disabled = false;
-  // }
-  //
-  // var distributionParticipants = function () {
-  //   nextGroup();
-  //   buttonGroupStage1.disabled = true;
-  //   buttonGroupStage1.removeEventListener('click', distributionParticipants);
-  // }
-  //
-  // buttonGroupStage1.addEventListener('click', distributionParticipants);
-  //
-  // window.buttonGroup1 = {
-  //   throwCollection: throwCollection,
-  //   insertThrowsValue: insertThrowsValue,
-  //   markWhoWon: markWhoWon,
-  //   comparison: comparison,
-  //   tr: tr,
-  //   maxThrows: MAX_THROWS
-  // }
+  buttonGroupStage1.addEventListener('click', button1ClickFunction);
+
+  window.buttonGroup1 = {
+    throwsCollection: throwsCollection,
+    tr: tr,
+    threeThrows: THREE_THROWS,
+    fiveThrows: FIVE_THROWS,
+    getThreeRandomThrows: getThreeRandomThrows,
+    rerollThrows: rerollThrows,
+    markWhoWon: markWhoWon
+  }
 })();
