@@ -21,6 +21,16 @@
     return 0;
   }
 
+  var comparisonExtraPoints = function (a, b) {
+    if (b.extraTotalPoints < a.extraTotalPoints) {
+      return -1;
+    }
+    if (a.extraTotalPoints > b.extraTotalPoints) {
+      return 1;
+    }
+    return 0;
+  }
+
   var markWhoWon = function (stageInfo, inputStg, inputStgLeight) {
     for (var i = 0; i < inputStgLeight; i+=2) {
       var firstInput = stageInfo[i].totalPoints;
@@ -43,13 +53,13 @@
         var points = 0;
         for (var j = 0; j < 2; j++) {
           for (var k = 0; k < MAX_THROWS; k++) {
-            var randomThrow = window.randomNumber(1, 6);
+            var randomThrow = window.randomNumber(1, 10);
             stageInfo[i + j][throwCollection[k]] = randomThrow;
             points += stageInfo[i + j][throwCollection[k]];
           }
           stageInfo[i + j].totalPoints = points;
           points = 0;
-          throwResultsStage1[i + j].innerHTML = stageInfo[i + j].throw1 + '/' + stageInfo[i + j].throw2 + '/' + stageInfo[i + j].throw3 + '=' + stageInfo[i + j].totalPoints;
+          throwResultsStage1[i + j].innerHTML = stageInfo[i + j].throw1 + '/' + stageInfo[i + j].throw2 + '/' + stageInfo[i + j].throw3 + '=' + stageInfo[i + j].totalPoints + '(П)';
         }
       }
     }
@@ -62,7 +72,7 @@
         var participantsInfo = {gameName: inputStage1[i].value};
         participantsStage1.push(participantsInfo);
         for (var j = 0; j < MAX_THROWS; j++) {
-          var randomThrow = window.randomNumber(1, 6);
+          var randomThrow = window.randomNumber(1, 10);
           stageInfo[i][throwCollection[j]] = randomThrow;
           points += stageInfo[i][throwCollection[j]];
         }
@@ -74,50 +84,55 @@
     }
   }
 
-  var haveSortingArraySameThrows = function (srtArray) {
-    if (srtArray[0].totalPoints === srtArray[1].totalPoints) {
-      for (var i = 0; i < srtArray.length - 1; i++) {
-        var points = srtArray[i].totalPoints;
-        for (var j = 0; j < extraThrowCollection.length - 1; j++) {
-          var randomThrow = window.randomNumber(1, 6);
-          srtArray[i][extraThrowCollection[j]] = randomThrow;
-          points += srtArray[i][extraThrowCollection[j]];
-        }
-        srtArray[i].totalPoints = points;
-        throwResultsStage1[i].innerHTML = srtArray[i].throw1 + '/' + srtArray[i].throw2 + '/' + srtArray[i].throw3 + '=' + srtArray[i].totalPoints;
-      }
-      srtArray.sort(comparisonFunction);
-    }
-  }
-
-  var getWinnerStage = function (stageInfoLength, stageInfo, inputStg) {
-    var sortingArray = [];
-    for (var i = 0; i < stageInfoLength; i++) {
+  var getWinnersStage1 = function (inputStg, stageInfo) {
+    var sortedArray = [];
+    for (var i = 0; i < inputStg.length; i++) {
       if (inputStg[i].style.borderColor === 'green') {
-        sortingArray.push(stageInfo[i]);
+        sortedArray.push(stageInfo[i]);
       }
     }
-    sortingArray.sort(comparisonFunction);
-    haveSortingArraySameThrows(sortingArray);
-    return sortingArray;
+    sortedArray.sort(comparisonFunction);
+    return sortedArray;
   }
 
-  var distributionOfParticipants = function () {
-    var sortingArray = getWinnerStage(participantsStage1.length, participantsStage1, inputStage1);
-    participantsFinal = sortingArray.slice(0, 1);
-    participantsStage2 = sortingArray.slice(1, 3);
-    for (var i = 0; i < participantsStage2.length; i++) {
-      inputStage2[i].value = participantsStage2[i].gameName;
+  var haveWinnersStageSameTotalPoints = function () {
+    var sortedArray = getWinnersStage1(inputStage1, participantsStage1);
+    if (sortedArray[0].totalPoints === sortedArray[1].totalPoints) {
+      for (var i = 0; i < sortedArray.length - 1; i++) {
+        var points = sortedArray[i].totalPoints;
+        var randomThrow = window.randomNumber(1, 10);
+        sortedArray[i][extraThrowCollection[0]] = randomThrow;
+        sortedArray[i].extraTotalPoints = points + sortedArray[i].throw4;
+      }
+      sortedArray.sort(comparisonExtraPoints);
     }
-    for (var j = 0; j < participantsFinal.length; j++) {
-      inputStage3[j].value = participantsFinal[j].gameName;
+    return sortedArray;
+  }
+
+  var distributionOfParticipants = function (sortedArray) {
+    participantsFinal = sortedArray.slice(0, 1);
+    inputStage3[0].value = participantsFinal[0].gameName;
+    if (participantsFinal[0].extraTotalPoints) {
+      throwResultsFinal[0].innerHTML = 'Набрал ' + participantsFinal[0].extraTotalPoints + '(д.о)';
+    } else {
+      throwResultsFinal[0].innerHTML = 'Набрал ' + participantsFinal[0].totalPoints + '(о)';
+    }
+    throwResultsFinal[1].innerHTML = 'Ждем соперника';
+    participantsStage2 = sortedArray.slice(1, 3);
+    for (var j = 0; j < participantsStage2.length; j++) {
+      inputStage2[j].value = participantsStage2[j].gameName;
+      if (participantsStage2[j].extraTotalPoints) {
+        throwResultsStage2[j].innerHTML = 'Набрал ' + participantsStage2[j].extraTotalPoints + '(д.о)';
+      } else {
+        throwResultsStage2[j].innerHTML = 'Набрал ' + participantsStage2[j].totalPoints + '(о)';
+      }
     }
   }
 
   buttonGroupStage1.addEventListener('click', function (evt) {
     evt.preventDefault();
     getThreeRandomThrows(inputStage1.length, participantsStage1, tr);
-    distributionOfParticipants();
+    distributionOfParticipants(haveWinnersStageSameTotalPoints());
     buttonGroupStage1.disabled = true;
   });
 
