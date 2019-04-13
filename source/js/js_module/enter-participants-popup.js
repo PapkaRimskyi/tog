@@ -79,7 +79,12 @@
   var closeParticipantsPopup = function () {
     inputParticipantsList.value = '';
     participantsPopup.classList.remove('popup--display');
+    sendParticipantsButton.classList.remove('enter-participants-popup__send-participants-list--gif');
     form.removeEventListener('click', writeName);
+  }
+
+  var activateGif = function () {
+    sendParticipantsButton.classList.add('enter-participants-popup__send-participants-list--gif');
   }
 
   var writeName = function () {
@@ -91,22 +96,28 @@
     musicAudio.play();
     musicAudio.volume = 0.3;
     buttonGroupStage1.disabled = false;
+    console.log(namesArray);
   }
 
-  form.addEventListener('submit', writeName);
+  var writeNameAndGifFunctionDelay = function () {
+    setTimeout(activateGif, 400);
+    setTimeout(writeName, 1400);
+  }
+
+  form.addEventListener('submit', writeNameAndGifFunctionDelay);
   inputParticipantsList.addEventListener('input', checkNamesArray);
 
   participantsOpenPopup.addEventListener('click', function (evt) {
     evt.preventDefault();
     participantsPopup.classList.toggle('popup--display');
-    form.addEventListener('submit', writeName);
+    form.addEventListener('submit', writeNameAndGifFunctionDelay);
     inputParticipantsList.addEventListener('input', checkNamesArray);
   });
 
   participantsPopupClose.addEventListener('click', function (evt) {
     evt.preventDefault();
     participantsPopup.classList.remove('popup--display');
-    form.removeEventListener('submit', writeName);
+    form.removeEventListener('submit', writeNameAndGifFunctionDelay);
     inputParticipantsList.removeEventListener('input', checkNamesArray);
   });
 })();

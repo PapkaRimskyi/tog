@@ -14,7 +14,7 @@
 
   var button2ClickFunction = function () {
     window.buttonGroup1.getThreeRandomThrows(inputStage2.length, participantsStage2, throwResultsStage2, window.buttonGroup1.threeThrows);
-    window.buttonGroup1.rerollThrows(inputStage2.length, participantsStage2, throwResultsStage2);
+    window.buttonGroup1.rerollThrows(inputStage2.length, participantsStage2, window.buttonGroup1.threeThrows, throwResultsStage2);
     window.buttonGroup1.markWhoWon(participantsStage2, inputStage2, inputStage2.length);
     getWinnerStage(inputStage2, participantsStage2, participantsFinal);
     buttonGroupStage2.disabled = true;

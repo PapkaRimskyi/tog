@@ -13,7 +13,7 @@
 
   var button3ClickFunction = function () {
     window.buttonGroup1.getThreeRandomThrows(inputStage3.length, participantsFinal, throwResultsFinal, window.buttonGroup1.fiveThrows);
-    window.buttonGroup1.rerollThrows(inputStage3.length, participantsFinal, throwResultsFinal);
+    window.buttonGroup1.rerollThrows(inputStage3.length, participantsFinal, window.buttonGroup1.fiveThrows, throwResultsFinal);
     window.buttonGroup1.markWhoWon(participantsFinal, inputStage3, inputStage3.length);
     getWinnerOfThisGame();
     buttonGroupStage3.disabled = true;

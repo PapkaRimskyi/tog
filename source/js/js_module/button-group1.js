@@ -46,21 +46,25 @@
     }
   }
 
-  var rerollThrows = function (inputStg, stageInfo, resultInput) {
+  var rerollThrows = function (inputStg, stageInfo, maxThrows, resultInput) {
     for (var i = 0; i < inputStg; i+=2) {
       var firstInput = stageInfo[i].totalPoints;
       var secondInput = stageInfo[i + 1].totalPoints;
       if (firstInput === secondInput) {
         var points = 0;
         for (var j = 0; j < 2; j++) {
-          for (var k = 0; k < THREE_THROWS; k++) {
+          for (var k = 0; k < maxThrows; k++) {
             var randomThrow = window.randomNumber(1, 10);
             stageInfo[i + j][throwsCollection[k]] = randomThrow;
             points += stageInfo[i + j][throwsCollection[k]];
           }
           stageInfo[i + j].totalPoints = points;
           points = 0;
-          resultInput[i + j].innerHTML = stageInfo[i + j].throw1 + '/' + stageInfo[i + j].throw2 + '/' + stageInfo[i + j].throw3 + '=' + stageInfo[i + j].totalPoints + '(П)';
+          if (maxThrows === THREE_THROWS) {
+            resultInput[i + j].innerHTML = stageInfo[i + j].throw1 + '/' + stageInfo[i + j].throw2 + '/' + stageInfo[i + j].throw3 + '=' + stageInfo[i + j].totalPoints + '(П)';
+          } else {
+            resultInput[i + j].innerHTML = stageInfo[i + j].throw1 + '/' + stageInfo[i + j].throw2 + '/' + stageInfo[i + j].throw3 + stageInfo[i + j].throw4 + '/' + stageInfo[i + j].throw5 + '=' + stageInfo[i + j].totalPoints + '(П)';
+          }
         }
       }
     }
@@ -134,7 +138,7 @@
 
   var button1ClickFunction = function () {
     getThreeRandomThrows(inputStage1.length, participantsStage1, throwResultsStage1, THREE_THROWS, tr);
-    rerollThrows(inputStage1.length, participantsStage1, throwResultsStage1);
+    rerollThrows(inputStage1.length, participantsStage1, THREE_THROWS, throwResultsStage1);
     markWhoWon(participantsStage1, inputStage1, inputStage1.length);
     distributionOfParticipants(haveWinnersStageSameTotalPoints());
     buttonGroupStage1.disabled = true;
