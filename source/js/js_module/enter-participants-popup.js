@@ -11,10 +11,17 @@
     return Math.random() - 0.5;
   }
 
+  var checkForEmptyInput = function () {
+    if (inputParticipantsList.value === '') {
+      inputParticipantsList.setCustomValidity('Нет участников. И как тут выбирать?');
+      changeBorder();
+    }
+  }
+
   var openedParticipantsWindow = function () {
     participantsPopup.classList.add('popup--display');
-    inputParticipantsList.setCustomValidity('Нет участников. И как тут выбирать?');
-    changeBorder();
+    sendParticipantsButton.disabled = false;
+    sendParticipantsButton.addEventListener('click', checkForEmptyInput);
   }
 
   openedParticipantsWindow();
@@ -59,7 +66,7 @@
       changeBorder();
       return;
     } else if (namesArray.length > MAXGAMES) {
-      inputParticipantsList.setCustomValidity('С количеством игр вы явно перебрали (НЕ БОЛЬШЕ 6). Текущее количество: ' + namesArray.length);
+      inputParticipantsList.setCustomValidity('С количеством игр Вы явно перебрали (НЕ БОЛЬШЕ 6). Текущее количество: ' + namesArray.length);
       changeBorder();
       return;
     } else if (hasArrayHaveOnlySpace(namesArray)) {
@@ -80,10 +87,12 @@
     inputParticipantsList.value = '';
     participantsPopup.classList.remove('popup--display');
     sendParticipantsButton.classList.remove('enter-participants-popup__send-participants-list--gif');
-    form.removeEventListener('click', writeName);
+    form.removeEventListener('submit', writeNameAndGifFunctionDelay);
+    inputParticipantsList.removeEventListener('input', checkNamesArray);
   }
 
   var activateGif = function () {
+    sendParticipantsButton.disabled = true;
     sendParticipantsButton.classList.add('enter-participants-popup__send-participants-list--gif');
   }
 
@@ -92,16 +101,15 @@
     for (var i = 0; i <  inputStage1.length; i++) {
       inputStage1[i].value = namesArray[i];
     }
+    sendParticipantsButton.removeEventListener('click', checkForEmptyInput);
     closeParticipantsPopup();
     musicAudio.play();
     musicAudio.volume = 0.3;
-    buttonGroupStage1.disabled = false;
-    console.log(namesArray);
   }
 
   var writeNameAndGifFunctionDelay = function () {
-    setTimeout(activateGif, 400);
-    setTimeout(writeName, 1400);
+    setTimeout(activateGif, 100);
+    setTimeout(writeName, 1000);
   }
 
   form.addEventListener('submit', writeNameAndGifFunctionDelay);
@@ -110,6 +118,8 @@
   participantsOpenPopup.addEventListener('click', function (evt) {
     evt.preventDefault();
     participantsPopup.classList.toggle('popup--display');
+    sendParticipantsButton.addEventListener('click', checkForEmptyInput);
+    sendParticipantsButton.disabled = false;
     form.addEventListener('submit', writeNameAndGifFunctionDelay);
     inputParticipantsList.addEventListener('input', checkNamesArray);
   });
@@ -117,6 +127,7 @@
   participantsPopupClose.addEventListener('click', function (evt) {
     evt.preventDefault();
     participantsPopup.classList.remove('popup--display');
+    sendParticipantsButton.removeEventListener('click', checkForEmptyInput);
     form.removeEventListener('submit', writeNameAndGifFunctionDelay);
     inputParticipantsList.removeEventListener('input', checkNamesArray);
   });

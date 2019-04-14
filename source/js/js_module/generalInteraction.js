@@ -41,15 +41,17 @@
     music.classList.toggle('music--display');
   });
 
-  rulesPopupOpen.addEventListener('click', function (evt) {
-    evt.preventDefault();
+  var addRulesPopup = function () {
     rulesPopup.classList.add('popup--display');
-  });
-
-  var removePopup = function () {
-    rulesPopup.classList.remove('popup--display');
-    rulesPopupClose.removeEventListener('click', removePopup);
+    rulesPopupClose.addEventListener('click', removeRulesPopup);
   }
 
-  rulesPopupClose.addEventListener('click', removePopup);
+  var removeRulesPopup = function () {
+    rulesPopup.classList.remove('popup--display');
+    rulesPopupClose.removeEventListener('click', removeRulesPopup);
+  }
+
+  rulesPopupOpen.addEventListener('click', addRulesPopup);
+
+  rulesPopupClose.addEventListener('click', removeRulesPopup);
 })();
