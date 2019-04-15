@@ -30,6 +30,16 @@
 
 .enter-participants-popup__participants-list {
   margin-bottom: 20px;
+  width: 150px;
+  font-family: inherit;
+  background-color: #d6d6cf;
+  box-sizing: border-box;
+}
+.enter-participants-popup__participants-list,
+.enter-participants-popup__participants-list::placeholder {
+  padding: 0 5px;
+  font-weight: 700;
+  color: darkblue;
 }
 
 .enter-participants-popup__send-participants-list {

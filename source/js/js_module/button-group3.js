@@ -7,6 +7,7 @@
       if (inputStage3[i].style.borderColor === 'green') {
        winnerInput.value = participantsFinal[i].gameName;
        winnerContainer.classList.add('tournament-stages__stage-container--winner-display');
+       crownOfWinner.classList.add('tournament-stages__crown--animation');
       }
     }
   }

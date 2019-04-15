@@ -26,3 +26,4 @@ var throwResultsStage2 = document.querySelectorAll('.tournament-stages__group--2
 var throwResultsFinal = document.querySelectorAll('.tournament-stages__group--3 .tournament-stages__points');
 var winnerInput = document.querySelector('.tournament-stages__stage-container--winner .tournament-stages__winner-input');
 var winnerContainer = document.querySelector('.tournament-stages__stage-container--winner');
+var crownOfWinner = document.querySelector('.tournament-stages__crown');

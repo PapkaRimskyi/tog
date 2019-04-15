@@ -105,6 +105,7 @@
     closeParticipantsPopup();
     musicAudio.play();
     musicAudio.volume = 0.3;
+    buttonGroupStage1.disabled = false;
   }
 
   var writeNameAndGifFunctionDelay = function () {

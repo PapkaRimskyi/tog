@@ -19,11 +19,13 @@
 }
 
 .tournament-stages__stage-container--winner {
+  position: relative;
   margin-top: 20px;
   margin-bottom: 0;
   display: none;
   flex-direction: column;
   align-items: center;
+  overflow: hidden;
 }
 
 .tournament-stages__stage-container--winner-display {
@@ -32,7 +34,12 @@
 
 .tournament-stages__input,
 .tournament-stages__winner-input {
+  padding: 5px 1px;
+  font-family: inherit;
+  font-weight: 700;
   text-align: center;
+  color: darkblue;
+  background-color: #d6d6cf;
 }
 
 .tournament-stages__points-container {
@@ -50,7 +57,7 @@
 
 .tournament-stages__button {
   margin: $margin-auto;
-  padding: 8px 0;
+  padding: 8px;
   width: 150px;
   display: flex;
   justify-content: center;
@@ -61,7 +68,61 @@
   cursor: pointer;
 }
 
+.tournament-stages__button:disabled:hover {
+  cursor: not-allowed;
+}
+
+.tournament-stages__button:not(:disabled):hover {
+  box-shadow: 0 0 15px 3px lightgrey inset;
+}
+
+.tournament-stages__button:not(:disabled):active {
+  color: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 -2px 15px -2px grey inset;
+}
+
 .tournament-stages__the-winner {
   margin: 0;
   margin-bottom: 5px;
+}
+
+.tournament-stages__crown {
+  position: absolute;
+  top: -40px;
+  left: 0;
+}
+
+.tournament-stages__crown--animation {
+  animation-name: bounce;
+  animation-duration: 2.5s;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+}
+
+@keyframes bounce {
+  0% {
+    top: -40px;
+    left: 0;
+  }
+  20% {
+    top: 23px;
+    left: 20px;
+  }
+  40% {
+    top: 0px;
+    left: 35px;
+  }
+  60% {
+    top: 23px;
+    left: 45px;
+  }
+  80% {
+    top: 0px;
+    left: 65px;
+  }
+  100% {
+    top: -1px;
+    left: 70px;
+    transform: rotate(-30deg);
+  }
 }
