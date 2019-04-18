@@ -5,6 +5,27 @@
   flex-wrap: wrap;
 }
 
+.tournament-stages__winner-and-loser-stage-container {
+  width: 1070px;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.tournament-stages__winner-stage-container {
+  margin-bottom: 75px;
+  width: 812px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.tournament-stages__loser-stage-container {
+  width: 1070px;
+  display: flex;
+  justify-content: space-between;
+}
+
 .tournament-stages__group {
   padding: 10px;
   border: 2px solid $black-color;
@@ -12,7 +33,7 @@
 
 .tournament-stages__stage-container {
   margin-bottom: 15px;
-  width: 360px;
+  width: 230px;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -35,6 +56,7 @@
 .tournament-stages__input,
 .tournament-stages__winner-input {
   padding: 5px 1px;
+  width: 100px;
   font-family: inherit;
   font-weight: 700;
   text-align: center;
@@ -46,24 +68,27 @@
   margin-top: 5px;
   width: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .tournament-stages__points {
   margin: 0;
+  width: 106px;
   font-size: 14px;
   line-height: 14px;
+  text-align: center;
+  word-wrap: break-word;
 }
 
 .tournament-stages__button {
   margin: $margin-auto;
   padding: 8px;
-  width: 150px;
+  width: 50px;
   display: flex;
   justify-content: center;
   font-size: 20px;
   border: 1px solid #c2c2c2;
-  border-radius: 25px;
+  border-radius: 50%;
   background-color: $white-color;
   cursor: pointer;
 }

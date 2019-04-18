@@ -3,8 +3,9 @@
 (function () {
   var throwsCollection = ['throw1', 'throw2', 'throw3', 'throw4', 'throw5'];
   var extraThrowCollection = ['throw4'];
-  window.participantsStage1 = [];
-  window.participantsStage2 = [];
+  window.participantsQualifyingStage = [];
+  window.participantsQuarterFinals = [];
+  window.participantsSemiFinal = [];
   window.participantsFinal = [];
   var tr = true;
 
@@ -74,8 +75,8 @@
     for (var i = 0; i < inputStg; i++) {
       var points = 0;
       if (stg1) {
-        var participantsInfo = {gameName: inputStage1[i].value};
-        participantsStage1.push(participantsInfo);
+        var participantsInfo = {gameName: qualifyingStageInput[i].value};
+        participantsQualifyingStage.push(participantsInfo);
       }
       for (var j = 0; j < maxThrows; j++) {
         var randomThrow = window.randomNumber(1, 10);
@@ -91,7 +92,7 @@
     }
   }
 
-  var getWinnersStage1 = function (inputStg, stageInfo) {
+  var getWinnersStage1  = function (inputStg, stageInfo) {
     var sortedArray = [];
     for (var i = 0; i < inputStg.length; i++) {
       if (inputStg[i].style.borderColor === 'green') {
@@ -103,7 +104,7 @@
   }
 
   var haveWinnersStageSameTotalPoints = function () {
-    var sortedArray = getWinnersStage1(inputStage1, participantsStage1);
+    var sortedArray = getWinnersStage1(qualifyingStageInput, participantsQualifyingStage);
     if (sortedArray[0].totalPoints === sortedArray[1].totalPoints) {
       for (var i = 0; i < sortedArray.length - 1; i++) {
         var points = sortedArray[i].totalPoints;
@@ -117,38 +118,37 @@
   }
 
   var distributionOfParticipants = function (sortedArray) {
-    participantsFinal = sortedArray.slice(0, 1);
-    inputStage3[0].value = participantsFinal[0].gameName;
-    if (participantsFinal[0].extraTotalPoints) {
-      throwResultsFinal[0].innerHTML = 'Набрал ' + participantsFinal[0].extraTotalPoints + '(д.о)';
+    participantsSemiFinal = sortedArray.slice(0, 1);
+    semiFinalStageInput[0].value = participantsSemiFinal[0].gameName;
+    if (participantsSemiFinal[0].extraTotalPoints) {
+      throwResultsSemiFinalStage[0].innerHTML = 'Набрал ' + participantsSemiFinal[0].extraTotalPoints + '(д.о)';
     } else {
-      throwResultsFinal[0].innerHTML = 'Набрал ' + participantsFinal[0].totalPoints + '(о)';
+      throwResultsSemiFinalStage[0].innerHTML = 'Набрал ' + participantsSemiFinal[0].totalPoints + '(о)';
     }
-    throwResultsFinal[1].innerHTML = 'Ждем соперника';
-    participantsStage2 = sortedArray.slice(1, 3);
-    for (var j = 0; j < participantsStage2.length; j++) {
-      inputStage2[j].value = participantsStage2[j].gameName;
-      if (participantsStage2[j].extraTotalPoints) {
-        throwResultsStage2[j].innerHTML = 'Набрал ' + participantsStage2[j].extraTotalPoints + '(д.о)';
+    participantsQuarterFinals = sortedArray.slice(1, 3);
+    for (var j = 0; j < participantsQuarterFinals.length; j++) {
+      quarterFinalsStageInput[j].value = participantsQuarterFinals[j].gameName;
+      if (participantsQuarterFinals[j].extraTotalPoints) {
+        throwResultsQuarterFinalsStage[j].innerHTML = 'Набрал ' + participantsQuarterFinals[j].extraTotalPoints + '(д.о)';
       } else {
-        throwResultsStage2[j].innerHTML = 'Набрал ' + participantsStage2[j].totalPoints + '(о)';
+        throwResultsQuarterFinalsStage[j].innerHTML = 'Набрал ' + participantsQuarterFinals[j].totalPoints + '(о)';
       }
     }
   }
 
-  var button1ClickFunction = function () {
-    getThreeRandomThrows(inputStage1.length, participantsStage1, throwResultsStage1, THREE_THROWS, tr);
-    rerollThrows(inputStage1.length, participantsStage1, THREE_THROWS, throwResultsStage1);
-    markWhoWon(participantsStage1, inputStage1, inputStage1.length);
+  var buttonQualifyingHandler = function () {
+    getThreeRandomThrows(qualifyingStageInput.length, participantsQualifyingStage, throwResultsQualifyingStage, THREE_THROWS, tr);
+    rerollThrows(qualifyingStageInput.length, participantsQualifyingStage, THREE_THROWS, throwResultsQualifyingStage);
+    markWhoWon(participantsQualifyingStage, qualifyingStageInput, qualifyingStageInput.length);
     distributionOfParticipants(haveWinnersStageSameTotalPoints());
-    buttonGroupStage1.disabled = true;
-    buttonGroupStage2.disabled = false;
-    buttonGroupStage1.removeEventListener('click', button1ClickFunction);
+    buttonGroupQualifying.disabled = true;
+    buttonGroupQuarterFinal.disabled = false;
+    buttonGroupQualifying.removeEventListener('click', buttonQualifyingHandler);
   }
 
-  buttonGroupStage1.addEventListener('click', button1ClickFunction);
+  buttonGroupQualifying.addEventListener('click', buttonQualifyingHandler);
 
-  window.buttonGroup1 = {
+  window.qualifyingStage = {
     throwsCollection: throwsCollection,
     tr: tr,
     threeThrows: THREE_THROWS,

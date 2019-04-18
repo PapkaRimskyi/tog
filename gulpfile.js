@@ -24,9 +24,8 @@ gulp.task('js_min', function () {
       'randomNumber.js',
       'generalInteraction.js',
       'enter-participants-popup.js',
-      'button-group1.js',
-      'button-group2.js',
-      'button-group3.js',
+      'qualifyingStage.js',
+      'winnerStage.js',
     ]))
   .pipe(concat('javascript.js'))
   .pipe(gulp.dest('build/js'))
