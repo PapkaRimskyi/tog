@@ -1,12 +1,20 @@
 'use strict';
 
 (function () {
+  var colorCollection = ['green', 'red'];
   var throwsCollection = ['throw1', 'throw2', 'throw3', 'throw4', 'throw5'];
   var extraThrowCollection = ['extraThrow'];
+  window.filterNextStage = [];
   window.participantsQualifyingStage = [];
   window.participantsQuarterFinals = [];
   window.participantsSemiFinal = [];
   window.participantsFinal = [];
+
+  window.participantsLoserLastChance = [];
+  window.participantsLoserQuarterFinals = []
+  window.participantsLoserSemiFinal = [];
+  window.participantsLoserFinal = [];
+
   var tr = true;
 
   var THREE_THROWS = 3;
@@ -58,7 +66,7 @@
     }
   }
 
-  var rerollThrows = function (groupInput, countThrows, groupData) {
+  var rerollThrows = function (groupInput, countThrows, groupData, result) {
     for (var i = 0; i < groupInput.length; i+=2) {
       var firstInput = groupData[i].totalPoints;
       var secondInput = groupData[i + 1].totalPoints;
@@ -72,6 +80,11 @@
           }
           groupData[i + j].totalPoints = points;
           points = 0;
+          if (countThrows === THREE_THROWS) {
+            result[i + j].innerHTML = groupData[i + j].throw1 + '/' + groupData[i + j].throw2 + '/' + groupData[i + j].throw3 + '=' + groupData[i + j].totalPoints + '(П)';
+          } else {
+            result[i + j].innerHTML = groupData[i + j].throw1 + '/' + groupData[i + j].throw2 + '/' + groupData[i + j].throw3 + groupData[i + j].throw4 + groupData[i + j].throw5 + '=' + groupData[i + j].totalPoints + '(П)';
+          }
         }
       }
     }
@@ -79,10 +92,12 @@
 
   var showThrowsResult = function (groupInput, countThrows, groupData, result) {
     for (var i = 0; i < groupInput.length; i++) {
-      if (countThrows === THREE_THROWS) {
-        result[i].innerHTML = groupData[i][throwsCollection[0]] + '/' + groupData[i][throwsCollection[1]] + '/' + groupData[i][throwsCollection[2]] + '=' + groupData[i].totalPoints;
-      } else {
-        result[i].innerHTML = groupData[i][throwsCollection[0]] + '/' + groupData[i][throwsCollection[1]] + '/' + groupData[i][throwsCollection[2]] + groupData[i][throwsCollection[3]] + groupData[i][throwsCollection[4]] + '=' + groupData[i].totalPoints;
+      if (result[i].textContent === '') {
+        if (countThrows === THREE_THROWS) {
+          result[i].innerHTML = groupData[i][throwsCollection[0]] + '/' + groupData[i][throwsCollection[1]] + '/' + groupData[i][throwsCollection[2]] + '=' + groupData[i].totalPoints + '(о)';
+        } else {
+          result[i].innerHTML = groupData[i][throwsCollection[0]] + '/' + groupData[i][throwsCollection[1]] + '/' + groupData[i][throwsCollection[2]] + groupData[i][throwsCollection[3]] + groupData[i][throwsCollection[4]] + '=' + groupData[i].totalPoints + '(о)';
+        }
       }
     }
     for (var j = 0; j < groupInput.length; j+=2) {
@@ -98,13 +113,61 @@
     }
   }
 
-  var buttonQualifyingHandler = function () {
-    getRandomThrows(qualifyingStageInput, THREE_THROWS);
-    rerollThrows(qualifyingStageInput, THREE_THROWS, participantsQualifyingStage);
-    showThrowsResult(qualifyingStageInput, THREE_THROWS, participantsQualifyingStage, throwResultsQualifyingStage);
+  var participantsNextStage = function (groupInput, color) {
+    filterNextStage = [];
+    for (var i = 0; i < groupInput.length; i++) {
+      if (groupInput[i].style.borderColor === color) {
+        filterNextStage.push(participantsQualifyingStage[i]);
+      }
+    }
+    filterNextStage.sort(comparisonFunction);
   }
 
-  buttonGroupQualifying.addEventListener('click', buttonQualifyingHandler);
+  var checkParticipantsOnSimilarTotalPoint = function () {
+    if (filterNextStage[0].totalPoints === filterNextStage[1].totalPoints) {
+      for (var i = 0; i < filterNextStage.length - 1; i++) {
+        var points = filterNextStage[i].totalPoints;
+        var randomThrow = window.randomNumber(1, 10);
+        filterNextStage[i].extraThrow = randomThrow;
+        filterNextStage[i].extraTotalPoint = points + filterNextStage[i].extraThrow;
+      }
+      filterNextStage.sort(comparisonExtraPoints);
+    }
+  }
+
+  var distributionOfParticipants = function (oneStageAhead, oneStageAheadInput, oneStageAheadResult, lastChance, lastChanceInput, lastChanceResult) {
+    oneStageAhead = filterNextStage.slice(0, 1);
+    oneStageAheadInput[0].value = oneStageAhead[0].gameName;
+    if (oneStageAhead[0].extraTotalPoint) {
+      oneStageAheadResult[0].innerHTML = 'Набрал ' + oneStageAhead[0].extraTotalPoint + '(д.о)';
+    } else {
+      oneStageAheadResult[0].innerHTML = 'Набрал ' + oneStageAhead[0].totalPoints + '(о)';
+    }
+    lastChance = filterNextStage.slice(1, 3);
+    for (var i = 0; i < lastChance.length; i++) {
+      lastChanceInput[i].value = lastChance[i].gameName;
+      if (lastChance[i].extraTotalPoint) {
+        lastChanceResult[i].innerHTML = 'Набрал ' + lastChance[i].extraTotalPoint + '(д.о)';
+      } else {
+        lastChanceResult[i].innerHTML = 'Набрал ' + lastChance[i].totalPoints + '(о)';
+      }
+    }
+  }
+
+  var buttonQualifyingHandler = function () {
+    getRandomThrows(qualifyingInput, THREE_THROWS);
+    rerollThrows(qualifyingInput, THREE_THROWS, participantsQualifyingStage, groupQualifyingResults);
+    showThrowsResult(qualifyingInput, THREE_THROWS, participantsQualifyingStage, groupQualifyingResults);
+    participantsNextStage(qualifyingInput, colorCollection[0]);
+    checkParticipantsOnSimilarTotalPoint();
+    distributionOfParticipants(participantsSemiFinal, winnerSemiFinalInput, winnerSemiFinalResults, participantsQuarterFinals, winnerQuarterFinalInput, winnerQuarterFinalResults);
+    participantsNextStage(qualifyingInput, colorCollection[1]);
+    checkParticipantsOnSimilarTotalPoint();
+    distributionOfParticipants(participantsLoserQuarterFinals, loserQuarterFinalInput, loserQuarterFinalResult, participantsLoserLastChance, loserLastChanceInput, loserLastChanceResult);
+    buttonQualifying.disabled = true;
+  }
+
+  buttonQualifying.addEventListener('click', buttonQualifyingHandler);
 
   // var markWhoWon = function (stageInfo, inputStg, inputStgLeight) {
   //   for (var i = 0; i < inputStgLeight; i+=2) {

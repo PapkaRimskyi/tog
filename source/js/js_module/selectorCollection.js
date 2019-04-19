@@ -16,19 +16,32 @@ var inputParticipantsList = document.querySelector('.enter-participants-popup__p
 var sendParticipantsButton = document.querySelector('.enter-participants-popup__send-participants-list');
 var form = document.querySelector('.enter-participants-popup__form');
 
-var qualifyingStageInput = document.querySelectorAll('.tournament-stages__group--qualifying-stage .tournament-stages__input');
-var quarterFinalsStageInput = document.querySelectorAll('.tournament-stages__group--quarter-finals-stage .tournament-stages__input');
-var semiFinalStageInput = document.querySelectorAll('.tournament-stages__group--semifinal-stage .tournament-stages__input');
-var finalStageInput = document.querySelectorAll('.tournament-stages__group--final-stage .tournament-stages__input');
+var qualifyingInput = document.querySelectorAll('.tournament-stages__group--qualifying-stage .tournament-stages__input');
 
-var buttonGroupQualifying = document.querySelector('.tournament-stages__button--qualifying-stage');
-var buttonGroupQuarterFinal = document.querySelector('.tournament-stages__button--quarter-finals-stage');
-var buttonGroupSemiFinal = document.querySelector('.tournament-stages__button--semifinal-stage');
+var winnerQuarterFinalInput = document.querySelectorAll('.tournament-stages__group--quarter-finals-stage .tournament-stages__input');
+var winnerSemiFinalInput = document.querySelectorAll('.tournament-stages__group--semifinal-stage .tournament-stages__input');
+var winnerFinalInput = document.querySelectorAll('.tournament-stages__group--final-stage .tournament-stages__input');
 
-var throwResultsQualifyingStage = document.querySelectorAll('.tournament-stages__group--qualifying-stage .tournament-stages__points');
-var throwResultsQuarterFinalsStage = document.querySelectorAll('.tournament-stages__group--quarter-finals-stage .tournament-stages__points');
-var throwResultsSemiFinalStage = document.querySelectorAll('.tournament-stages__group--semifinal-stage .tournament-stages__points');
-var throwResultsFinalStage = document.querySelectorAll('.tournament-stages__group--final-stage .tournament-stages__points');
+var loserLastChanceInput = document.querySelectorAll('.tournament-stages__group--last-chance-stage .tournament-stages__input');
+var loserQuarterFinalInput = document.querySelectorAll('.tournament-stages__group--loser-bracket-quarter-finals-stage .tournament-stages__input');
+var loserSemiFinalInput = document.querySelectorAll('.tournament-stages__group--loser-bracket-semifinal-stage .tournament-stages__input');
+var loserFinalInput = document.querySelectorAll('.tournament-stages__group--loser-bracket-final-stage .tournament-stages__input');
+
+var buttonQualifying = document.querySelector('.tournament-stages__button--qualifying-stage');
+
+var buttonWinnerQuarterFinal = document.querySelector('.tournament-stages__button--quarter-finals-stage');
+var buttonWinnerSemiFinal = document.querySelector('.tournament-stages__button--semifinal-stage');
+
+var groupQualifyingResults = document.querySelectorAll('.tournament-stages__group--qualifying-stage .tournament-stages__points');
+
+var winnerQuarterFinalResults = document.querySelectorAll('.tournament-stages__group--quarter-finals-stage .tournament-stages__points');
+var winnerSemiFinalResults = document.querySelectorAll('.tournament-stages__group--semifinal-stage .tournament-stages__points');
+var winnerFinalResults = document.querySelectorAll('.tournament-stages__group--final-stage .tournament-stages__points');
+
+var loserLastChanceResult = document.querySelectorAll('.tournament-stages__group--last-chance-stage .tournament-stages__points');
+var loserQuarterFinalResult = document.querySelectorAll('.tournament-stages__group--loser-bracket-quarter-finals-stage .tournament-stages__points');
+var loserSemiFinalResult = document.querySelectorAll('.tournament-stages__group--loser-bracket-semifinal-stage .tournament-stages__points');
+var loserFinalResult = document.querySelectorAll('.tournament-stages__group--loser-bracket-final-stage .tournament-stages__points');
 
 var winnerInput = document.querySelector('.tournament-stages__stage-container--winner .tournament-stages__winner-input');
 var winnerContainer = document.querySelector('.tournament-stages__stage-container--winner');

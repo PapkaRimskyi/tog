@@ -98,14 +98,14 @@
 
   var writeName = function () {
     var namesArray = takeArrayFromInput().sort(sortGameNames);
-    for (var i = 0; i < qualifyingStageInput.length; i++) {
-      qualifyingStageInput[i].value = namesArray[i];
+    for (var i = 0; i < qualifyingInput.length; i++) {
+      qualifyingInput[i].value = namesArray[i];
     }
     sendParticipantsButton.removeEventListener('click', checkForEmptyInput);
     closeParticipantsPopup();
     // musicAudio.play();
     musicAudio.volume = 0.3;
-    buttonGroupQualifying.disabled = false;
+    buttonQualifying.disabled = false;
   }
 
   var writeNameAndGifFunctionDelay = function () {
