@@ -98,14 +98,14 @@
 
   var writeName = function () {
     var namesArray = takeArrayFromInput().sort(sortGameNames);
-    for (var i = 0; i <  inputStage1.length; i++) {
-      inputStage1[i].value = namesArray[i];
+    for (var i = 0; i < qualifyingInput.length; i++) {
+      qualifyingInput[i].value = namesArray[i];
     }
     sendParticipantsButton.removeEventListener('click', checkForEmptyInput);
     closeParticipantsPopup();
     musicAudio.play();
     musicAudio.volume = 0.3;
-    buttonGroupStage1.disabled = false;
+    qualifyingButton.disabled = false;
   }
 
   var writeNameAndGifFunctionDelay = function () {
