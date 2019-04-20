@@ -27,10 +27,16 @@ var loserQuarterFinalInput = document.querySelectorAll('.tournament-stages__grou
 var loserSemiFinalInput = document.querySelectorAll('.tournament-stages__group--loser-bracket-semifinal-stage .tournament-stages__input');
 var loserFinalInput = document.querySelectorAll('.tournament-stages__group--loser-bracket-final-stage .tournament-stages__input');
 
-var buttonQualifying = document.querySelector('.tournament-stages__button--qualifying-stage');
+var qualifyingButton = document.querySelector('.tournament-stages__button--qualifying-stage');
 
-var buttonWinnerQuarterFinal = document.querySelector('.tournament-stages__button--quarter-finals-stage');
-var buttonWinnerSemiFinal = document.querySelector('.tournament-stages__button--semifinal-stage');
+var winnerQuarterFinalButton = document.querySelector('.tournament-stages__button--quarter-finals-stage');
+var winnerSemiFinalButton = document.querySelector('.tournament-stages__button--semifinal-stage');
+var winnerFinalButton = document.querySelector('.tournament-stages__button--final-stage');
+
+var loserLastChanceButton = document.querySelector('.tournament-stages__button--last-chance-stage');
+var loserQuarterFinalButton  = document.querySelector('.tournament-stages__button--loser-bracket-quarter-finals-stage');
+var loserSemiFinalButton = document.querySelector('.tournament-stages__button--loser-bracket-semifinal-stage');
+var loserFinalButton = document.querySelector('.tournament-stages__button--loser-bracket-final-stage');
 
 var groupQualifyingResults = document.querySelectorAll('.tournament-stages__group--qualifying-stage .tournament-stages__points');
 

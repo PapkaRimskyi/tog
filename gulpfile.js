@@ -26,6 +26,7 @@ gulp.task('js_min', function () {
       'enter-participants-popup.js',
       'qualifyingStage.js',
       'winnerStage.js',
+      'loserStage.js',
     ]))
   .pipe(concat('javascript.js'))
   .pipe(gulp.dest('build/js'))

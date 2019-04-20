@@ -103,9 +103,9 @@
     }
     sendParticipantsButton.removeEventListener('click', checkForEmptyInput);
     closeParticipantsPopup();
-    // musicAudio.play();
+    musicAudio.play();
     musicAudio.volume = 0.3;
-    buttonQualifying.disabled = false;
+    qualifyingButton.disabled = false;
   }
 
   var writeNameAndGifFunctionDelay = function () {
