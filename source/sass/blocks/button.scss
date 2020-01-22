@@ -1,0 +1,18 @@
+.button {
+  margin: $margin-auto;
+  padding: 10px 15px;
+  display: block;
+  background-color: #daa94e;
+  border: 2px solid transparent;
+  cursor: crosshair;
+
+  &:hover,
+  &:focus {
+    border-color: #b61156;
+  }
+
+  &:active {
+    border-color: transparent;
+    box-shadow: 1px 0 13px -2px $black-color inset;
+  }
+}

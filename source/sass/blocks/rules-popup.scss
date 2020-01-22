@@ -1,9 +1,9 @@
 .rules-popup {
   position: absolute;
-  top: 1px;
-  display: none;
+  top: 15%;
+  width: 600px;
   background-color: $white-color;
-  box-shadow: 0 9px 22.72px 9.28px rgba(27,27,27,.2);
+  box-shadow: 0 9px 22.72px 9.28px rgba(27, 27, 27, 0.2);
   z-index: 1;
 }
 

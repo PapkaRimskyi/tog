@@ -6,40 +6,52 @@
   "author": "PR",
   "license": "ISC",
   "devDependencies": {
-    "@htmlacademy/editorconfig-cli": "^1.0.0",
-    "autoprefixer": "^9.5.0",
-    "browser-sync": "^2.26.3",
-    "del": "^3.0.0",
-    "gulp": "^4.0.0",
-    "gulp-concat": "^2.6.1",
-    "gulp-csso": "^3.0.1",
-    "gulp-imagemin": "^5.0.3",
-    "gulp-order": "^1.2.0",
-    "gulp-plumber": "^1.2.1",
-    "gulp-postcss": "^8.0.0",
-    "gulp-rename": "^1.4.0",
-    "gulp-sass": "^4.0.2",
-    "gulp-uglify": "^3.0.1",
-    "gulp-webp": "^4.0.1",
-    "pump": "^3.0.0",
-    "stylelint": "^9.10.1",
-    "stylelint-config-htmlacademy": "^0.1.1",
-    "svgo": "^1.1.1"
+    "@babel/core": "7.7.7",
+    "@babel/preset-env": "7.7.7",
+    "autoprefixer": "9.7.3",
+    "babel-loader": "8.0.6",
+    "clean-webpack-plugin": "3.0.0",
+    "copy-webpack-plugin": "5.1.1",
+    "css-loader": "3.4.2",
+    "cssnano": "4.1.10",
+    "editorconfig": "0.15.3",
+    "eslint": "6.8.0",
+    "eslint-config-airbnb-base": "14.0.0",
+    "eslint-plugin-import": "2.20.0",
+    "file-loader": "5.0.2",
+    "html-webpack-plugin": "3.2.0",
+    "image-webpack-loader": "6.0.0",
+    "mini-css-extract-plugin": "0.9.0",
+    "node-sass": "4.13.0",
+    "postcss-loader": "3.0.0",
+    "resolve-url-loader": "3.1.1",
+    "sass-loader": "8.0.1",
+    "style-loader": "1.1.2",
+    "stylelint": "12.0.1",
+    "stylelint-config-recommended": "3.0.0",
+    "webpack": "4.41.5",
+    "webpack-cli": "3.3.10",
+    "webpack-dev-server": "3.10.1"
   },
   "scripts": {
-    "editorconfig": "editorconfig-cli",
+    "editorconfig": "editorconfig",
     "stylelint": "stylelint \"source/sass/**/*.scss\" --syntax scss",
-    "test": "npm run editorconfig && npm run stylelint",
-    "build": "gulp build",
-    "start": "gulp start"
+    "eslint": "eslint source/**/*.js",
+    "check": "npm run editorconfig && npm run stylelint && npm run eslint",
+    "build": "webpack --mode production",
+    "dev": "webpack-dev-server --mode development"
   },
-  "editorconfig-cli": [
+  "editorconfig": [
     "*.json",
     "*.js",
     "source/*.html",
     "source/js/**/*.js",
     "source/img/**/*.svg",
     "source/sass/**/*.{sass,scss}"
+  ],
+  "browserslist": [
+    "> 1%",
+    "last 3 version"
   ],
   "repository": {
     "type": "git",
@@ -48,5 +60,6 @@
   "bugs": {
     "url": "https://github.com/PapkaRimskyi/tog/issues"
   },
-  "homepage": "https://github.com/PapkaRimskyi/tog#readme"
+  "homepage": "https://github.com/PapkaRimskyi/tog#readme",
+  "dependencies": {}
 }

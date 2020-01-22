@@ -1,11 +1,10 @@
 .enter-participants-popup {
   position: absolute;
   top: 1px;
-  left: 24%;
+  top: 15%;
   width: 518px;
-  display: none;
   background-color: $white-color;
-  box-shadow: 0 9px 22.72px 9.28px rgba(27,27,27,.2);
+  box-shadow: 0 9px 22.72px 9.28px rgba(27, 27, 27, 0.2);
   z-index: 1;
 }
 
@@ -35,6 +34,7 @@
   background-color: #d6d6cf;
   box-sizing: border-box;
 }
+
 .enter-participants-popup__participants-list,
 .enter-participants-popup__participants-list::placeholder {
   padding: 0 5px;

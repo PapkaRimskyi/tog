@@ -1,0 +1,31 @@
+.stage-1 {
+  &__headline {
+    margin-top: 0;
+    padding: 0 10px;
+    min-width: 50px;
+    text-align: center;
+    text-decoration: underline;
+
+    &-name {
+      position: relative;
+    }
+  }
+
+  &__table {
+    margin: $margin-auto;
+    margin-bottom: 10px;
+    min-width: 250px;
+    border: 1px solid $black-color;
+    border-spacing: inherit;
+
+    tr td {
+      border: 1px solid $black-color;
+    }
+  }
+
+  &__participant {
+    margin: 0 0 5px 0;
+    padding: 5px 0;
+    text-align: center;
+  }
+}

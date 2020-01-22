@@ -1,0 +1,11 @@
+.stage-tip {
+  position: absolute;
+  top: -14px;
+  text-decoration: none;
+  color: $black-color;
+
+  &:hover,
+  &:focus {
+    opacity: .2;
+  }
+}

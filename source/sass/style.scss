@@ -1,4 +1,6 @@
 @import "variables.scss";
+@import "blocks/button.scss";
+@import "blocks/stage-tip.scss";
 @import "blocks/rules-popup.scss";
 @import "blocks/music.scss";
 @import "blocks/enter-participants-popup.scss";
@@ -9,6 +11,6 @@
 @import "blocks/header-nav.scss";
 @import "blocks/participants.scss";
 @import "blocks/tog-main.scss";
-@import "blocks/tournament-stages.scss";
-@import "blocks/tog-footer.scss";
+@import "blocks/tournament.scss";
+@import "blocks/stage-1.scss";
 @import "blocks/copyright.scss";

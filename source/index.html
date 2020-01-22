@@ -5,235 +5,81 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Tournament of Games</title>
-  <link href="fonts/CeraStencilPRO-Light.woff" rel="preload" as="font">
-  <link href="fonts/CeraStencilPRO-Regular.woff" rel="preload" as="font">
-  <link href="fonts/CeraStencilPRO-Bold.woff" rel="preload" as="font">
-  <link href="css/style-min.css" rel="stylesheet">
+  <link href="assets/fonts/CeraStencilPRO-Light.woff" rel="preload" as="font" crossorigin="anonymous">
+  <link href="assets/fonts/CeraStencilPRO-Regular.woff" rel="preload" as="font" crossorigin="anonymous">
+  <link href="assets/fonts/CeraStencilPRO-Bold.woff" rel="preload" as="font" crossorigin="anonymous">
+  <link href="assets/css/style.css" rel="stylesheet" crossorigin="anonymous">
 </head>
 
 <body>
-  <header class="tog-header">
-    <h1 class="tog-header__title">Tournament of Games</h1>
-    <div class="tog-header__container">
-      <section class="time-and-data">
-        <h2 class="visually-hidden">Дата и время</h2>
-        <p class="time-and-data__info">
-          <span class="time-and-data__info time-and-data__info--date">Дата</span>/<span class="time-and-data__info time-and-data__info--time">время</span>
-        </p>
-      </section>
-      <nav class="header-nav header-nav--margin-left">
-        <ul class="header-nav__list">
-          <li class="header-nav__item">
-            <a class="header-nav__link rules-js" href="#">Правила</a>
-          </li>
-          <li class="header-nav__item">
-            <a class="header-nav__link audio-player" href="#">Плеер</a>
-            <section class="music">
-              <h2 class="visually-hidden">Раздел с музыкой</h2>
-              <audio class="music__audio" src="music/fort-boyard.mp3" controls></audio>
-            </section>
-          </li>
-          <li class="header-nav__item">
-            <a class="header-nav__link" href="#">История победителей</a>
-          </li>
-          <li class="header-nav__item">
-            <a class="header-nav__link" href="#">Гороскоп</a>
-          </li>
-        </ul>
-      </nav>
-      <section class="participants">
-        <h2 class="visually-hidden">Добавить участников</h2>
-        <a class="participants__link participants-js" href="#">Вписать участников</a>
-      </section>
-      <section class="rules-popup">
-        <h2 class="visually-hidden">Окно со списком правил</h2>
-        <div class="rules-popup__container">
-          <a class="popup__close rules-close" href="#">
-            <svg class="popup__close-svg" xmlns="http://www.w3.org/2000/svg" width="34.31" height="38.25" viewBox="0 0 35 39" fill="none" stroke="#242424" stroke-width="2">
-              <path d="M.99 35.94L31.77 1.02m-29.24 0L33.3 35.94"/>
-            </svg>
-          </a>
-          <h2 class="rules-popup__headline">Список правил</h2>
-          <ol class="rules-popup__list">
-            <li class="rules-popup__item">
-              <p class="rules-popup__text">Если вас 3 - по 2 игры от каждого.<br> ИЛИ <br> Если вас 2 - по 3 игры от каждого.</p>
-            </li>
-            <li class="rules-popup__item">
-              <p class="rules-popup__text">Рандом определяет участников.</p>
-            </li>
-            <li class="rules-popup__item">
-              <p class="rules-popup__text">Числа рандомятся 3 раза, но в финале 5 раз.</p>
-            </li>
-            <li class="rules-popup__item">
-              <p class="rules-popup__text">Игра, занявшая первое место, побеждает в турнире. Условие игрЫ в Игры, которые займут 2 и 3 место обговариваются ДО начала турнира.</p>
-            </li>
-            <li class="rules-popup__item">
-              <p class="rules-popup__text">Мошнить на победителя нельзя (кроме DBD и R6). Придется играть.</p>
-            </li>
-            <li class="rules-popup__item">
-              <p class="rules-popup__text">Если среди 3 победителей групповой стадии у двоих окажется одинаковое количество очков (пример - первое и второе место), то будет осуществлен 4 бросок (д.о) и на его основе решится, кто проходит в финал.</p>
-            </li>
-          </ol>
-        </div>
-      </section>
-      <section class="enter-participants-popup">
-        <h2 class="visually-hidden">Окно для добавления участников</h2>
-        <div class="enter-participants-popup__container">
-          <a class="popup__close participants-close" href="#">
-            <svg class="popup__close-svg" xmlns="http://www.w3.org/2000/svg" width="34.31" height="38.25" viewBox="0 0 35 39" fill="none" stroke="#242424" stroke-width="2">
-              <path d="M.99 35.94L31.77 1.02m-29.24 0L33.3 35.94"/>
-            </svg>
-          </a>
-          <h2 class="enter-participants-popup__headline">Хотите вписать участников турнира?</h2>
-          <form class="enter-participants-popup__form" action="localhost:3000" method="post" enctype="multipart/form-data">
-            <input class="enter-participants-popup__participants-list" type="text" name="games" placeholder="Список игр">
-            <button class="enter-participants-popup__send-participants-list" type="submit" disabled>Отправить!</button>
-          </form>
-        </div>
-      </section>
-    </div>
-  </header>
+  <!--Place for header-->
   <main class="tog-main">
-    <section class="tournament-stages">
-      <h2 class="visually-hidden">Групповые этапы</h2>
-      <section class="tournament-stages__group tournament-stages__group--qualifying-stage">
-        <h2 class="visually-hidden">Отборочный этап</h2>
-        <div class="tournament-stages__stage-container">
-          <input class="tournament-stages__input" disabled>
-          <input class="tournament-stages__input" disabled>
-          <div class="tournament-stages__points-container">
-            <p class="tournament-stages__points"></p>
-            <p class="tournament-stages__points"></p>
-          </div>
-        </div>
-        <div class="tournament-stages__stage-container">
-          <input class="tournament-stages__input" disabled>
-          <input class="tournament-stages__input" disabled>
-          <div class="tournament-stages__points-container">
-            <p class="tournament-stages__points"></p>
-            <p class="tournament-stages__points"></p>
-          </div>
-        </div>
-        <div class="tournament-stages__stage-container">
-          <input class="tournament-stages__input" disabled>
-          <input class="tournament-stages__input" disabled>
-          <div class="tournament-stages__points-container">
-            <p class="tournament-stages__points"></p>
-            <p class="tournament-stages__points"></p>
-          </div>
-        </div>
-        <button class="tournament-stages__button tournament-stages__button--qualifying-stage" type="button" disabled>Go
-        <se</button>
-      </section>
-      <div class="tournament-stages__winner-and-loser-stage-container">
-        <section class="tournament-stages__winner-stage-container">
-          <h2 class="visually-hidden">Верхняя сетка</h2>
-          <section class="tournament-stages__group tournament-stages__group--quarter-finals-stage">
-            <h2 class="visually-hidden">Четвертьфинал</h2>
-            <div class="tournament-stages__stage-container">
-              <input class="tournament-stages__input" disabled>
-              <input class="tournament-stages__input" disabled>
-              <div class="tournament-stages__points-container">
-                <p class="tournament-stages__points"></p>
-                <p class="tournament-stages__points"></p>
-              </div>
-            </div>
-            <button class="tournament-stages__button tournament-stages__button--quarter-finals-stage" type="button" disabled>Go</button>
-          </section>
-          <section class="tournament-stages__group tournament-stages__group--semifinal-stage">
-            <h2 class="visually-hidden">Полуфинал</h2>
-            <div class="tournament-stages__stage-container">
-              <input class="tournament-stages__input" disabled>
-              <input class="tournament-stages__input" disabled>
-              <div class="tournament-stages__points-container">
-                <p class="tournament-stages__points"></p>
-                <p class="tournament-stages__points"></p>
-              </div>
-            </div>
-            <button class="tournament-stages__button tournament-stages__button--semifinal-stage" type="button" disabled>Go</button>
-          </section>
-        </section>
-        <section class="tournament-stages__loser-stage-container">
-          <h2 class="visually-hidden">Нижняя сетка</h2>
-          <section class="tournament-stages__group tournament-stages__group--last-chance-stage">
-            <h2 class="visually-hidden">Последний шанс!</h2>
-            <div class="tournament-stages__stage-container">
-              <input class="tournament-stages__input" disabled>
-              <input class="tournament-stages__input" disabled>
-              <div class="tournament-stages__points-container">
-                <p class="tournament-stages__points"></p>
-                <p class="tournament-stages__points"></p>
-              </div>
-            </div>
-            <button class="tournament-stages__button tournament-stages__button--last-chance-stage" type="button" disabled>Go</button>
-          </section>
-          <section class="tournament-stages__group tournament-stages__group--loser-bracket-quarter-finals-stage">
-            <h2 class="visually-hidden">Четвертьфинал нижней сетки.</h2>
-            <div class="tournament-stages__stage-container">
-              <input class="tournament-stages__input" disabled>
-              <input class="tournament-stages__input" disabled>
-              <div class="tournament-stages__points-container">
-                <p class="tournament-stages__points"></p>
-                <p class="tournament-stages__points"></p>
-              </div>
-            </div>
-            <button class="tournament-stages__button tournament-stages__button--loser-bracket-quarter-finals-stage" type="button" disabled>Go</button>
-          </section>
-          <section class="tournament-stages__group tournament-stages__group--loser-bracket-semifinal-stage">
-            <h2 class="visually-hidden">Полуфинал нижней сетки.</h2>
-            <div class="tournament-stages__stage-container">
-              <input class="tournament-stages__input" disabled>
-              <input class="tournament-stages__input" disabled>
-              <div class="tournament-stages__points-container">
-                <p class="tournament-stages__points"></p>
-                <p class="tournament-stages__points"></p>
-              </div>
-            </div>
-            <button class="tournament-stages__button tournament-stages__button--loser-bracket-semifinal-stage" type="button" disabled>Go</button>
-          </section>
-          <section class="tournament-stages__group tournament-stages__group--loser-bracket-final-stage">
-            <h2 class="visually-hidden">Финал нижней сетки.</h2>
-            <div class="tournament-stages__stage-container">
-              <input class="tournament-stages__input" disabled>
-              <input class="tournament-stages__input" disabled>
-              <div class="tournament-stages__points-container">
-                <p class="tournament-stages__points"></p>
-                <p class="tournament-stages__points"></p>
-              </div>
-            </div>
-            <button class="tournament-stages__button tournament-stages__button--loser-bracket-final-stage" type="button" disabled>Go</button>
-          </section>
-        </section>
-      </div>
-      <section class="tournament-stages__group tournament-stages__group--final-stage">
-        <h2 class="visually-hidden">Финал!</h2>
-        <div class="tournament-stages__stage-container">
-          <input class="tournament-stages__input" disabled>
-          <input class="tournament-stages__input" disabled>
-          <div class="tournament-stages__points-container">
-            <p class="tournament-stages__points"></p>
-            <p class="tournament-stages__points"></p>
-          </div>
-        </div>
-        <button class="tournament-stages__button tournament-stages__button--final-stage" type="button" disabled>Go</button>
-        <div class="tournament-stages__stage-container tournament-stages__stage-container--winner">
-          <p class="tournament-stages__the-winner">Победитель!</p>
-          <input class="tournament-stages__winner-input" disabled>
-          <svg class="tournament-stages__crown" width="50" height="50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 90" fill="#D4AF37">
-            <path d="M72.771 30.157a1.7 1.7 0 0 0-1.965.092l-14.07 11.014-8.97-10.764c-.646-.773-1.966-.775-2.611.002l-8.967 10.762-14.074-11.014a1.698 1.698 0 1 0-2.702 1.73l5.972 25.209c.112 3.973 3.379 7.17 7.379 7.17h27.395c3.999 0 7.266-3.197 7.378-7.17l5.973-25.209a1.698 1.698 0 0 0-.738-1.822zm-8.586 26.43a1.77 1.77 0 0 0-.045.391 3.985 3.985 0 0 1-3.981 3.98H32.764a3.985 3.985 0 0 1-3.982-3.98c0-.131-.016-.264-.046-.391L23.84 35.915l11.551 9.039c.724.57 1.767.457 2.354-.25l8.716-10.461 8.719 10.463a1.699 1.699 0 0 0 2.354.248l11.549-9.039-4.898 20.672z"/>
-            <path d="M45.257 45.929a1.712 1.712 0 0 0-.493 1.189c0 .459.17.902.493 1.209.322.322.748.49 1.207.49.441 0 .884-.168 1.207-.49.305-.307.492-.75.492-1.209 0-.441-.188-.883-.492-1.189-.63-.629-1.803-.629-2.414 0z"/>
-          </svg>
-        </div>
-      </section>
+    <section class="tournament stage-1">
+      <h1 class="stage-1__headline">
+        <span class="stage-1__headline-name">
+          Групповой этап
+          <a href="#" class="stage-tip">⚑</a>
+        </span>
+      </h1>
+      <table class="stage-1__table">
+        <tr>
+          <td>
+            <p class="stage-1__participant stage-1__participant--name">test</p>
+          </td>
+          <td>
+            <p class="stage-1__participant stage-1__participant--points">test</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p class="stage-1__participant stage-1__participant--name">test</p>
+          </td>
+          <td>
+            <p class="stage-1__participant stage-1__participant--points">test</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p class="stage-1__participant stage-1__participant--name">test</p>
+          </td>
+          <td>
+            <p class="stage-1__participant stage-1__participant--points">test</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p class="stage-1__participant stage-1__participant--name">test</p>
+          </td>
+          <td>
+            <p class="stage-1__participant stage-1__participant--points">test</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p class="stage-1__participant stage-1__participant--name">test</p>
+          </td>
+          <td>
+            <p class="stage-1__participant stage-1__participant--points">test</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p class="stage-1__participant stage-1__participant--name">test</p>
+          </td>
+          <td>
+            <p class="stage-1__participant stage-1__participant--points">test</p>
+          </td>
+        </tr>
+      </table>
+      <button class="button stage-1__button" type="button">1 бросок</button>
     </section>
+    <!--Place for stages-->
+    <!-- <svg class="tournament-stages__crown" width="50" height="50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 90" fill="#D4AF37">
+    <path d="M72.771 30.157a1.7 1.7 0 0 0-1.965.092l-14.07 11.014-8.97-10.764c-.646-.773-1.966-.775-2.611.002l-8.967 10.762-14.074-11.014a1.698 1.698 0 1 0-2.702 1.73l5.972 25.209c.112 3.973 3.379 7.17 7.379 7.17h27.395c3.999 0 7.266-3.197 7.378-7.17l5.973-25.209a1.698 1.698 0 0 0-.738-1.822zm-8.586 26.43a1.77 1.77 0 0 0-.045.391 3.985 3.985 0 0 1-3.981 3.98H32.764a3.985 3.985 0 0 1-3.982-3.98c0-.131-.016-.264-.046-.391L23.84 35.915l11.551 9.039c.724.57 1.767.457 2.354-.25l8.716-10.461 8.719 10.463a1.699 1.699 0 0 0 2.354.248l11.549-9.039-4.898 20.672z"/>
+    <path d="M45.257 45.929a1.712 1.712 0 0 0-.493 1.189c0 .459.17.902.493 1.209.322.322.748.49 1.207.49.441 0 .884-.168 1.207-.49.305-.307.492-.75.492-1.209 0-.441-.188-.883-.492-1.189-.63-.629-1.803-.629-2.414 0z"/>
+  </svg> -->
   </main>
-  <footer class="tog-footer">
-    <section class="copyright">
-      <h2 class="visually-hidden">Остальная информация</h2>
-      <p class="copyright__text">Придумано компанией ЛГД в 2019 году. Все права защищены &#169;.</p>
-    </section>
-  </footer>
-  <script src="js/javascript.js"></script>
+  <script src="assets/js/main.js"></script>
 </body>
 
 </html>
