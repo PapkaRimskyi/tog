@@ -1,6 +1,6 @@
 import '../sass/style.scss';
-import MainController from './controllers/main-controller.js';
+import FirstOrderController from './controllers/first-order-controller.js';
 
-const mainController = new MainController();
+const firstOrderController = new FirstOrderController();
 
-mainController.render();
+firstOrderController.render();

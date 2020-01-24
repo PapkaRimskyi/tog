@@ -1,11 +1,11 @@
-import Header from '../components/header-components/header.js';
-import RulesPopup from '../components/header-components/rules-popup.js';
-import Music from '../components/header-components/music-tab.js';
-import ParticipantsPopup from '../components/header-components/participants-popup.js';
+import Header from '../../components/header-components/header.js';
+import RulesPopup from '../../components/header-components/rules-popup.js';
+import Music from '../../components/header-components/music-tab.js';
+import ParticipantsPopup from '../../components/header-components/participants-popup.js';
 
-import DateTime from '../support-classes/date-time-class.js';
+import DateTime from '../../support-classes/date-time-class.js';
 
-import { renderMarkup } from '../utils.js';
+import { renderMarkup } from '../../utils.js';
 
 export default class HeaderController {
   constructor() {
