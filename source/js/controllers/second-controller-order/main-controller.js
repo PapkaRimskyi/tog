@@ -14,6 +14,7 @@ export default class MainController {
 
     this.stageTipHoverHandler = this.stageTipHoverHandler.bind(this);
     this.stageTipHoverOutHandler = this.stageTipHoverOutHandler.bind(this);
+    this.stage1ButtonHandler = this.stage1ButtonHandler.bind(this);
   }
 
   render(participantsList) {
@@ -21,6 +22,20 @@ export default class MainController {
     renderMarkup(this.mainTag, this.stage1, `beforeend`);
     this.stageTip = this.stage1.getElement().querySelector(`.stage-tip`);
     this.stage1.stageTipInteraction(this.stageTipHoverHandler, this.stageTipHoverOutHandler);
+    this.stage1.stage1ButtonInteraction(this.stage1ButtonHandler);
+  }
+
+  stage1ButtonHandler(participantsList) {
+    this.stage1.throwCube(participantsList);
+    for (let i = 0; i < this.stage1.cellNames.length; i++) {
+      this.stage1.cellNames[i].textContent = participantsList[i].name;
+      this.stage1.cellPoints[i].textContent = participantsList[i].points;
+    }
+    if (this.stage1.launchCount !== this.stage1.MAX_LAUNCH_COUNT) {
+      this.stage1.stage1Button.textContent = `${this.stage1.launchCount + 1} бросок`;
+    } else {
+      this.stage1.stage1Button.textContent = `Второй этап`;
+    }
   }
 
   stageTipHoverHandler(evt) {

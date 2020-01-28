@@ -1,4 +1,4 @@
-import AbstractClass from '../../support-classes/abstract-class.js';
+import ParticipantsListMethods from '../../support-classes/participants-list-methods.js';
 
 const stage1Markup = (participantsList) => `<section class="tournament stage-1">
   <h1 class="stage-1__headline">
@@ -23,10 +23,18 @@ const stage1Markup = (participantsList) => `<section class="tournament stage-1">
 </section>
 `;
 
-export default class Stage1 extends AbstractClass {
+export default class Stage1 extends ParticipantsListMethods {
   constructor(list) {
     super();
     this.list = list;
+    //info cells
+    this.cellNames = this.getElement().querySelectorAll(`.stage-1__participant--name`);
+    this.cellPoints = this.getElement().querySelectorAll(`.stage-1__participant--points`);
+    //stage button
+    this.stage1Button = this.getElement().querySelector(`.stage-1__button`);
+    //variables for throws
+    this.MAX_LAUNCH_COUNT = 3;
+    this.launchCount = 0;
   }
 
   getTemplate() {
@@ -39,6 +47,13 @@ export default class Stage1 extends AbstractClass {
       const tipFlag = this.getElement().querySelector(`.stage-tip`);
       handlerIn(evt);
       tipFlag.addEventListener(`mouseout`, handlerOut);
+    });
+  }
+
+  stage1ButtonInteraction(handler) {
+    this.getElement().querySelector(`.stage-1__button`).addEventListener(`click`, (evt) => {
+      evt.preventDefault();
+      handler(this.list);
     });
   }
 }
