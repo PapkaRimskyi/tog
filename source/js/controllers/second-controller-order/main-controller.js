@@ -6,22 +6,24 @@ import { renderMarkup } from '../../utils.js';
 export default class MainController {
   constructor() {
     this.mainTag = document.querySelector(`.tog-main`);
-    this.stage1 = new Stage1();
+
+    this.stage1 = null;
     this.tipInfo = new TipInfo();
 
     this.stageTip = null;
 
-    this.stageHoverHandler = this.stageHoverHandler.bind(this);
-    this.stageHoverOutHandler = this.stageHoverOutHandler.bind(this);
+    this.stageTipHoverHandler = this.stageTipHoverHandler.bind(this);
+    this.stageTipHoverOutHandler = this.stageTipHoverOutHandler.bind(this);
   }
 
-  render() {
+  render(participantsList) {
+    this.stage1 = new Stage1(participantsList);
     renderMarkup(this.mainTag, this.stage1, `beforeend`);
     this.stageTip = this.stage1.getElement().querySelector(`.stage-tip`);
-    this.stage1.stageTipInteraction(this.stageHoverHandler, this.stageHoverOutHandler);
+    this.stage1.stageTipInteraction(this.stageTipHoverHandler, this.stageTipHoverOutHandler);
   }
 
-  stageHoverHandler(evt) {
+  stageTipHoverHandler(evt) {
     let stageContainer = evt.target;
     let stageLvlTip = null;
     while (!stageContainer.classList.contains(`stage-1`)) {
@@ -45,11 +47,11 @@ export default class MainController {
     this.stageTip.append(paragraphMarkup);
   }
 
-  stageHoverOutHandler() {
+  stageTipHoverOutHandler() {
     for (let child of this.stageTip.children) {
       child.remove();
     }
-    this.stageTip.removeEventListener(`mouseover`, this.stageHoverHandler);
-    this.stageTip.removeEventListener(`mouseout`, this.stageHoverOutHandler);
+    this.stageTip.removeEventListener(`mouseover`, this.stageTipHoverHandler);
+    this.stageTip.removeEventListener(`mouseout`, this.stageTipHoverOutHandler);
   }
 }

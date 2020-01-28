@@ -8,13 +8,16 @@ import DateTime from '../../support-classes/date-time-class.js';
 import { renderMarkup } from '../../utils.js';
 
 export default class HeaderController {
-  constructor() {
+  constructor(mainControlllerInstance) {
+    //main html component
     this.headerComponent = new Header();
-
+    //main controller instance
+    this.mainControllerInstance = mainControlllerInstance;
+    //popups component
     this.participantsPopup = new ParticipantsPopup();
     this.rulesPopup = new RulesPopup();
     this.music = new Music();
-
+    //other values
     this.documentBody = document.body;
     this.header = null;
 
@@ -22,9 +25,11 @@ export default class HeaderController {
       date: null,
       time: null,
     }
-
+    //popup map collection
     this.popupCollection = null;
+    //functions bind by this context
     this.headerHandler = this.headerHandler.bind(this);
+    this.sendParticipantsHandler = this.sendParticipantsHandler.bind(this);
   }
 
   render() {
@@ -32,7 +37,7 @@ export default class HeaderController {
     this.header = this.documentBody.querySelector(`.tog-header`);
     this.popupCollection = new Map([[`.rules-js`, this.rulesPopup], [`.audio-player`, this.music], [`.participants-js`, this.participantsPopup]]);
     this.headerComponent.headerDelegation(this.headerHandler);
-    this.updateTime();
+    this._updateTime();
   }
 
   headerHandler(pressedTarget) {
@@ -46,6 +51,10 @@ export default class HeaderController {
             this._closeAllPopup();
             renderMarkup(this.header, currentTarget, `beforeend`);
             currentTarget.closePopupByCrossButton(this.crossButtonHandler);
+            if (currentTarget.submitForm) {
+              currentTarget.inputValidation();
+              currentTarget.submitForm(this.sendParticipantsHandler);
+            }
             this._setPopupCoord(`.${currentTarget.getElement().className}`);
           } else {
             renderMarkup(pressedTarget.parentNode, currentTarget, `beforeend`);
@@ -56,6 +65,10 @@ export default class HeaderController {
         }
       }
     }
+  }
+
+  sendParticipantsHandler(list) {
+    this.mainControllerInstance.render(list);
   }
 
   _setPopupCoord(popupClassName, withTop = false) {
@@ -80,7 +93,7 @@ export default class HeaderController {
     context.deleteElement();
   }
 
-  updateTime() {
+  _updateTime() {
     this.timeData.date = this.headerComponent.getElement().querySelector(`.time-and-data__info--date`);
     this.timeData.time = this.headerComponent.getElement().querySelector(`.time-and-data__info--time`);
     const dateTimeInstance = new DateTime();

@@ -1,73 +1,36 @@
 import AbstractClass from '../../support-classes/abstract-class.js';
 
-const stage1Markup = () => `<section class="tournament stage-1">
-<h1 class="stage-1__headline">
-  <span class="stage-1__headline-name">
-    Групповой этап
-    <a href="#" class="stage-tip">⚑</a>
-  </span>
-</h1>
-<table class="stage-1__table">
-  <tr>
+const stage1Markup = (participantsList) => `<section class="tournament stage-1">
+  <h1 class="stage-1__headline">
+    <span class="stage-1__headline-name">
+      Групповой этап
+      <a href="#" class="stage-tip">⚑</a>
+    </span>
+  </h1>
+  <table class="stage-1__table">
+  ${participantsList.map((participant) => {
+    return `<tr>
     <td>
-      <p class="stage-1__participant stage-1__participant--name">test</p>
+      <p class="stage-1__participant stage-1__participant--name">${participant.name}</p>
     </td>
     <td>
-      <p class="stage-1__participant stage-1__participant--points">test</p>
+      <p class="stage-1__participant stage-1__participant--points">${participant.points}</p>
     </td>
-  </tr>
-  <tr>
-    <td>
-      <p class="stage-1__participant stage-1__participant--name">test</p>
-    </td>
-    <td>
-      <p class="stage-1__participant stage-1__participant--points">test</p>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <p class="stage-1__participant stage-1__participant--name">test</p>
-    </td>
-    <td>
-      <p class="stage-1__participant stage-1__participant--points">test</p>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <p class="stage-1__participant stage-1__participant--name">test</p>
-    </td>
-    <td>
-      <p class="stage-1__participant stage-1__participant--points">test</p>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <p class="stage-1__participant stage-1__participant--name">test</p>
-    </td>
-    <td>
-      <p class="stage-1__participant stage-1__participant--points">test</p>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <p class="stage-1__participant stage-1__participant--name">test</p>
-    </td>
-    <td>
-      <p class="stage-1__participant stage-1__participant--points">test</p>
-    </td>
-  </tr>
-</table>
-<button class="button stage-1__button" type="button">1 бросок</button>
+  </tr>`;
+  }).join(``)}
+  </table>
+  <button class="button stage-1__button" type="button">1 бросок</button>
 </section>
 `;
 
 export default class Stage1 extends AbstractClass {
-  constructor() {
+  constructor(list) {
     super();
+    this.list = list;
   }
 
   getTemplate() {
-    return stage1Markup();
+    return stage1Markup(this.list);
   }
 
   stageTipInteraction(handlerIn, handlerOut) {

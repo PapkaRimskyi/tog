@@ -1,4 +1,4 @@
-import AbstractClass from '../../support-classes/abstract-class.js';
+import CrossButton from '../../support-classes/cross-button-class.js';
 
 const rulesMarkup = () => `<section class="rules-popup">
 <h2 class="visually-hidden">Окно со списком правил</h2>
@@ -30,20 +30,12 @@ const rulesMarkup = () => `<section class="rules-popup">
 </section>
 `;
 
-export default class RulesPopup extends AbstractClass {
+export default class RulesPopup extends CrossButton {
   constructor() {
     super();
   }
 
   getTemplate() {
     return rulesMarkup();
-  }
-
-  closePopupByCrossButton(handler) {
-    this.getElement().querySelector(`.popup__close`).addEventListener(`click`, (evt) => {
-      evt.preventDefault();
-      handler(this);
-      this.getElement().querySelector(`.popup__close`).removeEventListener(`click`, handler);
-    });
   }
 }
