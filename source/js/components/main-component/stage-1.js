@@ -27,18 +27,24 @@ export default class Stage1 extends ParticipantsListMethods {
   constructor(list) {
     super();
     this.list = list;
-    //info cells
+
     this.cellNames = this.getElement().querySelectorAll(`.stage-1__participant--name`);
     this.cellPoints = this.getElement().querySelectorAll(`.stage-1__participant--points`);
-    //stage button
     this.stage1Button = this.getElement().querySelector(`.stage-1__button`);
-    //variables for throws
+
     this.MAX_LAUNCH_COUNT = 3;
     this.launchCount = 0;
   }
 
   getTemplate() {
     return stage1Markup(this.list);
+  }
+
+  getLaunchAndMaxLaunchCount() {
+    return {
+      maxLaunchCount: this.MAX_LAUNCH_COUNT,
+      launchCount: this.launchCount,
+    }
   }
 
   stageTipInteraction(handlerIn, handlerOut) {
@@ -53,7 +59,7 @@ export default class Stage1 extends ParticipantsListMethods {
   stage1ButtonInteraction(handler) {
     this.getElement().querySelector(`.stage-1__button`).addEventListener(`click`, (evt) => {
       evt.preventDefault();
-      handler(this.list);
+      handler(this.list, this.stage1Button);
     });
   }
 }

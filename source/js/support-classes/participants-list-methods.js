@@ -27,4 +27,13 @@ export default class ParticipantsListMethods extends AbstractClass {
       }
     });
   }
+
+  getCellCollection(cellType) {
+    switch (cellType) {
+      case `cellNames`:
+        return this.cellNames;
+      case `cellPoints`:
+        return this.cellPoints;
+    }
+  }
 }
