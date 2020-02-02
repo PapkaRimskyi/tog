@@ -1,0 +1,26 @@
+.one-v-one {
+  margin: $margin-auto;
+  width: 600px;
+  display: flex;
+  justify-content: center;
+
+  &__participant {
+    margin: 10px 0;
+    padding: 0 10px;
+    width: 500px;
+    box-sizing: border-box;
+
+    &-info {
+      border-bottom: 1px solid black;
+    }
+
+    &-name,
+    &-points,
+    &-stage-result {
+      margin-top: 0;
+      padding: 0 25px;
+      text-align: center;
+    }
+  }
+}
+

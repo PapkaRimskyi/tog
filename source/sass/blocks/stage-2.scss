@@ -1,0 +1,14 @@
+.stage-2 {
+  &__headline {
+    margin-top: 0;
+    padding: 0 10px;
+    min-width: 50px;
+    text-align: center;
+    text-decoration: underline;
+    color: rgb(21, 8, 201);
+
+    &-name {
+      position: relative;
+    }
+  }
+}

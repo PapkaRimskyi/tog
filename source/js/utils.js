@@ -4,13 +4,21 @@ export const createDomElement = (markup) => {
   return element.firstChild;
 }
 
-export const renderMarkup = (container, domElement, where) => {
+export const renderMarkup = (container, domElement, where, withoutGetElement = false) => {
   switch (where) {
     case INSERT_POSITION.AFTER:
-      container.prepend(domElement.getElement());
+      if (withoutGetElement) {
+        container.prepend(createDomElement(domElement));
+      } else {
+        container.prepend(domElement.getElement());
+      }
       break;
     case INSERT_POSITION.BEFORE:
-      container.append(domElement.getElement());
+      if (withoutGetElement) {
+        container.append(createDomElement(domElement));
+      } else {
+        container.append(domElement.getElement());
+      }
       break;
   }
 }

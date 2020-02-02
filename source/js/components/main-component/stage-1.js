@@ -1,4 +1,4 @@
-import ParticipantsListMethods from '../../support-classes/participants-list-methods.js';
+import StageTip from '../../support-classes/stage-tip.js';
 
 const stage1Markup = (participantsList) => `<section class="tournament stage-1">
   <h1 class="stage-1__headline">
@@ -23,43 +23,30 @@ const stage1Markup = (participantsList) => `<section class="tournament stage-1">
 </section>
 `;
 
-export default class Stage1 extends ParticipantsListMethods {
+export default class Stage1 extends StageTip {
   constructor(list) {
     super();
     this.list = list;
 
+    this.stageTip = this.getElement().querySelector(`.stage-tip`);
     this.cellNames = this.getElement().querySelectorAll(`.stage-1__participant--name`);
     this.cellPoints = this.getElement().querySelectorAll(`.stage-1__participant--points`);
     this.stage1Button = this.getElement().querySelector(`.stage-1__button`);
 
-    this.MAX_LAUNCH_COUNT = 3;
-    this.launchCount = 0;
+    this.LAUNCH_COUNT_LESS_THAN = 4;
+    this.launchCount = 1;
+
+    this.stageTipInteraction = this.stageTipInteraction.bind(this);
   }
 
   getTemplate() {
     return stage1Markup(this.list);
   }
 
-  getLaunchAndMaxLaunchCount() {
-    return {
-      maxLaunchCount: this.MAX_LAUNCH_COUNT,
-      launchCount: this.launchCount,
-    }
-  }
-
-  stageTipInteraction(handlerIn, handlerOut) {
-    this.getElement().querySelector(`.stage-tip`).addEventListener(`mouseover`, (evt) => {
-      evt.preventDefault();
-      const tipFlag = this.getElement().querySelector(`.stage-tip`);
-      handlerIn(evt);
-      tipFlag.addEventListener(`mouseout`, handlerOut);
-    });
-  }
-
   stage1ButtonInteraction(handler) {
     this.getElement().querySelector(`.stage-1__button`).addEventListener(`click`, (evt) => {
       evt.preventDefault();
-      handler(this.list, this.stage1Button);
+      handler(this.list, this.stage1Button, this.launchCount, this.LAUNCH_COUNT_LESS_THAN, this.cellNames, this.cellPoints);
     });
   }
 }

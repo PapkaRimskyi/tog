@@ -21,9 +21,9 @@ export default class AbstractClass {
     return this._element;
   }
 
-  deleteElement() {
-    if (document.querySelector(`.${this.getElement().className}`)) {
-      document.querySelector(`.${this.getElement().className}`).remove();
+  deleteElement(elem = document.querySelector(`.${this.getElement().className}`)) {
+    if (elem) {
+      elem.remove();
     }
   }
 }

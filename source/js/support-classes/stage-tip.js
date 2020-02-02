@@ -1,8 +1,18 @@
 import TipInfo from '../models/tip-models.js';
+import ParticipantsListMethods from './participants-list-methods.js';
 
-export default class StageTip {
+export default class StageTip extends ParticipantsListMethods {
   constructor() {
+    super();
     this.tipInfoInstance = new TipInfo();
+  }
+
+  stageTipInteraction() {
+    this.getElement().querySelector(`.stage-tip`).addEventListener(`mouseover`, (evt) => {
+      evt.preventDefault();
+      this.stageTipHoverHandler(evt);
+      this.stageTip.addEventListener(`mouseout`, this.stageTipHoverOutHandler);
+    });
   }
 
   stageTipHoverHandler(evt) {
@@ -20,11 +30,11 @@ export default class StageTip {
   }
 
   stageTipHoverOutHandler() {
-    for (let child of this.stageTip.children) {
+    for (let child of this.children) {
       child.remove();
     }
-    this.stageTip.removeEventListener(`mouseover`, this.stageTipHoverHandler);
-    this.stageTip.removeEventListener(`mouseout`, this.stageTipHoverOutHandler);
+    this.removeEventListener(`mouseover`, this.stageTipHoverHandler);
+    this.removeEventListener(`mouseout`, this.stageTipHoverOutHandler);
   }
 
   appendTipInfo(stageLvlTip) {

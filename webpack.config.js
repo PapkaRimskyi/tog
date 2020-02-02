@@ -95,7 +95,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: `./index.html`,
       template: `${PATHS.src}/index.html`,
-      // inject: false,
     }),
     new MiniCssExtractPlugin({
       filename: `${PATHS.assets}css/style.css`,
