@@ -21,10 +21,10 @@ export default class Stage2Controller {
     this.stage2Instance.stage2ButtonInteraction(this.getMultiple, this.renderNextParticipant);
   }
 
-  getMultiple(participantslist, nameContainers, stage2Button) {
+  getMultiple(participantsList, nameContainers, participantsCompleted, stage2Button) {
     for (let name of nameContainers) {
       const resultContainer = name.parentElement.nextElementSibling;
-      for (let participant of participantslist) {
+      for (let participant of participantsList) {
         if (name.textContent === participant.name) {
           participant.multiple = this.randomMultiple();
           resultContainer.textContent = `${participant.points} * ${participant.multiple} = ${participant.points * participant.multiple}`;
@@ -33,7 +33,7 @@ export default class Stage2Controller {
       }
     }
     this.stage2Instance.setMultipleStatus(false);
-    stage2Button.textContent = 'Следующие участники!';
+    this.isAllParticipantsCounted(participantsCompleted, participantsList, stage2Button);
   }
 
   renderNextParticipant(participantContainer, stage2Button) {
@@ -45,5 +45,14 @@ export default class Stage2Controller {
 
   randomMultiple() {
     return Math.floor(this.MIN_MULTIPLE + Math.random() * (this.MAX_MULTIPLE + 1 - this.MIN_MULTIPLE));
+  }
+
+
+  isAllParticipantsCounted(participantCount, participantsList, button) {
+    if (participantCount === participantsList.length) {
+      button.textContent = 'Следующий этап!';
+    } else {
+      button.textContent = 'Следующие участники!';
+    }
   }
 }

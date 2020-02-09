@@ -33,7 +33,8 @@ export default class Stage2 extends StageTip {
 
     this.participantsList = participantsList;
     this.participantId = 0;
-    this.isMultiple = true;
+    this.participantsCompleted = 0;
+    this.isMultipleStatus = true;
 
     this.stageTipInteraction = this.stageTipInteraction.bind(this);
   }
@@ -43,8 +44,8 @@ export default class Stage2 extends StageTip {
   }
 
   renderParticipant() {
-    const numberOfRepeat = this.participantId + 2;
-    for (this.participantId; this.participantId < numberOfRepeat; this.participantId++) {
+    this.participantsCompleted = this.participantId + 2;
+    for (this.participantId; this.participantId < this.participantsCompleted; this.participantId++) {
       renderMarkup(this.participantContainer, stage2ParticipantsMarkup(this.participantsList[this.participantId]), `beforeend`, true);
     }
     this.participantNameContainers = this.getElement().querySelectorAll(`.one-v-one__participant-name`);
@@ -53,17 +54,22 @@ export default class Stage2 extends StageTip {
   stage2ButtonInteraction(throwMultiHandler, renderNextParticipantHandler) {
     this.stage2Button.addEventListener(`click`, (evt) => {
       evt.preventDefault();
-      if (this.isMultiple) {
-        throwMultiHandler(this.participantsList, this.participantNameContainers, this.stage2Button);
-      } else {
-        if (this.participantId !== this.participantsList.length) {
-          renderNextParticipantHandler(this.participantContainer, this.stage2Button);
+      if (this.stage2Button.textContent !== `Следующий этап!`) {
+        if (this.isMultipleStatus) {
+          throwMultiHandler(this.participantsList, this.participantNameContainers, this.participantsCompleted, this.stage2Button);
+          if (this.participantsCompleted === this.participantsList.length) {
+            this.stage2Button.textContent = 'Следующий этап!';
+          }
+        } else {
+          if (this.participantId !== this.participantsList.length) {
+            renderNextParticipantHandler(this.participantContainer, this.stage2Button);
+          }
         }
       }
     });
   }
 
   setMultipleStatus(value) {
-    this.isMultiple = value;
+    this.isMultipleStatus = value;
   }
 }
