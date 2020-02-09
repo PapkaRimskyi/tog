@@ -27,9 +27,13 @@ export default class Stage2 extends StageTip {
   constructor(participantsList) {
     super();
     this.stageTip = this.getElement().querySelector(`.stage-tip`);
+    this.stage2Button = this.getElement().querySelector(`.stage-2__button`);
+    this.participantContainer = this.getElement().querySelector(`.one-v-one`);
+    this.participantNameContainers = null;
+
     this.participantsList = participantsList;
-    this.participantStep = 0;
-    this.container = this.getElement().querySelector(`.one-v-one`);
+    this.participantId = 0;
+    this.isMultiple = true;
 
     this.stageTipInteraction = this.stageTipInteraction.bind(this);
   }
@@ -39,9 +43,27 @@ export default class Stage2 extends StageTip {
   }
 
   renderParticipant() {
-    const loopCount = this.participantStep + 2;
-    for (this.participantStep; this.participantStep < loopCount; this.participantStep++) {
-      renderMarkup(this.container, stage2ParticipantsMarkup(this.participantsList[this.participantStep]), `beforeend`, true);
+    const numberOfRepeat = this.participantId + 2;
+    for (this.participantId; this.participantId < numberOfRepeat; this.participantId++) {
+      renderMarkup(this.participantContainer, stage2ParticipantsMarkup(this.participantsList[this.participantId]), `beforeend`, true);
     }
+    this.participantNameContainers = this.getElement().querySelectorAll(`.one-v-one__participant-name`);
+  }
+
+  stage2ButtonInteraction(throwMultiHandler, renderNextParticipantHandler) {
+    this.stage2Button.addEventListener(`click`, (evt) => {
+      evt.preventDefault();
+      if (this.isMultiple) {
+        throwMultiHandler(this.participantsList, this.participantNameContainers, this.stage2Button);
+      } else {
+        if (this.participantId !== this.participantsList.length) {
+          renderNextParticipantHandler(this.participantContainer, this.stage2Button);
+        }
+      }
+    });
+  }
+
+  setMultipleStatus(value) {
+    this.isMultiple = value;
   }
 }
