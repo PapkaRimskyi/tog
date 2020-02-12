@@ -18,7 +18,7 @@ export default class Stage2Controller {
     renderMarkup(this.mainTag, this.stage2Instance, `beforeend`);
     this.stage2Instance.renderParticipant();
     this.stage2Instance.stageTipInteraction();
-    this.stage2Instance.stage2ButtonInteraction(this.getMultiple, this.renderNextParticipant);
+    this.stage2Instance.stageButtonInteraction(this.getMultiple, this.renderNextParticipant);
   }
 
   getMultiple(participantsList, nameContainers, participantsCompleted, stage2Button) {
@@ -36,11 +36,11 @@ export default class Stage2Controller {
     this.isAllParticipantsCounted(participantsCompleted, participantsList, stage2Button);
   }
 
-  renderNextParticipant(participantContainer, stage2Button) {
+  renderNextParticipant(participantContainer, stageButton) {
     Array.from(participantContainer.children).forEach((participant) => participant.remove());
     this.stage2Instance.renderParticipant();
     this.stage2Instance.setMultipleStatus(true);
-    stage2Button.textContent = `Мультимножитель!`;
+    stageButton.textContent = `Мультимножитель!`;
   }
 
   randomMultiple() {

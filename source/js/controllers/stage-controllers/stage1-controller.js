@@ -8,16 +8,16 @@ export default class Stage1Controller {
     this.stage1Instance = new Stage1(participantsList);
     this.stage2Controller = null;
 
-    this.stage1ButtonHandler = this.stage1ButtonHandler.bind(this);
+    this.stageButtonHandler = this.stageButtonHandler.bind(this);
   }
 
   renderStage() {
     renderMarkup(this.mainTag, this.stage1Instance, `beforeend`);
     this.stage1Instance.stageTipInteraction();
-    this.stage1Instance.stage1ButtonInteraction(this.stage1ButtonHandler);
+    this.stage1Instance.stageButtonInteraction(this.stageButtonHandler);
   }
 
-  stage1ButtonHandler(participantsList, button, launchCount, maxLaunchCount, cellNames, cellPoints) {
+  stageButtonHandler(participantsList, button, launchCount, maxLaunchCount, cellNames, cellPoints) {
     if (button.textContent !== `Второй этап`) {
       this.stage1Instance.throwCube(participantsList);
       for (let i = 0; i < cellNames.length; i++) {

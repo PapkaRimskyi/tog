@@ -1,4 +1,4 @@
-import StageTip from '../../support-classes/stage-tip.js';
+import Stage from '../../support-classes/stage-class.js';
 
 const stage1Markup = (participantsList) => `<section class="tournament stage-1">
   <h1 class="stage-1__headline">
@@ -19,34 +19,29 @@ const stage1Markup = (participantsList) => `<section class="tournament stage-1">
   </tr>`;
   }).join(``)}
   </table>
-  <button class="button stage-1__button" type="button">1 бросок</button>
+  <button class="button stage__button" type="button">1 бросок</button>
 </section>
 `;
 
-export default class Stage1 extends StageTip {
-  constructor(list) {
-    super();
-    this.list = list;
+export default class Stage1 extends Stage {
+  constructor(participantsList) {
+    super(participantsList);
 
-    this.stageTip = this.getElement().querySelector(`.stage-tip`);
     this.cellNames = this.getElement().querySelectorAll(`.stage-1__participant--name`);
     this.cellPoints = this.getElement().querySelectorAll(`.stage-1__participant--points`);
-    this.stage1Button = this.getElement().querySelector(`.stage-1__button`);
 
     this.LAUNCH_COUNT_LESS_THAN = 4;
     this.launchCount = 1;
-
-    this.stageTipInteraction = this.stageTipInteraction.bind(this);
   }
 
   getTemplate() {
-    return stage1Markup(this.list);
+    return stage1Markup(this.participantsList);
   }
 
-  stage1ButtonInteraction(handler) {
-    this.getElement().querySelector(`.stage-1__button`).addEventListener(`click`, (evt) => {
+  stageButtonInteraction(handler) {
+    this.stageButton.addEventListener(`click`, (evt) => {
       evt.preventDefault();
-      handler(this.list, this.stage1Button, this.launchCount, this.LAUNCH_COUNT_LESS_THAN, this.cellNames, this.cellPoints);
+      handler(this.participantsList, this.stageButton, this.launchCount, this.LAUNCH_COUNT_LESS_THAN, this.cellNames, this.cellPoints);
     });
   }
 }

@@ -1,4 +1,4 @@
-import StageTip from '../../support-classes/stage-tip.js';
+import Stage from '../../support-classes/stage-class.js';
 
 import { renderMarkup} from '../../utils.js';
 
@@ -10,7 +10,7 @@ const stage2Markup = () => `<section class="tournament stage-2">
   </span>
 </h1>
 <div class="one-v-one"></div>
-<button class="button stage-2__button" type="button">Мультимножитель!</button>
+<button class="button stage__button" type="button">Мультимножитель!</button>
 </section>
 `;
 
@@ -23,20 +23,15 @@ const stage2ParticipantsMarkup = (participant) => `<div class="one-v-one__partic
 </div>
 `;
 
-export default class Stage2 extends StageTip {
+export default class Stage2 extends Stage {
   constructor(participantsList) {
-    super();
-    this.stageTip = this.getElement().querySelector(`.stage-tip`);
-    this.stage2Button = this.getElement().querySelector(`.stage-2__button`);
+    super(participantsList);
     this.participantContainer = this.getElement().querySelector(`.one-v-one`);
     this.participantNameContainers = null;
 
-    this.participantsList = participantsList;
-    this.participantId = 0;
+    this.participantNumber = 0;
     this.participantsCompleted = 0;
     this.isMultipleStatus = true;
-
-    this.stageTipInteraction = this.stageTipInteraction.bind(this);
   }
 
   getTemplate() {
@@ -44,25 +39,25 @@ export default class Stage2 extends StageTip {
   }
 
   renderParticipant() {
-    this.participantsCompleted = this.participantId + 2;
-    for (this.participantId; this.participantId < this.participantsCompleted; this.participantId++) {
-      renderMarkup(this.participantContainer, stage2ParticipantsMarkup(this.participantsList[this.participantId]), `beforeend`, true);
+    this.participantsCompleted = this.participantNumber + 2;
+    for (this.participantNumber; this.participantNumber < this.participantsCompleted; this.participantNumber++) {
+      renderMarkup(this.participantContainer, stage2ParticipantsMarkup(this.participantsList[this.participantNumber]), `beforeend`, true);
     }
     this.participantNameContainers = this.getElement().querySelectorAll(`.one-v-one__participant-name`);
   }
 
-  stage2ButtonInteraction(throwMultiHandler, renderNextParticipantHandler) {
-    this.stage2Button.addEventListener(`click`, (evt) => {
+  stageButtonInteraction(throwMultiHandler, renderNextParticipantHandler) {
+    this.stageButton.addEventListener(`click`, (evt) => {
       evt.preventDefault();
-      if (this.stage2Button.textContent !== `Следующий этап!`) {
+      if (this.stageButton.textContent !== `Следующий этап!`) {
         if (this.isMultipleStatus) {
-          throwMultiHandler(this.participantsList, this.participantNameContainers, this.participantsCompleted, this.stage2Button);
+          throwMultiHandler(this.participantsList, this.participantNameContainers, this.participantsCompleted, this.stageButton);
           if (this.participantsCompleted === this.participantsList.length) {
-            this.stage2Button.textContent = 'Следующий этап!';
+            this.stageButton.textContent = 'Следующий этап!';
           }
         } else {
-          if (this.participantId !== this.participantsList.length) {
-            renderNextParticipantHandler(this.participantContainer, this.stage2Button);
+          if (this.participantNumber !== this.participantsList.length) {
+            renderNextParticipantHandler(this.participantContainer, this.stageButton);
           }
         }
       }
