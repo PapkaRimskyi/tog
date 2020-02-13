@@ -2,9 +2,9 @@ import Stage from '../../support-classes/stage-class.js';
 
 import { renderMarkup} from '../../utils.js';
 
-const stage2Markup = () => `<section class="tournament stage-2">
-<h1 class="stage-2__headline">
-  <span class="stage-2__headline-name">
+const stage2Markup = () => `<section class="tournament stage stage-2">
+<h1 class="stage__headline stage-2__headline--color">
+  <span class="stage__headline-name">
     Четвертьфинал
     <a href="#" class="stage-tip">⚑</a>
   </span>
@@ -26,7 +26,7 @@ const stage2ParticipantsMarkup = (participant) => `<div class="one-v-one__partic
 export default class Stage2 extends Stage {
   constructor(participantsList) {
     super(participantsList);
-    this.participantContainer = this.getElement().querySelector(`.one-v-one`);
+
     this.participantNameContainers = null;
 
     this.participantNumber = 0;
@@ -46,25 +46,14 @@ export default class Stage2 extends Stage {
     this.participantNameContainers = this.getElement().querySelectorAll(`.one-v-one__participant-name`);
   }
 
-  stageButtonInteraction(throwMultiHandler, renderNextParticipantHandler) {
+  stageButtonInteraction(handler) {
     this.stageButton.addEventListener(`click`, (evt) => {
       evt.preventDefault();
-      if (this.stageButton.textContent !== `Следующий этап!`) {
-        if (this.isMultipleStatus) {
-          throwMultiHandler(this.participantsList, this.participantNameContainers, this.participantsCompleted, this.stageButton);
-          if (this.participantsCompleted === this.participantsList.length) {
-            this.stageButton.textContent = 'Следующий этап!';
-          }
-        } else {
-          if (this.participantNumber !== this.participantsList.length) {
-            renderNextParticipantHandler(this.participantContainer, this.stageButton);
-          }
-        }
-      }
+      handler(this.participantsList, this.participantNameContainers, this.participantsCompleted, this.participantNumber, this.participantContainer, this.stageButton, this.isMultipleStatus);
     });
   }
 
-  setMultipleStatus(value) {
-    this.isMultipleStatus = value;
+  setMultipleStatus(boolean) {
+    this.isMultipleStatus = boolean;
   }
 }

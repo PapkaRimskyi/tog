@@ -1,6 +1,6 @@
-import StageTIp from './stage-tip.js';
+import StageTip from './stage-tip.js';
 
-export default class Stage extends StageTIp {
+export default class Stage extends StageTip {
   constructor(participantsList) {
     super();
 
@@ -8,8 +8,13 @@ export default class Stage extends StageTIp {
 
     this.stageTip = this.getElement().querySelector(`.stage-tip`);
     this.stageButton = this.getElement().querySelector(`.stage__button`);
+    this.participantContainer = this.getElement().querySelector(`.one-v-one`);
 
     this.stageTipInteraction = this.stageTipInteraction.bind(this);
+  }
+
+  renderParticipant() {
+    throw new Error(`Need to rewrite under stage level. Can't be used by Stage`);
   }
 
   stageButtonInteraction() {

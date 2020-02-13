@@ -1,20 +1,20 @@
 import Stage from '../../support-classes/stage-class.js';
 
-const stage1Markup = (participantsList) => `<section class="tournament stage-1">
-  <h1 class="stage-1__headline">
-    <span class="stage-1__headline-name">
+const stage1Markup = (participantsList) => `<section class="tournament stage stage-1">
+  <h1 class="stage__headline stage-1__headline--color">
+    <span class="stage__headline-name">
       Групповой этап
       <a href="#" class="stage-tip">⚑</a>
     </span>
   </h1>
-  <table class="stage-1__table">
+  <table class="stage__table">
   ${participantsList.map((participant) => {
     return `<tr>
     <td>
-      <p class="stage-1__participant stage-1__participant--name">${participant.name}</p>
+      <p class="stage__participant stage__participant--name">${participant.name}</p>
     </td>
     <td>
-      <p class="stage-1__participant stage-1__participant--points">${participant.points}</p>
+      <p class="stage__participant stage__participant--points">${participant.points}</p>
     </td>
   </tr>`;
   }).join(``)}
@@ -27,8 +27,8 @@ export default class Stage1 extends Stage {
   constructor(participantsList) {
     super(participantsList);
 
-    this.cellNames = this.getElement().querySelectorAll(`.stage-1__participant--name`);
-    this.cellPoints = this.getElement().querySelectorAll(`.stage-1__participant--points`);
+    this.cellNames = this.getElement().querySelectorAll(`.stage__participant--name`);
+    this.cellPoints = this.getElement().querySelectorAll(`.stage__participant--points`);
 
     this.LAUNCH_COUNT_LESS_THAN = 4;
     this.launchCount = 1;

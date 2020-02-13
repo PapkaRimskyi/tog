@@ -1,9 +1,10 @@
 const tipCollection = new Map([
   [`stage-1`, `3 броска. 2 последних участника вылетают из турнира.`],
   [`stage-2`, `Мультимножитель умножает очки участника с предыдущей фазы на случайный множитель.`],
+  [`stage-3`, `Рандомится знак вычитания или сложения. Рандомится число. Очки участника считаются.`],
 ]);
 
-const stageLvlList = [`stage-1`, `stage-2`, `stage-3`, `stage-4`];
+const stageLvlList = [`stage-1`, `stage-2`, `stage-3`];
 
 export default class TipInfo {
   constructor() {
@@ -27,6 +28,9 @@ export default class TipInfo {
         return this.tip;
       case `stage-2`:
         this.tip = tipCollection.get(`stage-2`);
+        return this.tip;
+      case `stage-3`:
+        this.tip = tipCollection.get(`stage-3`);
         return this.tip;
     }
   }
