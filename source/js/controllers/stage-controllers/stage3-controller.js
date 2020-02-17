@@ -1,29 +1,33 @@
+import StageController from '../../support-classes/stage-controller-class.js';
 import Stage3 from '../../components/main-component/stage-3.js';
-// import Stage4 from '../../components/main-component/stage-4.js';
+import Stage4Controller from '../stage-controllers/stage4-controller.js';
 import { renderMarkup } from '../../utils.js';
 
-export default class Stage3Controller {
+export default class Stage3Controller extends StageController {
   constructor(participantsList) {
-    this.participantsList = participantsList;
-    this.stage3Instance = new Stage3(participantsList.semifinalStage);
-    // this.stage4Instance = new Stage4(participantsList.finalStage);
+    super(participantsList, new Stage3(participantsList.semifinalStage));
 
-    this.mainTag = document.querySelector(`.tog-main`);
+    this.writeNextStageControllerInstance(new Stage4Controller(this.participantsList.finalStage));
 
     this.stageButtonHandler = this.stageButtonHandler.bind(this);
   }
 
   renderStage() {
-    renderMarkup(this.mainTag, this.stage3Instance, `beforeend`);
-    this.stage3Instance.renderParticipant();
-    this.stage3Instance.stageTipInteraction();
-    this.stage3Instance.stageButtonInteraction(this.stageButtonHandler);
+    renderMarkup(this.mainTag, this.stageInstance, `beforeend`);
+    this.stageInstance.renderParticipant();
+    this.stageInstance.stageTipInteraction();
+    this.stageInstance.stageButtonInteraction(this.stageButtonHandler);
   }
 
   stageButtonHandler(participantsList, nameContainers, button) {
     if (button.textContent !== 'К финалу!') {
       this.randomValues(participantsList, nameContainers);
       button.textContent = `К финалу!`;
+      this.stageInstance.sortParticipantsList(this.participantsList.semifinalStage);
+    } else {
+      this.stageInstance.deleteElement(document.querySelector(`.stage-3`));
+      this.nextStageControllerInstance.addSecondParticipant(this.participantsList.semifinalStage[0]);
+      this.nextStageControllerInstance.renderStage();
     }
   }
 

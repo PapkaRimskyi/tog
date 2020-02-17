@@ -1,25 +1,24 @@
+import StageController from '../../support-classes/stage-controller-class.js';
 import Stage1 from '../../components/main-component/stage-1.js';
 import Stage2Controller from './stage2-controller.js';
 import { renderMarkup } from '../../utils.js';
 
-export default class Stage1Controller {
+export default class Stage1Controller extends StageController {
   constructor(participantsList) {
-    this.mainTag = document.querySelector(`.tog-main`);
-    this.stage1Instance = new Stage1(participantsList);
-    this.stage2Controller = null;
+    super(participantsList, new Stage1(participantsList));
 
     this.stageButtonHandler = this.stageButtonHandler.bind(this);
   }
 
   renderStage() {
-    renderMarkup(this.mainTag, this.stage1Instance, `beforeend`);
-    this.stage1Instance.stageTipInteraction();
-    this.stage1Instance.stageButtonInteraction(this.stageButtonHandler);
+    renderMarkup(this.mainTag, this.stageInstance, `beforeend`);
+    this.stageInstance.stageTipInteraction();
+    this.stageInstance.stageButtonInteraction(this.stageButtonHandler);
   }
 
   stageButtonHandler(participantsList, button, launchCount, maxLaunchCount, cellNames, cellPoints) {
     if (button.textContent !== `Второй этап`) {
-      this.stage1Instance.throwCube(participantsList);
+      this.stageInstance.throwCube(participantsList);
       for (let i = 0; i < cellNames.length; i++) {
         cellNames[i].textContent = participantsList[i].name;
         cellPoints[i].textContent = participantsList[i].points;
@@ -30,9 +29,9 @@ export default class Stage1Controller {
         button.textContent = `Второй этап`;
       }
     } else {
-      this.stage1Instance.deleteElement(document.querySelector(`.stage-1`));
-      this.stage2Controller = new Stage2Controller(participantsList);
-      this.stage2Controller.renderStage();
+      this.stageInstance.deleteElement(document.querySelector(`.stage-1`));
+      this.writeNextStageControllerInstance(new Stage2Controller(this.participantsList));
+      this.nextStageControllerInstance.renderStage();
     }
   }
 }

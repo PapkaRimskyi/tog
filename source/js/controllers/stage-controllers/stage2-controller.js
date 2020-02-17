@@ -1,3 +1,4 @@
+import StageController from '../../support-classes/stage-controller-class.js';
 import Stage2 from '../../components/main-component/stage-2.js';
 import Stage3Controller from './stage3-controller.js';
 import { renderMarkup } from '../../utils.js';
@@ -8,27 +9,25 @@ const buttonStatus = {
   nextStage: `Следующий этап!`,
 }
 
-export default class Stage2Controller {
+export default class Stage2Controller extends StageController {
   constructor(participantsList) {
-    this.stage3Controller = null;
-
-    this.mainTag = document.querySelector(`.tog-main`);
+    super(participantsList);
 
     this.COUNT_OF_PARTICIPANTS_QUARTER_FINAL = 4;
     this.MIN_MULTIPLE = 1;
     this.MAX_MULTIPLE = 3;
 
-    this.participantsList = participantsList.slice(0, this.COUNT_OF_PARTICIPANTS_QUARTER_FINAL);
-    this.stage2Instance = new Stage2(this.participantsList);
+    this.modifiedParticipantList(0, this.COUNT_OF_PARTICIPANTS_QUARTER_FINAL);
+    this.writeStageInstance(new Stage2(this.participantsList));
 
     this.stageButtonHandler = this.stageButtonHandler.bind(this);
   }
 
   renderStage() {
-    renderMarkup(this.mainTag, this.stage2Instance, `beforeend`);
-    this.stage2Instance.renderParticipant();
-    this.stage2Instance.stageTipInteraction();
-    this.stage2Instance.stageButtonInteraction(this.stageButtonHandler);
+    renderMarkup(this.mainTag, this.stageInstance, `beforeend`);
+    this.stageInstance.renderParticipant();
+    this.stageInstance.stageTipInteraction();
+    this.stageInstance.stageButtonInteraction(this.stageButtonHandler);
   }
 
   getMultiple(participantsList, nameContainers, participantsCompleted, stageButton) {
@@ -42,14 +41,14 @@ export default class Stage2Controller {
         }
       }
     }
-    this.stage2Instance.setMultipleStatus(false);
+    this.stageInstance.setMultipleStatus(false);
     this.isAllParticipantsCounted(participantsCompleted, participantsList, stageButton);
   }
 
   renderNextParticipant(participantContainer, stageButton) {
     this.deletePreviousParticipants(participantContainer);
-    this.stage2Instance.renderParticipant();
-    this.stage2Instance.setMultipleStatus(true);
+    this.stageInstance.renderParticipant();
+    this.stageInstance.setMultipleStatus(true);
     stageButton.textContent = buttonStatus.multiple;
   }
 
@@ -63,14 +62,14 @@ export default class Stage2Controller {
         }
       }
     } else {
-      this.stage2Instance.deleteElement(document.querySelector(`.stage-2`));
-      this.stage2Instance.sortParticipantsList(participantsList);
+      this.stageInstance.deleteElement(document.querySelector(`.stage-2`));
+      this.stageInstance.sortParticipantsList(participantsList);
       const participants = {
         finalStage: participantsList.slice(0, 1),
         semifinalStage: participantsList.slice(1, 3),
       }
-      this.stage3Controller = new Stage3Controller(participants);
-      this.stage3Controller.renderStage();
+      this.writeNextStageControllerInstance(new Stage3Controller(participants));
+      this.nextStageControllerInstance.renderStage();
     }
   }
 
