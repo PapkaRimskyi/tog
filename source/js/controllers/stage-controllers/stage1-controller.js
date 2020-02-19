@@ -18,7 +18,7 @@ export default class Stage1Controller extends StageController {
 
   stageButtonHandler(participantsList, button, launchCount, maxLaunchCount, cellNames, cellPoints) {
     if (button.textContent !== `Второй этап`) {
-      this.stageInstance.throwCube(participantsList);
+      this.stageInstance.throwCube(participantsList, `points`);
       for (let i = 0; i < cellNames.length; i++) {
         cellNames[i].textContent = participantsList[i].name;
         cellPoints[i].textContent = participantsList[i].points;

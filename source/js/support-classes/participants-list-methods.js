@@ -6,11 +6,14 @@ export default class ParticipantsListMethods extends AbstractClass {
     this.MAX_CUBE_POINTS = 12;
   }
 
-  throwCube(list) {
-    if (this.launchCount !== this.MAX_LAUNCH_COUNT) {
+  throwCube(list, pointsType) {
+    if (this.launchCount !== this.LAUNCH_COUNT_LESS_THAN) {
       this.launchCount++;
       for (let participant of list) {
-        participant.points += Math.floor(Math.random() * this.MAX_CUBE_POINTS);
+        if (isNaN(participant[`${pointsType}`])) {
+          participant[`${pointsType}`] = 0;
+        }
+        participant[`${pointsType}`] += Math.floor(Math.random() * this.MAX_CUBE_POINTS);
       }
     }
     this.sortParticipantsList(list);
