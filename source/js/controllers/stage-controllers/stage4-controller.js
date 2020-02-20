@@ -1,5 +1,6 @@
 import StageController from '../../support-classes/stage-controller-class.js';
 import Stage4 from '../../components/main-component/stage-4.js';
+import '../../../img/crown.svg';
 
 import { renderMarkup } from '../../utils.js';
 
@@ -21,7 +22,7 @@ export default class Stage4Controller extends StageController {
     this.stageInstance.pushParticipant(secondParticipant);
   }
 
-  stageButtonHandler(participantsList, button, launchCount, maxLaunchCount, pointsContainer) {
+  stageButtonHandler(participantsList, button, launchCount, maxLaunchCount, pointsContainer, nameContainers) {
     if (button.textContent !== `У нас есть победитель!`) {
       this.stageInstance.throwCube(participantsList, `finalPoints`);
       for (let i = 0; i < pointsContainer.length; i++) {
@@ -30,6 +31,7 @@ export default class Stage4Controller extends StageController {
       if (launchCount + 1 < maxLaunchCount) {
         button.textContent = `${launchCount + 1} бросок`;
       } else {
+        this.stageInstance.highlightingStageWinner(participantsList, nameContainers);
         button.textContent = `У нас есть победитель!`;
         button.disabled = true;
       }

@@ -56,6 +56,7 @@ export default class Stage2Controller extends StageController {
     if (stageButton.textContent !== buttonStatus.nextStage) {
       if (multipleStatus) {
         this.getMultiple(participantsList, nameContainers, participantsCompleted, stageButton);
+        this.stageInstance.highlightingStageWinner(participantsList, nameContainers);
       } else {
         if (participantNumber !== participantsList.length) {
           this.renderNextParticipant(participantsContainer, stageButton);

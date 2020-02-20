@@ -22,13 +22,14 @@ export default class Stage2 extends Stage {
     for (this.participantNumber; this.participantNumber < this.participantsCompleted; this.participantNumber++) {
       renderMarkup(this.participantContainer, stageParticipantsMarkup(this.participantsList[this.participantNumber]), `beforeend`, true);
     }
-    this.participantsInfoContainer = this.getElement().querySelectorAll(`.one-v-one__participant-name`);
+    this.participantsNameContainer = this.getElement().querySelectorAll(`.one-v-one__participant-name`);
+    this.participantsPointsContainer = this.getElement().querySelectorAll(`.one-v-one__participant-points`);
   }
 
   stageButtonInteraction(handler) {
     this.stageButton.addEventListener(`click`, (evt) => {
       evt.preventDefault();
-      handler(this.participantsList, this.participantsInfoContainer, this.participantsCompleted, this.participantNumber, this.participantContainer, this.stageButton, this.isMultipleStatus);
+      handler(this.participantsList, this.participantsNameContainer, this.participantsCompleted, this.participantNumber, this.participantContainer, this.stageButton, this.isMultipleStatus);
     });
   }
 

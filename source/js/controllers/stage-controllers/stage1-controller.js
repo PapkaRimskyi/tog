@@ -27,6 +27,7 @@ export default class Stage1Controller extends StageController {
         button.textContent = `${launchCount + 1} бросок`;
       } else {
         button.textContent = `Второй этап`;
+        this.stageInstance.highlightingParticipant(cellNames, 4);
       }
     } else {
       this.stageInstance.deleteElement(document.querySelector(`.stage-1`));

@@ -24,6 +24,7 @@ export default class Stage3Controller extends StageController {
       this.randomValues(participantsList, nameContainers);
       button.textContent = `К финалу!`;
       this.stageInstance.sortParticipantsList(this.participantsList.semifinalStage);
+      this.stageInstance.highlightingStageWinner(participantsList, nameContainers);
     } else {
       this.stageInstance.deleteElement(document.querySelector(`.stage-3`));
       this.nextStageControllerInstance.addSecondParticipant(this.participantsList.semifinalStage[0]);

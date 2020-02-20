@@ -19,13 +19,14 @@ export default class Stage3 extends Stage {
     for (let i = 0; i < this.participantsList.length; i++) {
       renderMarkup(this.participantContainer, stageParticipantsMarkup(this.participantsList[i]), `beforeend`, true);
     }
-    this.participantsInfoContainer = this.getElement().querySelectorAll(`.one-v-one__participant-name`);
+    this.participantsNameContainer = this.getElement().querySelectorAll(`.one-v-one__participant-name`);
+    this.participantsPointsContainer = this.getElement().querySelectorAll(`.one-v-one__participant-points`);
   }
 
   stageButtonInteraction(handler) {
     this.stageButton.addEventListener(`click`, (evt) => {
       evt.preventDefault();
-      handler(this.participantsList, this.participantsInfoContainer, this.stageButton);
+      handler(this.participantsList, this.participantsNameContainer, this.stageButton);
     })
   }
 

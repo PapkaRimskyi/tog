@@ -6,7 +6,8 @@ export default class Stage extends StageTip {
 
     this.participantsList = participantsList;
 
-    this.participantsInfoContainer = null;
+    this.participantsNameContainer = null;
+    this.participantsPointsContainer = null;
     this.stageTip = this.getElement().querySelector(`.stage-tip`);
     this.stageButton = this.getElement().querySelector(`.stage__button`);
     this.participantContainer = this.getElement().querySelector(`.one-v-one`);

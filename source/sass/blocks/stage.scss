@@ -16,16 +16,17 @@
     margin-bottom: 10px;
     min-width: 250px;
     border: 1px solid $black-color;
-    border-spacing: inherit;
+    border-collapse: separate;
+    border-spacing: 0;
 
     tr td {
-      border: 1px solid $black-color;
+      border: 2px solid $black-color;
     }
   }
 
   &__participant {
-    margin: 0 0 5px 0;
-    padding: 5px 0;
+    margin: 0 0 0 0;
+    padding: 5px 0 10px 0;
     text-align: center;
   }
 }
