@@ -11,6 +11,8 @@ export default class Music extends AbstractClass {
     super();
   }
 
+  //Template
+
   getTemplate() {
     return musicMarkup();
   }

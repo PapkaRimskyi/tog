@@ -11,6 +11,8 @@ export default class Stage4Controller extends StageController {
     this.stageButtonHandler = this.stageButtonHandler.bind(this);
   }
 
+  //Render
+
   renderStage() {
     renderMarkup(this.mainTag, this.stageInstance, `beforeend`);
     this.stageInstance.renderParticipant();
@@ -18,23 +20,31 @@ export default class Stage4Controller extends StageController {
     this.stageInstance.stageButtonInteraction(this.stageButtonHandler);
   }
 
+  //Handler
+
+  stageButtonHandler(participantsList, button, launchCount, maxLaunchCount, pointsContainer, nameContainers) {
+    if (button.textContent !== `У нас есть победитель!`) {
+      this.stageInstance.throwCube(participantsList, `finalPoints`, false);
+      this.addFinalPoints(pointsContainer, participantsList);
+      if (launchCount + 1 < maxLaunchCount) {
+        button.textContent = `${launchCount + 1} бросок`;
+      } else {
+        this.stageInstance.highlightingStageWinner(participantsList, nameContainers, `finalPoints`);
+        button.textContent = `У нас есть победитель!`;
+        button.disabled = true;
+      }
+    }
+  }
+
+  //Support methods
+
   addSecondParticipant(secondParticipant) {
     this.stageInstance.pushParticipant(secondParticipant);
   }
 
-  stageButtonHandler(participantsList, button, launchCount, maxLaunchCount, pointsContainer, nameContainers) {
-    if (button.textContent !== `У нас есть победитель!`) {
-      this.stageInstance.throwCube(participantsList, `finalPoints`);
-      for (let i = 0; i < pointsContainer.length; i++) {
-        pointsContainer[i].textContent = participantsList[i].finalPoints;
-      }
-      if (launchCount + 1 < maxLaunchCount) {
-        button.textContent = `${launchCount + 1} бросок`;
-      } else {
-        this.stageInstance.highlightingStageWinner(participantsList, nameContainers);
-        button.textContent = `У нас есть победитель!`;
-        button.disabled = true;
-      }
+  addFinalPoints(pointsContainer, participantsList) {
+    for (let i = 0; i < pointsContainer.length; i++) {
+      pointsContainer[i].textContent = participantsList[i].finalPoints;
     }
   }
 }

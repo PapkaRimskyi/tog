@@ -35,6 +35,8 @@ export default class RulesPopup extends CrossButton {
     super();
   }
 
+  //Template
+
   getTemplate() {
     return rulesMarkup();
   }

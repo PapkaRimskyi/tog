@@ -5,6 +5,8 @@ export default class MainController {
     this.stage1ControllerInstance = null;
   }
 
+  //Render
+
   render(participantsList) {
     this.stage1ControllerInstance = new Stage1Controller(participantsList);
     this.stage1ControllerInstance.renderStage();

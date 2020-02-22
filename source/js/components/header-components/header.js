@@ -53,6 +53,8 @@ export default class Header extends AbstractClass {
     super();
   }
 
+  //Template
+
   getTemplate() {
     return headerMarkup();
   }

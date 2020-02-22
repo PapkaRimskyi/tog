@@ -11,17 +11,22 @@ export default class Stage3 extends Stage {
     this.isRandomStatus = true;
   }
 
+  //Template
+
   getTemplate() {
     return stageMarkup(3, `Полуфинал`, `Мне повезет!`);
   }
+
+  //Render
 
   renderParticipant() {
     for (let i = 0; i < this.participantsList.length; i++) {
       renderMarkup(this.participantContainer, stageParticipantsMarkup(this.participantsList[i]), `beforeend`, true);
     }
     this.participantsNameContainer = this.getElement().querySelectorAll(`.one-v-one__participant-name`);
-    this.participantsPointsContainer = this.getElement().querySelectorAll(`.one-v-one__participant-points`);
   }
+
+  //Button interaction
 
   stageButtonInteraction(handler) {
     this.stageButton.addEventListener(`click`, (evt) => {
@@ -29,6 +34,8 @@ export default class Stage3 extends Stage {
       handler(this.participantsList, this.participantsNameContainer, this.stageButton);
     })
   }
+
+  //Support methods
 
   setRandomStatus(boolean) {
     this.isRandomStatus = boolean;

@@ -13,9 +13,13 @@ export default class Stage2 extends Stage {
     this.isMultipleStatus = true;
   }
 
+  //Template
+
   getTemplate() {
     return stageMarkup(2, `Четвертьфинал`, `Мультимножитель!`);
   }
+
+  //Render
 
   renderParticipant() {
     this.participantsCompleted = this.participantNumber + 2;
@@ -23,8 +27,9 @@ export default class Stage2 extends Stage {
       renderMarkup(this.participantContainer, stageParticipantsMarkup(this.participantsList[this.participantNumber]), `beforeend`, true);
     }
     this.participantsNameContainer = this.getElement().querySelectorAll(`.one-v-one__participant-name`);
-    this.participantsPointsContainer = this.getElement().querySelectorAll(`.one-v-one__participant-points`);
   }
+
+  //Button interaction
 
   stageButtonInteraction(handler) {
     this.stageButton.addEventListener(`click`, (evt) => {
@@ -32,6 +37,8 @@ export default class Stage2 extends Stage {
       handler(this.participantsList, this.participantsNameContainer, this.participantsCompleted, this.participantNumber, this.participantContainer, this.stageButton, this.isMultipleStatus);
     });
   }
+
+  //Support methods
 
   setMultipleStatus(boolean) {
     this.isMultipleStatus = boolean;

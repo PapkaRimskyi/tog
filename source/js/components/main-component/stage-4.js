@@ -12,13 +12,13 @@ export default class Stage4 extends Stage {
     this.launchCount = 1;
   }
 
+  //Template
+
   getTemplate() {
     return stageMarkup(4, `Финал`, `1 бросок`);
   }
 
-  pushParticipant(secondParticipant) {
-    this.participantsList.push(secondParticipant);
-  }
+  //Render
 
   renderParticipant() {
     for (let i = 0; i < this.participantsList.length; i++) {
@@ -28,10 +28,18 @@ export default class Stage4 extends Stage {
     this.participantsPointsContainer = this.getElement().querySelectorAll(`.one-v-one__participant-points`);
   }
 
+  //Button interaction
+
   stageButtonInteraction(handler) {
     this.stageButton.addEventListener(`click`, (evt) => {
       evt.preventDefault();
       handler(this.participantsList, this.stageButton, this.launchCount, this.LAUNCH_COUNT_LESS_THAN, this.participantsPointsContainer, this.participantsNameContainer);
     });
+  }
+
+  //Support methods
+
+  pushParticipant(secondParticipant) {
+    this.participantsList.push(secondParticipant);
   }
 }

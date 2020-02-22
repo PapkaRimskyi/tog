@@ -9,6 +9,8 @@ export default class FirstOrderController {
     this.footerController = new FooterController();
   }
 
+  //Render
+
   render() {
     this.headerController.render();
     this.footerController.render();

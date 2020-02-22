@@ -8,6 +8,8 @@ export default class FooterController {
     this.copyrightComponent = new Copyright();
   }
 
+  //Render
+
   render() {
     renderMarkup(this.footerTag, this.copyrightComponent, `beforeend`);
   }

@@ -10,11 +10,15 @@ export default class Stage1Controller extends StageController {
     this.stageButtonHandler = this.stageButtonHandler.bind(this);
   }
 
+  //Render
+
   renderStage() {
     renderMarkup(this.mainTag, this.stageInstance, `beforeend`);
     this.stageInstance.stageTipInteraction();
     this.stageInstance.stageButtonInteraction(this.stageButtonHandler);
   }
+
+  //Handler
 
   stageButtonHandler(participantsList, button, launchCount, maxLaunchCount, cellNames, cellPoints) {
     if (button.textContent !== `Второй этап`) {
@@ -27,7 +31,7 @@ export default class Stage1Controller extends StageController {
         button.textContent = `${launchCount + 1} бросок`;
       } else {
         button.textContent = `Второй этап`;
-        this.stageInstance.highlightingParticipant(cellNames, 4);
+        this.stageInstance.highlightingGroupStageWinners(cellNames, 4, `points`);
       }
     } else {
       this.stageInstance.deleteElement(document.querySelector(`.stage-1`));

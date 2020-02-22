@@ -12,6 +12,8 @@ export default class Stage3Controller extends StageController {
     this.stageButtonHandler = this.stageButtonHandler.bind(this);
   }
 
+  //Render
+
   renderStage() {
     renderMarkup(this.mainTag, this.stageInstance, `beforeend`);
     this.stageInstance.renderParticipant();
@@ -19,18 +21,22 @@ export default class Stage3Controller extends StageController {
     this.stageInstance.stageButtonInteraction(this.stageButtonHandler);
   }
 
+  //Handler
+
   stageButtonHandler(participantsList, nameContainers, button) {
     if (button.textContent !== 'К финалу!') {
       this.randomValues(participantsList, nameContainers);
       button.textContent = `К финалу!`;
-      this.stageInstance.sortParticipantsList(this.participantsList.semifinalStage);
-      this.stageInstance.highlightingStageWinner(participantsList, nameContainers);
+      this.stageInstance.sortParticipantsList(this.participantsList.semifinalStage, `points`);
+      this.stageInstance.highlightingStageWinner(participantsList, nameContainers, `points`);
     } else {
       this.stageInstance.deleteElement(document.querySelector(`.stage-3`));
       this.nextStageControllerInstance.addSecondParticipant(this.participantsList.semifinalStage[0]);
       this.nextStageControllerInstance.renderStage();
     }
   }
+
+  //Support methods
 
   randomValues(participantsList, nameContainers) {
     for (let name of nameContainers) {

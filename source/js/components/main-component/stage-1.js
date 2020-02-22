@@ -34,9 +34,13 @@ export default class Stage1 extends Stage {
     this.launchCount = 1;
   }
 
+  //Template
+
   getTemplate() {
     return stage1Markup(this.participantsList);
   }
+
+  //Button interaction
 
   stageButtonInteraction(handler) {
     this.stageButton.addEventListener(`click`, (evt) => {

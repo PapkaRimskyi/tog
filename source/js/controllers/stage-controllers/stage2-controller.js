@@ -23,12 +23,47 @@ export default class Stage2Controller extends StageController {
     this.stageButtonHandler = this.stageButtonHandler.bind(this);
   }
 
+  //Render
+
   renderStage() {
     renderMarkup(this.mainTag, this.stageInstance, `beforeend`);
     this.stageInstance.renderParticipant();
     this.stageInstance.stageTipInteraction();
     this.stageInstance.stageButtonInteraction(this.stageButtonHandler);
   }
+
+  renderNextParticipant(participantContainer, stageButton) {
+    this.deletePreviousParticipants(participantContainer);
+    this.stageInstance.renderParticipant();
+    this.stageInstance.setMultipleStatus(true);
+    stageButton.textContent = buttonStatus.multiple;
+  }
+
+  //Handler
+
+  stageButtonHandler(participantsList, nameContainers, participantsCompleted, participantNumber, participantsContainer, stageButton, multipleStatus) {
+    if (stageButton.textContent !== buttonStatus.nextStage) {
+      if (multipleStatus) {
+        this.getMultiple(participantsList, nameContainers, participantsCompleted, stageButton);
+        this.stageInstance.highlightingStageWinner(participantsList, nameContainers, `points`);
+      } else {
+        if (participantNumber !== participantsList.length) {
+          this.renderNextParticipant(participantsContainer, stageButton);
+        }
+      }
+    } else {
+      this.stageInstance.deleteElement(document.querySelector(`.stage-2`));
+      this.stageInstance.sortParticipantsList(participantsList, `points`);
+      const participants = {
+        finalStage: participantsList.slice(0, 1),
+        semifinalStage: participantsList.slice(1, 3),
+      }
+      this.writeNextStageControllerInstance(new Stage3Controller(participants));
+      this.nextStageControllerInstance.renderStage();
+    }
+  }
+
+  //Support methods
 
   getMultiple(participantsList, nameContainers, participantsCompleted, stageButton) {
     for (let name of nameContainers) {
@@ -43,35 +78,6 @@ export default class Stage2Controller extends StageController {
     }
     this.stageInstance.setMultipleStatus(false);
     this.isAllParticipantsCounted(participantsCompleted, participantsList, stageButton);
-  }
-
-  renderNextParticipant(participantContainer, stageButton) {
-    this.deletePreviousParticipants(participantContainer);
-    this.stageInstance.renderParticipant();
-    this.stageInstance.setMultipleStatus(true);
-    stageButton.textContent = buttonStatus.multiple;
-  }
-
-  stageButtonHandler(participantsList, nameContainers, participantsCompleted, participantNumber, participantsContainer, stageButton, multipleStatus) {
-    if (stageButton.textContent !== buttonStatus.nextStage) {
-      if (multipleStatus) {
-        this.getMultiple(participantsList, nameContainers, participantsCompleted, stageButton);
-        this.stageInstance.highlightingStageWinner(participantsList, nameContainers);
-      } else {
-        if (participantNumber !== participantsList.length) {
-          this.renderNextParticipant(participantsContainer, stageButton);
-        }
-      }
-    } else {
-      this.stageInstance.deleteElement(document.querySelector(`.stage-2`));
-      this.stageInstance.sortParticipantsList(participantsList);
-      const participants = {
-        finalStage: participantsList.slice(0, 1),
-        semifinalStage: participantsList.slice(1, 3),
-      }
-      this.writeNextStageControllerInstance(new Stage3Controller(participants));
-      this.nextStageControllerInstance.renderStage();
-    }
   }
 
   deletePreviousParticipants(participantContainer) {

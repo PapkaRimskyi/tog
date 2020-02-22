@@ -32,6 +32,8 @@ export default class HeaderController {
     this.sendParticipantsHandler = this.sendParticipantsHandler.bind(this);
   }
 
+  //Render
+
   render() {
     renderMarkup(this.documentBody, this.headerComponent, `afterbegin`);
     this.header = this.documentBody.querySelector(`.tog-header`);
@@ -39,6 +41,8 @@ export default class HeaderController {
     this.headerComponent.headerDelegation(this.headerHandler);
     this._updateTime();
   }
+
+  //Handler
 
   headerHandler(pressedTarget) {
     const classCollection = [...pressedTarget.classList];
@@ -67,9 +71,15 @@ export default class HeaderController {
     }
   }
 
+  crossButtonHandler(context) {
+    context.deleteElement();
+  }
+
   sendParticipantsHandler(list) {
     this.mainControllerInstance.render(list);
   }
+
+  //Support methods
 
   _setPopupCoord(popupClassName, withTop = false) {
     const element = document.querySelector(`${popupClassName}`);
@@ -87,10 +97,6 @@ export default class HeaderController {
         popup.deleteElement();
       }
     }
-  }
-
-  crossButtonHandler(context) {
-    context.deleteElement();
   }
 
   _updateTime() {

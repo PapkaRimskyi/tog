@@ -31,9 +31,13 @@ export default class ParticipantsPopup extends CrossButton {
     this.listPassedChecks = null;
   }
 
+  //Template
+
   getTemplate() {
     return participantsMarkup();
   }
+
+  //Event listeners
 
   inputValidation() {
     this.input.addEventListener(`input`, (evt) => {
@@ -57,6 +61,8 @@ export default class ParticipantsPopup extends CrossButton {
       }
     });
   }
+
+  //Support methods
 
   _getParticipantsList(inputValueName) {
     const participantsList = [];

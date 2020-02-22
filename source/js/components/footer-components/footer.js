@@ -11,6 +11,8 @@ export default class Copyright extends AbstractClass {
     super();
   }
 
+  //Template
+
   getTemplate() {
     return copyrightMarkup();
   }

@@ -6,7 +6,7 @@ export default class ParticipantsListMethods extends AbstractClass {
     this.MAX_CUBE_POINTS = 12;
   }
 
-  throwCube(list, pointsType) {
+  throwCube(list, pointsType, sortFunction = true) {
     if (this.launchCount !== this.LAUNCH_COUNT_LESS_THAN) {
       this.launchCount++;
       for (let participant of list) {
@@ -16,14 +16,16 @@ export default class ParticipantsListMethods extends AbstractClass {
         participant[`${pointsType}`] += Math.floor(Math.random() * this.MAX_CUBE_POINTS);
       }
     }
-    this.sortParticipantsList(list);
+    if (sortFunction) {
+      this.sortParticipantsList(list, pointsType);
+    }
   }
 
-  sortParticipantsList(list) {
+  sortParticipantsList(list, pointsType = 'points') {
     list.sort((a, b) => {
-      if (a.points > b.points) {
+      if (a[`${pointsType}`] > b[`${pointsType}`]) {
         return -1;
-      } else if (a.points < b.points) {
+      } else if (a[`${pointsType}`] < b[`${pointsType}`]) {
         return 1;
       } else {
         return 0;
@@ -47,27 +49,35 @@ export default class ParticipantsListMethods extends AbstractClass {
     }
   }
 
-  highlightingParticipant(containerList, maxPassedChecks) {
-    let passedChecks = 0;
+  highlightingGroupStageWinners(containerList, maxPassedParticipants) {
+    let passedParticipants = 0;
     for (let container of containerList) {
-      if (passedChecks < maxPassedChecks) {
+      if (passedParticipants < maxPassedParticipants) {
         container.parentElement.style.borderColor = `#36b847`;
-        passedChecks++;
+        passedParticipants++;
       } else {
         container.parentElement.style.borderColor = `#da3131a4`;
       }
     }
   }
 
-  highlightingStageWinner(participantsList, nameContainers) {
+  setBackgroundColor(winner, nameContainers, winnerColor, looserColor) {
+    for (let nameContainer of nameContainers) {
+      if (nameContainer.textContent === winner) {
+        nameContainer.style.backgroundColor = winnerColor;
+      } else {
+        nameContainer.style.backgroundColor = looserColor;
+      }
+    }
+  }
+
+  highlightingStageWinner(participantsList, nameContainers, pointsType) {
     const participants = this.findParticipants(participantsList, nameContainers);
     for (let i = 0; i < 1; i++) {
-      if (participants[i].points > participants[i + 1].points) {
-        nameContainers[i].style.backgroundColor = `#36b847`;
-        nameContainers[i + 1].style.backgroundColor = `#da3131a4`;
+      if (participants[i][`${pointsType}`] > participants[i + 1][`${pointsType}`]) {
+        this.setBackgroundColor(participants[i].name, nameContainers, `#36b847`, `#da3131a4`);
       } else {
-        nameContainers[i].style.backgroundColor = `#da3131a4`;
-        nameContainers[i + 1].style.backgroundColor = `#36b847`;
+        this.setBackgroundColor(participants[i + 1].name, nameContainers, `#36b847`, `#da3131a4`);
       }
     }
   }
