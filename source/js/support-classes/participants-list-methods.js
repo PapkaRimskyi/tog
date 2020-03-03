@@ -7,8 +7,8 @@ export default class ParticipantsListMethods extends AbstractClass {
   }
 
   throwCube(list, pointsType, sortFunction = true) {
-    if (this.launchCount !== this.LAUNCH_COUNT_LESS_THAN) {
-      this.launchCount++;
+    if (this.LAUNCH_COUNT !== this.LAUNCH_COUNT_LESS_THAN) {
+      this.LAUNCH_COUNT++;
       for (let participant of list) {
         if (isNaN(participant[`${pointsType}`])) {
           participant[`${pointsType}`] = 0;

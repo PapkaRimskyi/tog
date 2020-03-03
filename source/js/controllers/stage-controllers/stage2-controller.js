@@ -1,4 +1,5 @@
 import StageController from '../../support-classes/stage-controller-class.js';
+import StageModel from '../../models/stage-model.js';
 import Stage2 from '../../components/main-component/stage-2.js';
 import Stage3Controller from './stage3-controller.js';
 import { renderMarkup } from '../../utils.js';
@@ -11,14 +12,12 @@ const buttonStatus = {
 
 export default class Stage2Controller extends StageController {
   constructor(participantsList) {
-    super(participantsList);
-
+    super(new StageModel(participantsList));
     this.COUNT_OF_PARTICIPANTS_QUARTER_FINAL = 4;
     this.MIN_MULTIPLE = 1;
     this.MAX_MULTIPLE = 3;
-
     this.modifiedParticipantList(0, this.COUNT_OF_PARTICIPANTS_QUARTER_FINAL);
-    this.writeStageInstance(new Stage2(this.participantsList));
+    this.setStageInstance(new Stage2(this.stageModel.getParticipantsList()));
 
     this.stageButtonHandler = this.stageButtonHandler.bind(this);
   }
@@ -41,7 +40,7 @@ export default class Stage2Controller extends StageController {
 
   //Handler
 
-  stageButtonHandler(participantsList, nameContainers, participantsCompleted, participantNumber, participantsContainer, stageButton, multipleStatus) {
+  stageButtonHandler(participantsList, nameContainers, participantsCompleted, participantNumber, participantsContainer, stageButton, multipleStatus, removeHandler) {
     if (stageButton.textContent !== buttonStatus.nextStage) {
       if (multipleStatus) {
         this.getMultiple(participantsList, nameContainers, participantsCompleted, stageButton);
@@ -52,13 +51,14 @@ export default class Stage2Controller extends StageController {
         }
       }
     } else {
+      removeHandler();
       this.stageInstance.deleteElement(document.querySelector(`.stage-2`));
       this.stageInstance.sortParticipantsList(participantsList, `points`);
       const participants = {
         finalStage: participantsList.slice(0, 1),
         semifinalStage: participantsList.slice(1, 3),
       }
-      this.writeNextStageControllerInstance(new Stage3Controller(participants));
+      this.setNextStageControllerInstance(new Stage3Controller(participants));
       this.nextStageControllerInstance.renderStage();
     }
   }

@@ -31,7 +31,8 @@ export default class Stage3 extends Stage {
   stageButtonInteraction(handler) {
     this.stageButton.addEventListener(`click`, (evt) => {
       evt.preventDefault();
-      handler(this.participantsList, this.participantsNameContainer, this.stageButton);
+      this.setButtonHandler(handler);
+      handler(this.participantsList, this.participantsNameContainer, this.stageButton, this.removeButtonHandler);
     })
   }
 

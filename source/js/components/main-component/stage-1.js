@@ -1,6 +1,6 @@
 import Stage from '../../support-classes/stage-class.js';
 
-const stage1Markup = (participantsList) => `<section class="tournament stage stage-1">
+const stageMarkup = (participantsList) => `<section class="tournament stage stage-1">
   <h1 class="stage__headline stage-1__headline--color">
     <span class="stage__headline-name">
       Групповой этап
@@ -27,17 +27,17 @@ export default class Stage1 extends Stage {
   constructor(participantsList) {
     super(participantsList);
 
+    this.LAUNCH_COUNT_LESS_THAN = 4;
+    this.LAUNCH_COUNT = 1;
+
     this.cellNames = this.getElement().querySelectorAll(`.stage__participant--name`);
     this.cellPoints = this.getElement().querySelectorAll(`.stage__participant--points`);
-
-    this.LAUNCH_COUNT_LESS_THAN = 4;
-    this.launchCount = 1;
   }
 
   //Template
 
   getTemplate() {
-    return stage1Markup(this.participantsList);
+    return stageMarkup(this.participantsList);
   }
 
   //Button interaction
@@ -45,7 +45,8 @@ export default class Stage1 extends Stage {
   stageButtonInteraction(handler) {
     this.stageButton.addEventListener(`click`, (evt) => {
       evt.preventDefault();
-      handler(this.participantsList, this.stageButton, this.launchCount, this.LAUNCH_COUNT_LESS_THAN, this.cellNames, this.cellPoints);
+      this.setButtonHandler(handler);
+      handler(this.participantsList, this.stageButton, this.LAUNCH_COUNT, this.LAUNCH_COUNT_LESS_THAN, this.cellNames, this.cellPoints, this.removeButtonHandler);
     });
   }
 }

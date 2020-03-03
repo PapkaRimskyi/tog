@@ -1,21 +1,21 @@
 export default class StageController {
-  constructor(participantsList, stage = null) {
+  constructor(participantsList) {
     this.mainTag = document.querySelector(`.tog-main`);
 
-    this.participantsList = participantsList;
-    this.stageInstance = stage;
+    this.stageModel = participantsList;
+    this.stageInstance = null;
     this.nextStageControllerInstance = null;
   }
 
-  writeNextStageControllerInstance(nextStageControllerInstance) {
+  setNextStageControllerInstance(nextStageControllerInstance) {
     this.nextStageControllerInstance = nextStageControllerInstance;
   }
 
-  writeStageInstance(stage) {
+  setStageInstance(stage) {
     this.stageInstance = stage;
   }
 
   modifiedParticipantList(min, max) {
-    this.participantsList = this.participantsList.slice(min, max);
+    this.stageModel.cropParticipantsList(min, max);
   }
 }

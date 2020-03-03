@@ -1,13 +1,16 @@
 import StageController from '../../support-classes/stage-controller-class.js';
+import StageModel from '../../models/stage-model.js';
 import Stage3 from '../../components/main-component/stage-3.js';
 import Stage4Controller from '../stage-controllers/stage4-controller.js';
 import { renderMarkup } from '../../utils.js';
 
 export default class Stage3Controller extends StageController {
   constructor(participantsList) {
-    super(participantsList, new Stage3(participantsList.semifinalStage));
+    super(new StageModel(participantsList), new Stage3(participantsList.semifinalStage));
 
-    this.writeNextStageControllerInstance(new Stage4Controller(this.participantsList.finalStage));
+    this.setStageInstance(new Stage3(this.stageModel.getSemifinalParticipants()));
+
+    this.setNextStageControllerInstance(new Stage4Controller(this.stageModel.getFinalParticipants()));
 
     this.stageButtonHandler = this.stageButtonHandler.bind(this);
   }
@@ -23,15 +26,16 @@ export default class Stage3Controller extends StageController {
 
   //Handler
 
-  stageButtonHandler(participantsList, nameContainers, button) {
+  stageButtonHandler(participantsList, nameContainers, button, removeHandler) {
     if (button.textContent !== 'К финалу!') {
       this.randomValues(participantsList, nameContainers);
       button.textContent = `К финалу!`;
-      this.stageInstance.sortParticipantsList(this.participantsList.semifinalStage, `points`);
+      this.stageInstance.sortParticipantsList(participantsList, `points`);
       this.stageInstance.highlightingStageWinner(participantsList, nameContainers, `points`);
     } else {
+      removeHandler();
       this.stageInstance.deleteElement(document.querySelector(`.stage-3`));
-      this.nextStageControllerInstance.addSecondParticipant(this.participantsList.semifinalStage[0]);
+      this.nextStageControllerInstance.addSecondParticipant(participantsList[0]);
       this.nextStageControllerInstance.renderStage();
     }
   }

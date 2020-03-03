@@ -22,12 +22,17 @@ const participantsMarkup = () => `<section class="enter-participants-popup">
 export default class ParticipantsPopup extends CrossButton {
   constructor() {
     super();
+
+    this.MAXGAMES = 6;
+
     this.input = this.getElement().querySelector(`.enter-participants-popup__participants-list`);
     this.form = this.getElement().querySelector(`.enter-participants-popup__form`);
+    this.sendParticipantsList = this.getElement().querySelector(`.enter-participants-popup__send-participants-list`);
+
+    this.handlerCollection = [{context: this.input}, {context: this.form}];
 
     this.gamesNameList = null;
 
-    this.MAXGAMES = 6;
     this.listPassedChecks = null;
   }
 
@@ -39,24 +44,21 @@ export default class ParticipantsPopup extends CrossButton {
 
   //Event listeners
 
-  inputValidation() {
+  inputValidation(handler) {
+    this.handlerCollection[0].list = new Set([handler]);
     this.input.addEventListener(`input`, (evt) => {
       evt.preventDefault();
-      if (this._checkValidation(this.input)) {
-        this.listPassedChecks = true;
-      } else {
-        this.listPassedChecks = false;
-      }
+      handler(this._checkValidation(this.input));
     });
   }
 
   submitForm(handler) {
+    this.handlerCollection[1].list = new Set([handler]);
     this.form.addEventListener(`submit`, (evt) => {
+      evt.stopImmediatePropagation();
       evt.preventDefault();
       if (this.listPassedChecks) {
-        handler(this._getParticipantsList(this.gamesNameList));
-        this.form.removeEventListener(`submit`, handler);
-        this.deleteElement();
+        handler(this._getParticipantsList(this.gamesNameList), this.handlerCollection);
         this._element = null;
       }
     });
@@ -65,11 +67,7 @@ export default class ParticipantsPopup extends CrossButton {
   //Support methods
 
   _getParticipantsList(inputValueName) {
-    const participantsList = [];
-    for (let participant of inputValueName) {
-      participantsList.push({name: participant.trim(), points: 0});
-    }
-    return participantsList;
+    return [].concat(inputValueName.map((participant) => ({name: participant.trim(), points: 0})));
   }
 
   _checkValidation(input) {
@@ -112,5 +110,9 @@ export default class ParticipantsPopup extends CrossButton {
       }
     }
     return false;
+  }
+
+  setListPassedChecks(boolean) {
+    this.listPassedChecks = boolean;
   }
 }

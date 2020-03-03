@@ -1,4 +1,5 @@
 import StageController from '../../support-classes/stage-controller-class.js';
+import StageModel from '../../models/stage-model.js';
 import Stage4 from '../../components/main-component/stage-4.js';
 import '../../../img/crown.svg';
 
@@ -6,7 +7,9 @@ import { renderMarkup } from '../../utils.js';
 
 export default class Stage4Controller extends StageController {
   constructor(participantsList) {
-    super(participantsList, new Stage4(participantsList));
+    super(new StageModel(participantsList));
+
+    this.setStageInstance(new Stage4(this.stageModel.getParticipantsList()));
 
     this.stageButtonHandler = this.stageButtonHandler.bind(this);
   }

@@ -10,10 +10,10 @@ export const stageMarkup = (numberOfStage, stageName, defaultButtonText) => `<se
 </section>
 `;
 
-export const stageParticipantsMarkup = (participant) => `<div class="one-v-one__participant">
+export const stageParticipantsMarkup = (participant, zeroPoints = false) => `<div class="one-v-one__participant">
 <div class="one-v-one__participant-info">
   <p class="one-v-one__participant-name">${participant.name}</p>
-  <p class="one-v-one__participant-points">${participant.points}</p>
+  <p class="one-v-one__participant-points">${zeroPoints === false ? participant.points : 0}</p>
 </div>
 <p class="one-v-one__participant-stage-result">Result here</p>
 </div>

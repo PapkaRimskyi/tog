@@ -29,7 +29,9 @@ export default class HeaderController {
     this.popupCollection = null;
     //functions bind by this context
     this.headerHandler = this.headerHandler.bind(this);
-    this.sendParticipantsHandler = this.sendParticipantsHandler.bind(this);
+    this.sendFormHandler = this.sendFormHandler.bind(this);
+    this.inputHandler = this.inputHandler.bind(this);
+    this.crossButtonHandler = this.crossButtonHandler.bind(this);
   }
 
   //Render
@@ -56,8 +58,8 @@ export default class HeaderController {
             renderMarkup(this.header, currentTarget, `beforeend`);
             currentTarget.closePopupByCrossButton(this.crossButtonHandler);
             if (currentTarget.submitForm) {
-              currentTarget.inputValidation();
-              currentTarget.submitForm(this.sendParticipantsHandler);
+              currentTarget.inputValidation(this.inputHandler);
+              currentTarget.submitForm(this.sendFormHandler);
             }
             this._setPopupCoord(`.${currentTarget.getElement().className}`);
           } else {
@@ -71,12 +73,25 @@ export default class HeaderController {
     }
   }
 
-  crossButtonHandler(context) {
+  crossButtonHandler(context, handlerCollection) {
     context.deleteElement();
+    if (context.sendParticipantsList) {
+      this._removeFormHandlers(handlerCollection);
+    }
   }
 
-  sendParticipantsHandler(list) {
+  sendFormHandler(list, handlerCollection) {
     this.mainControllerInstance.render(list);
+    this.participantsPopup.deleteElement();
+    this._removeFormHandlers(handlerCollection);
+  }
+
+  inputHandler(checkValidation) {
+    if (checkValidation) {
+      this.participantsPopup.setListPassedChecks(true);
+    } else {
+      this.participantsPopup.setListPassedChecks(false);
+    }
   }
 
   //Support methods
@@ -95,6 +110,21 @@ export default class HeaderController {
     for (let popup of this.popupCollection.values()) {
       if (popup !== this.music) {
         popup.deleteElement();
+      }
+    }
+  }
+
+  _removeFormHandlers(handlerCollection) {
+    for (let item of handlerCollection) {
+      for (let handler of item.list) {
+        switch (item.context.tagName) {
+          case item.context.tagName === `INPUT`:
+            item.context.removeEventListener(`input`, handler);
+            break;
+          case item.context.tagName === `FORM`:
+            item.context.removeEventListener(`submit`, handler);
+            break;
+        }
       }
     }
   }

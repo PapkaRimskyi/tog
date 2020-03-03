@@ -9,7 +9,7 @@ export default class Stage4 extends Stage {
     super(firstParticipant);
 
     this.LAUNCH_COUNT_LESS_THAN = 6;
-    this.launchCount = 1;
+    this.LAUNCH_COUNT = 1;
   }
 
   //Template
@@ -22,7 +22,7 @@ export default class Stage4 extends Stage {
 
   renderParticipant() {
     for (let i = 0; i < this.participantsList.length; i++) {
-      renderMarkup(this.participantContainer, stageParticipantsMarkup(this.participantsList[i]), `beforeend`, true);
+      renderMarkup(this.participantContainer, stageParticipantsMarkup(this.participantsList[i], true), `beforeend`, true);
     }
     this.participantsNameContainer = this.getElement().querySelectorAll(`.one-v-one__participant-name`);
     this.participantsPointsContainer = this.getElement().querySelectorAll(`.one-v-one__participant-points`);
@@ -33,7 +33,7 @@ export default class Stage4 extends Stage {
   stageButtonInteraction(handler) {
     this.stageButton.addEventListener(`click`, (evt) => {
       evt.preventDefault();
-      handler(this.participantsList, this.stageButton, this.launchCount, this.LAUNCH_COUNT_LESS_THAN, this.participantsPointsContainer, this.participantsNameContainer);
+      handler(this.participantsList, this.stageButton, this.LAUNCH_COUNT, this.LAUNCH_COUNT_LESS_THAN, this.participantsPointsContainer, this.participantsNameContainer);
     });
   }
 
