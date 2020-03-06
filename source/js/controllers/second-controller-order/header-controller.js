@@ -29,9 +29,6 @@ export default class HeaderController {
     this.popupCollection = null;
     //functions bind by this context
     this.headerHandler = this.headerHandler.bind(this);
-    this.sendFormHandler = this.sendFormHandler.bind(this);
-    this.inputHandler = this.inputHandler.bind(this);
-    this.crossButtonHandler = this.crossButtonHandler.bind(this);
   }
 
   //Render
@@ -39,93 +36,63 @@ export default class HeaderController {
   render() {
     renderMarkup(this.documentBody, this.headerComponent, `afterbegin`);
     this.header = this.documentBody.querySelector(`.tog-header`);
-    this.popupCollection = new Map([[`.rules-js`, this.rulesPopup], [`.audio-player`, this.music], [`.participants-js`, this.participantsPopup]]);
+    this.popupCollection = new Map([[`rules-popup`, this.rulesPopup], [`audio-popup`, this.music], [`participants-popup`, this.participantsPopup]]);
     this.headerComponent.headerDelegation(this.headerHandler);
     this._updateTime();
   }
 
   //Handler
 
-  headerHandler(pressedTarget) {
-    const classCollection = [...pressedTarget.classList];
-    let currentTarget = null;
-    for (let className of classCollection) {
-      if (this.popupCollection.has(`.${className}`)) {
-        currentTarget = this.popupCollection.get(`.${className}`);
-        if (!document.querySelector(`.${currentTarget.getElement().className}`)) {
-          if (currentTarget.closePopupByCrossButton) {
-            this._closeAllPopup();
-            renderMarkup(this.header, currentTarget, `beforeend`);
-            currentTarget.closePopupByCrossButton(this.crossButtonHandler);
-            if (currentTarget.submitForm) {
-              currentTarget.inputValidation(this.inputHandler);
-              currentTarget.submitForm(this.sendFormHandler);
-            }
-            this._setPopupCoord(`.${currentTarget.getElement().className}`);
-          } else {
-            renderMarkup(pressedTarget.parentNode, currentTarget, `beforeend`);
-            this._setPopupCoord(`.${currentTarget.getElement().className}`, true);
-          }
+  headerHandler(elem) {
+    for (let popup of this.popupCollection.keys()) {
+      if (popup === elem.id) {
+        const popup = this.popupCollection.get(`${elem.id}`);
+        if (!this.header.querySelector(`.${popup.getElement().className}`)) {
+          this._closeOtherPopup(popup);
+          renderMarkup(this.header, popup, `beforeend`);
+          this._setEventToCrossButton(popup);
+          this._setPopupCoord(elem.id, popup.getElement());
         } else {
-          currentTarget.deleteElement();
+          this._crossButtonHandler.call(popup);
         }
       }
     }
   }
 
-  crossButtonHandler(context, handlerCollection) {
-    context.deleteElement();
-    if (context.sendParticipantsList) {
-      this._removeFormHandlers(handlerCollection);
+  // //Support methods
+
+  _setEventToCrossButton(popup) {
+    if (popup.closePopupByCrossButton) {
+      popup.closePopupByCrossButton(this._crossButtonHandler.bind(popup));
     }
   }
 
-  sendFormHandler(list, handlerCollection) {
-    this.mainControllerInstance.render(list);
-    this.participantsPopup.deleteElement();
-    this._removeFormHandlers(handlerCollection);
+  _crossButtonHandler() {
+    if (this.closePopupByCrossButton) {
+      this.getElement().querySelector(`.popup__close`).removeEventListener(`click`, this.getCrossHandler());
+    }
+    this.deleteElement();
   }
 
-  inputHandler(checkValidation) {
-    if (checkValidation) {
-      this.participantsPopup.setListPassedChecks(true);
+  _closeOtherPopup(popupInstance) {
+    if (popupInstance !== this.music) {
+      for (let popup of this.popupCollection.values()) {
+        if (popup !== this.music) {
+          if (this.header.querySelector(`.${popup.getElement().className}`)) {
+            popup.getElement().querySelector(`.popup__close`).removeEventListener(`click`, popup.getCrossHandler());
+            popup.deleteElement();
+          }
+        }
+      }
+    }
+  }
+
+  _setPopupCoord(popupId, elem) {
+    if (popupId !== `audio-popup`) {
+      elem.style.left = `${(document.documentElement.clientWidth - elem.clientWidth) / 2}px`;
     } else {
-      this.participantsPopup.setListPassedChecks(false);
-    }
-  }
-
-  //Support methods
-
-  _setPopupCoord(popupClassName, withTop = false) {
-    const element = document.querySelector(`${popupClassName}`);
-    if (withTop) {
-      element.style.top = `${-70}px`;
-      element.style.left = `${(document.documentElement.clientWidth / 2) + 70}px`;
-      return;
-    }
-    element.style.left = `${(document.documentElement.clientWidth - element.clientWidth) / 2}px`;
-  }
-
-  _closeAllPopup() {
-    for (let popup of this.popupCollection.values()) {
-      if (popup !== this.music) {
-        popup.deleteElement();
-      }
-    }
-  }
-
-  _removeFormHandlers(handlerCollection) {
-    for (let item of handlerCollection) {
-      for (let handler of item.list) {
-        switch (item.context.tagName) {
-          case item.context.tagName === `INPUT`:
-            item.context.removeEventListener(`input`, handler);
-            break;
-          case item.context.tagName === `FORM`:
-            item.context.removeEventListener(`submit`, handler);
-            break;
-        }
-      }
+      elem.style.top = `${25}px`;
+      elem.style.left = `${(document.documentElement.clientWidth / 1.32)}px`;
     }
   }
 

@@ -6,56 +6,65 @@
   background-color: $white-color;
   box-shadow: 0 9px 22.72px 9.28px rgba(27, 27, 27, 0.2);
   z-index: 1;
-}
 
-.enter-participants-popup__container {
-  padding: 10px 20px;
-}
+  &__container {
+    padding: 10px 20px;
+  }
 
-.enter-participants-popup__headline {
-  margin-top: 0;
-  margin-bottom: 45px;
-  font-size: 25px;
-  line-height: 35px;
-  text-align: center;
-}
+  &__headline {
+    margin-top: 0;
+    margin-bottom: 45px;
+    font-size: 25px;
+    line-height: 35px;
+    text-align: center;
+  }
 
-.enter-participants-popup__form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex-wrap: wrap;
-}
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+  }
 
-.enter-participants-popup__participants-list {
-  margin-bottom: 20px;
-  width: 150px;
-  font-family: inherit;
-  background-color: #d6d6cf;
-  box-sizing: border-box;
-}
+  &__participants-list {
+    margin-bottom: 20px;
+    width: 150px;
+    font-family: inherit;
+    background-color: #d6d6cf;
+    box-sizing: border-box;
+  }
 
-.enter-participants-popup__participants-list,
-.enter-participants-popup__participants-list::placeholder {
-  padding: 0 5px;
-  font-weight: 700;
-  color: darkblue;
-}
+  &__participants-list,
+  &__participants-list::placeholder {
+    padding: 0 5px;
+    font-weight: 700;
+    color: darkblue;
+  }
 
-.enter-participants-popup__send-participants-list {
-  padding: 80px 0;
-  width: 150px;
-  border: none;
-  background-color: #f2f2f2;
-  background-image: url("../img/agutin-button.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: -83px 0;
-  color: $white-color;
-  cursor: pointer;
-}
+  &__participants-list::placeholder {
+    transition: all 1s;
+  }
 
-.enter-participants-popup__send-participants-list--gif {
-  background-image: url("../img/agutin-gif.gif");
-  background-position: center;
+  &__participants-list:hover::placeholder,
+  &__participants-list:focus::placeholder {
+    font-size: 10px;
+  }
+
+  &__send-participants-list {
+    padding: 80px 0;
+    width: 150px;
+    border: none;
+    background-color: #f2f2f2;
+    background-image: url("../img/agutin-button.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: -83px 0;
+    color: $white-color;
+    cursor: pointer;
+
+    &--gif {
+      background-image: url("../img/agutin-gif.gif");
+      background-position: center;
+    }
+  }
 }

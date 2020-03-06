@@ -2,10 +2,10 @@
   margin: $margin-auto;
   display: flex;
   justify-content: center;
-}
 
-.copyright__text {
-  margin: 0;
-  width: 350px;
-  text-align: center;
+  &__text {
+    margin: 0;
+    width: 350px;
+    text-align: center;
+  }
 }

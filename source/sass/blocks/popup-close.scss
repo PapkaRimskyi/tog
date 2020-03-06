@@ -4,4 +4,11 @@
   width: 35px;
   display: flex;
   justify-content: flex-end;
+  transition: all 1s;
+
+  &:hover,
+  &:focus {
+    opacity: 0.5;
+    transform: rotate(50deg);
+  }
 }
