@@ -1,5 +1,5 @@
 .header-nav {
-  width: 500px;
+  flex-grow: 4;
 
   &__list {
     margin: 0;
@@ -17,13 +17,13 @@
 
     &:hover,
     &:focus {
-      animation: up-and-down .2s ease-in-out;
+      animation: link-shake .2s linear;
       opacity: .5;
     }
   }
 }
 
-@keyframes up-and-down {
+@keyframes link-shake {
   0% {
     left: 0;
   }

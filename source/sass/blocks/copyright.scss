@@ -1,11 +1,30 @@
 .copyright {
   margin: $margin-auto;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 
   &__text {
     margin: 0;
     width: 350px;
     text-align: center;
+  }
+
+  &__participant {
+    display: inline-block;
+    position: relative;
+    transition: all .2s;
+
+    &--green-color:hover {
+      color: green;
+    }
+
+    &--gold-color:hover {
+      color: gold;
+    }
+
+    &:hover {
+      transform: scale(1.5);
+    }
   }
 }

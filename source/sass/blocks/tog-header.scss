@@ -12,6 +12,11 @@
     line-height: 50px;
     text-shadow: 5px -5px 15px darkred;
     word-wrap: break-word;
+    transition: all .5s;
+
+    &:hover {
+      text-shadow: 5px 12px 25px darkred;
+    }
   }
 
   &__container {
