@@ -69,7 +69,7 @@ export default class HeaderController {
 
   _crossButtonHandler() {
     if (this.closePopupByCrossButton) {
-      this.getElement().querySelector(`.popup__close`).removeEventListener(`click`, this.getCrossHandler());
+      this.getElement().querySelector(`.popup-close`).removeEventListener(`click`, this.getCrossHandler());
     }
     this.deleteElement();
   }
@@ -79,7 +79,7 @@ export default class HeaderController {
       for (let popup of this.popupCollection.values()) {
         if (popup !== this.music) {
           if (this.header.querySelector(`.${popup.getElement().className}`)) {
-            popup.getElement().querySelector(`.popup__close`).removeEventListener(`click`, popup.getCrossHandler());
+            popup.getElement().querySelector(`.popup-close`).removeEventListener(`click`, popup.getCrossHandler());
             popup.deleteElement();
           }
         }

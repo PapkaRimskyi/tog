@@ -5,8 +5,8 @@ import '../../../img/agutin-gif.gif';
 const participantsMarkup = () => `<section class="enter-participants-popup">
 <h2 class="visually-hidden">Окно для добавления участников</h2>
 <div class="enter-participants-popup__container">
-  <a class="popup__close participants-close" href="#">
-    <svg class="popup__close-svg" xmlns="http://www.w3.org/2000/svg" width="34.31" height="38.25" viewBox="0 0 35 39" fill="none" stroke="#242424" stroke-width="2">
+  <a class="popup-close participants-close" href="#">
+    <svg class="popup-close__svg" xmlns="http://www.w3.org/2000/svg" width="34.31" height="38.25" viewBox="0 0 35 39" fill="none" stroke="#242424" stroke-width="2">
       <path d="M.99 35.94L31.77 1.02m-29.24 0L33.3 35.94"/>
     </svg>
   </a>

@@ -1,8 +1,21 @@
 .time-and-data {
-  flex-grow: 1;
+  margin-bottom: 20px;
 
   &__info {
     margin: $margin-auto;
     width: 185px;
   }
 }
+
+@media (min-width: $tablet-width) {
+  .time-and-data {
+    margin-bottom: 0;
+    flex-grow: 1;
+  }
+}
+
+// @media (min-width: $desktop-width) {
+//   .time-and-data {
+//     flex-grow: 1;
+//   }
+// }

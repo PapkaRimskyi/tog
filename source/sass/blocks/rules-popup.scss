@@ -1,21 +1,13 @@
 .rules-popup {
   position: absolute;
-  top: 15%;
-  width: 600px;
+  top: 18%;
+  width: $mobile-width - 20px;
   background-color: $white-color;
   box-shadow: 0 9px 22.72px 9.28px rgba(27, 27, 27, 0.2);
   z-index: 1;
 
   &__container {
-    padding: 25px 40px;
-  }
-
-  &__close {
-    margin-left: auto;
-    margin-bottom: 25px;
-    width: 35px;
-    display: flex;
-    justify-content: flex-end;
+    padding: 10px;
   }
 
   &__headline {
@@ -36,5 +28,31 @@
 
   &__text {
     margin: 0;
+  }
+}
+
+@media (min-width: $tablet-width) {
+  .rules-popup {
+    top: 15%;
+    width: $tablet-width - 100px;
+
+    &__container {
+      padding: 10px 15px;
+    }
+  }
+}
+
+@media (min-width: $desktop-width) {
+  .rules-popup {
+    position: absolute;
+    top: 15%;
+    width: 600px;
+    background-color: $white-color;
+    box-shadow: 0 9px 22.72px 9.28px rgba(27, 27, 27, 0.2);
+    z-index: 1;
+
+    &__container {
+      padding: 25px 40px;
+    }
   }
 }

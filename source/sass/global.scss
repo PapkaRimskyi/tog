@@ -24,14 +24,22 @@
 
 body {
   margin: $margin-auto;
-  min-width: 1200px;
-  max-width: 1600px;
+  min-width: $mobile-width;
+  max-width: $mobile-width;
   font-size: 18px;
   font-family: "CeraStencilPRO", "Open Sans", sans-serif;
   font-weight: 400;
   line-height: 24px;
   color: $black-color;
   background-color: #f2f2f2;
+
+  @media (min-width: $tablet-width) {
+    max-width: $tablet-width;
+  }
+
+  @media (min-width: $desktop-width) {
+    max-width: $max-desktop-width;
+  }
 }
 
 .visually-hidden {

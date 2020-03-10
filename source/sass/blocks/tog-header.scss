@@ -1,16 +1,16 @@
 .tog-header {
-  margin-bottom: 170px;
+  margin: $margin-auto;
+  margin-bottom: 100px;
   padding-top: 25px;
-  width: 100%;
-  max-width: $max-width-desktop;
+  max-width: $mobile-width;
 
   &__title {
     margin: $margin-auto;
     margin-bottom: 25px;
-    width: 530px;
-    font-size: 50px;
-    line-height: 50px;
+    font-size: 34px;
+    line-height: 34px;
     text-shadow: 5px -5px 15px darkred;
+    text-align: center;
     word-wrap: break-word;
     transition: all .5s;
 
@@ -22,9 +22,43 @@
   &__container {
     position: relative;
     margin: $margin-auto;
-    width: 1050px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+  }
+}
+
+@media (min-width: $tablet-width) {
+  .tog-header {
+    margin-bottom: 150px;
+    max-width: $tablet-width;
+
+    &__title {
+      width: 530px;
+      font-size: 40px;
+      line-height: 40px;
+    }
+
+    &__container {
+      width: $tablet-width - 40px;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+}
+
+@media (min-width: $desktop-width) {
+  .tog-header {
+    margin-bottom: 170px;
+    max-width: $max-desktop-width;
+
+    &__title {
+      font-size: 50px;
+      line-height: 50px;
+    }
+
+    &__container {
+      width: $desktop-width - 40px;
+    }
   }
 }

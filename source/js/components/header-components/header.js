@@ -25,7 +25,7 @@ const headerMarkup = () => {
         <time class="time-and-data__info time-and-data__info--date" datetime="${timeData.dateTimeAttrValue}">${timeData.date}</time>|<time class="time-and-data__info time-and-data__info--time" dateTime="${timeData.time}">${timeData.time}</time>
       </p>
     </section>
-    <nav class="header-nav header-nav--margin-left">
+    <nav class="header-nav">
       <ul class="header-nav__list">
         <li class="header-nav__item">
           <a class="header-nav__link rules" id="rules-popup" href="#">Правила</a>
