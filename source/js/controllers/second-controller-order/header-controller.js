@@ -38,7 +38,7 @@ export default class HeaderController {
     this.header = this.documentBody.querySelector(`.tog-header`);
     this.popupCollection = new Map([[`rules-popup`, this.rulesPopup], [`audio-popup`, this.music], [`participants-popup`, this.participantsPopup]]);
     this.headerComponent.headerDelegation(this.headerHandler);
-    this._updateTime();
+    this.updateTime();
   }
 
   //Handler
@@ -48,33 +48,63 @@ export default class HeaderController {
       if (popup === elem.id) {
         const popup = this.popupCollection.get(`${elem.id}`);
         if (!this.header.querySelector(`.${popup.getElement().className}`)) {
-          this._closeOtherPopup(popup);
+          this.closeOtherPopup(popup);
           renderMarkup(this.header, popup, `beforeend`);
-          this._setEventToCrossButton(popup);
-          this._setPopupCoord(elem.id, popup.getElement());
+          this.setCrossButtonHandler(popup);
+          this.setFormHandler(popup, elem);
+          this.setPopupCoord(elem.id, popup.getElement());
         } else {
-          this._crossButtonHandler.call(popup);
+          this.crossButtonHandler.call(popup, this.removeFormHandlers.bind(popup));
         }
       }
     }
   }
 
-  // //Support methods
-
-  _setEventToCrossButton(popup) {
+  setCrossButtonHandler(popup) {
     if (popup.closePopupByCrossButton) {
-      popup.closePopupByCrossButton(this._crossButtonHandler.bind(popup));
+      popup.closePopupByCrossButton(this.crossButtonHandler.bind(popup, this.removeFormHandlers.bind(popup)));
     }
   }
 
-  _crossButtonHandler() {
-    if (this.closePopupByCrossButton) {
-      this.getElement().querySelector(`.popup-close`).removeEventListener(`click`, this.getCrossHandler());
-    }
+  crossButtonHandler(removeFormHandlers) {
+    event.preventDefault();
+    this.getElement().querySelector(`.popup-close`).removeEventListener(`click`, this.getCrossHandler());
+    removeFormHandlers();
     this.deleteElement();
   }
 
-  _closeOtherPopup(popupInstance) {
+  setFormHandler(popup, button) {
+    if (popup.inputValidation && popup.submitForm) {
+      popup.inputValidation(this.participantsInputHandler.bind(popup));
+      popup.submitForm(this.sendButtonHandler.bind(popup, this.mainControllerInstance, this.removeFormHandlers.bind(popup), button));
+    }
+  }
+
+  participantsInputHandler() {
+    this.setListPassedChecks(this.checkValidation());
+  }
+
+  sendButtonHandler(mainControllerInstance, removeFormHandler, button) {
+    event.preventDefault();
+    if (this.getListPassedChecks()) {
+      mainControllerInstance.render(this.getParticipantsList(this.getGamesNamesList()));
+      removeFormHandler();
+      button.disabled = true;
+      this.deleteElement();
+    }
+  }
+
+  //Support methods
+
+  removeFormHandlers() {
+    if (Object.hasOwnProperty.call(Object.getPrototypeOf(this), `inputValidation`) && Object.hasOwnProperty.call(Object.getPrototypeOf(this), `submitForm`)) {
+      for (let elem of this.getHandlerCollection()) {
+        elem.context.removeEventListener(`${elem.event}`, ...elem.list);
+      }
+    }
+  }
+
+  closeOtherPopup(popupInstance) {
     if (popupInstance !== this.music) {
       for (let popup of this.popupCollection.values()) {
         if (popup !== this.music) {
@@ -87,7 +117,7 @@ export default class HeaderController {
     }
   }
 
-  _setPopupCoord(popupId, elem) {
+  setPopupCoord(popupId, elem) {
     if (popupId !== `audio-popup`) {
       elem.style.left = `${(document.documentElement.clientWidth - elem.clientWidth) / 2}px`;
     } else {
@@ -96,7 +126,7 @@ export default class HeaderController {
     }
   }
 
-  _updateTime() {
+  updateTime() {
     this.timeData.date = this.headerComponent.getElement().querySelector(`.time-and-data__info--date`);
     this.timeData.time = this.headerComponent.getElement().querySelector(`.time-and-data__info--time`);
     const dateTimeInstance = new DateTime();

@@ -15,13 +15,21 @@
 
   &__link {
     position: relative;
+    font: inherit;
+    border: none;
+    background-color: transparent;
     text-decoration: none;
     color: $black-color;
+    cursor: pointer;
 
     &:hover,
     &:focus {
       animation: link-shake .2s linear;
       opacity: .5;
+    }
+
+    &:disabled {
+      opacity: .3;
     }
   }
 }
