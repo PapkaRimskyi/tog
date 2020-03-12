@@ -13,7 +13,7 @@
   &__participant {
     display: inline-block;
     position: relative;
-    transition: all .2s;
+    transition: color .2s, transform .2s;
 
     &--green-color:hover {
       color: green;

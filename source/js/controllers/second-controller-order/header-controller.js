@@ -52,7 +52,7 @@ export default class HeaderController {
           renderMarkup(this.header, popup, `beforeend`);
           this.setCrossButtonHandler(popup);
           this.setFormHandler(popup, elem);
-          this.setPopupCoord(elem.id, popup.getElement());
+          this.setPopupCoord(popup.getElement());
         } else {
           this.crossButtonHandler.call(popup, this.removeFormHandlers.bind(popup));
         }
@@ -68,8 +68,10 @@ export default class HeaderController {
 
   crossButtonHandler(removeFormHandlers) {
     event.preventDefault();
-    this.getElement().querySelector(`.popup-close`).removeEventListener(`click`, this.getCrossHandler());
-    removeFormHandlers();
+    if (this.closePopupByCrossButton) {
+      this.getElement().querySelector(`.popup-close`).removeEventListener(`click`, this.getCrossHandler());
+      removeFormHandlers();
+    }
     this.deleteElement();
   }
 
@@ -91,6 +93,7 @@ export default class HeaderController {
       removeFormHandler();
       button.disabled = true;
       this.deleteElement();
+      this.clearElement();
     }
   }
 
@@ -117,13 +120,8 @@ export default class HeaderController {
     }
   }
 
-  setPopupCoord(popupId, elem) {
-    if (popupId !== `audio-popup`) {
-      elem.style.left = `${(document.documentElement.clientWidth - elem.clientWidth) / 2}px`;
-    } else {
-      elem.style.top = `${25}px`;
-      elem.style.left = `${(document.documentElement.clientWidth / 1.32)}px`;
-    }
+  setPopupCoord(elem) {
+    elem.style.left = `${(document.documentElement.clientWidth - elem.clientWidth) / 2}px`;
   }
 
   updateTime() {

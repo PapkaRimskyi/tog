@@ -1,13 +1,12 @@
 .one-v-one {
   margin: $margin-auto;
-  width: 600px;
+  width: $mobile-width;
   display: flex;
   justify-content: center;
 
   &__participant {
     margin: 10px 0;
     padding: 0 10px;
-    width: 500px;
     box-sizing: border-box;
 
     &-info {
@@ -18,9 +17,34 @@
     &-points,
     &-stage-result {
       margin-top: 0;
-      padding: 0 25px;
+      padding: 0 20px;
       text-align: center;
     }
   }
 }
 
+@media (min-width: $tablet-width) {
+  .one-v-one {
+    width: 500px;
+
+    &__participant {
+      width: 400px;
+
+      &-name,
+      &-points,
+      &-stage-result {
+        padding: 0 25px;
+      }
+    }
+  }
+}
+
+@media (min-width: $desktop-width) {
+  .one-v-one {
+    width: 600px;
+
+    &__participant {
+      width: 500px;
+    }
+  }
+}

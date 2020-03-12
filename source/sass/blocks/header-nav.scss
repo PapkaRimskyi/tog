@@ -29,7 +29,9 @@
     }
 
     &:disabled {
+      animation: none;
       opacity: .3;
+      cursor: not-allowed;
     }
   }
 }

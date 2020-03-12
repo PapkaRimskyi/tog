@@ -1,12 +1,29 @@
 .tip-block {
   position: absolute;
-  left: 35px;
+  top: 44px;
+  right: -2px;
   margin: 0;
   padding: 2px 5px 8px;
-  width: 250px;
-  font-size: 20px;
+  width: 150px;
+  font-size: 16px;
+  line-height: 20px;
   font-weight: 700;
-  border: 2px solid black;
+  border: 2px solid $black-color;
   color: $black-color;
   background-color: $white-color;
+}
+
+@media (min-width: $tablet-width) {
+  .tip-block {
+    top: 44px;
+    width: 200px;
+    font-size: 20px;
+  }
+}
+
+@media (min-width: $desktop-width) {
+  .tip-block {
+    right: -250px;
+    width: 250px;
+  }
 }

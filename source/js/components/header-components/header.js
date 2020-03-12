@@ -28,7 +28,7 @@ const headerMarkup = () => {
     <nav class="header-nav">
       <ul class="header-nav__list">
         <li class="header-nav__item">
-          <button class="header-nav__link rules" id="rules-popup" type="button">Правила</button>
+          <button class="header-nav__link rules" id="rules-popup">Правила</button>
         </li>
         <li class="header-nav__item">
           <button class="header-nav__link audio-player" id="audio-popup">Плеер</button>

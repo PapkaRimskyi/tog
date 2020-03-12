@@ -41,7 +41,7 @@
   }
 
   &__participants-list::placeholder {
-    transition: all 1s;
+    transition: font-size 1s;
   }
 
   &__participants-list:hover::placeholder,

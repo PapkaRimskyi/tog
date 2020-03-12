@@ -1,11 +1,20 @@
 .music {
   position: absolute;
-  top: 40px;
-  left: 28%;
-  background-color: grey;
-  border-radius: 20px;
+  top: 315px;
 
   &__audio {
     display: flex;
+  }
+}
+
+@media (min-width: $tablet-width) {
+  .music {
+    top: 130px;
+  }
+}
+
+@media (min-width: $desktop-width) {
+  .music {
+    top: 136px;
   }
 }
