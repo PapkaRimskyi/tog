@@ -1,6 +1,7 @@
 .music {
   position: absolute;
-  top: 315px;
+  top: 34vh;
+  left: calc(50vw - (300px / 2));
 
   &__audio {
     display: flex;
@@ -9,12 +10,12 @@
 
 @media (min-width: $tablet-width) {
   .music {
-    top: 130px;
+    top: 15vh;
   }
 }
 
 @media (min-width: $desktop-width) {
   .music {
-    top: 136px;
+    top: 16vh;
   }
 }

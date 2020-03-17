@@ -16,11 +16,11 @@
     transition: color .2s, transform .2s;
 
     &--green-color:hover {
-      color: green;
+      color: $green-color;
     }
 
     &--gold-color:hover {
-      color: gold;
+      color: $gold-color;
     }
 
     &:hover {

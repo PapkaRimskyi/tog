@@ -14,16 +14,10 @@ const rulesMarkup = () => `<section class="rules-popup">
       <p class="rules-popup__text">Турнир проходит в 4 этапа.</p>
     </li>
     <li class="rules-popup__item">
-      <p class="rules-popup__text">В 1 фазе участники выстраиваются согласно алфавитному порядку. Дальше идет построение по количеству очков.</p>
-    </li>
-    <li class="rules-popup__item">
-      <p class="rules-popup__text">Числа рандомятся 3 раза, но в финале 5 раз.</p>
+      <p class="rules-popup__text">Флажок рядом с названием этапа - описание этапа.</p>
     </li>
     <li class="rules-popup__item">
       <p class="rules-popup__text">Игра, занявшая первое место, побеждает в турнире. Условие игрЫ в Игры, которые займут 2 и 3 место обговариваются ДО начала турнира.</p>
-    </li>
-    <li class="rules-popup__item">
-      <p class="rules-popup__text">Мошнить на победителя нельзя (кроме DBD и R6). Придется играть.</p>
     </li>
   </ol>
 </div>

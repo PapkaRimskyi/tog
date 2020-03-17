@@ -56,7 +56,7 @@ export default class ParticipantsListMethods extends AbstractClass {
         container.parentElement.style.borderColor = `#36b847`;
         passedParticipants++;
       } else {
-        container.parentElement.style.borderColor = `#da3131a4`;
+        container.parentElement.style.borderColor = `#fd0303`;
       }
     }
   }
@@ -75,9 +75,9 @@ export default class ParticipantsListMethods extends AbstractClass {
     const participants = this.findParticipants(participantsList, nameContainers);
     for (let i = 0; i < 1; i++) {
       if (participants[i][`${pointsType}`] > participants[i + 1][`${pointsType}`]) {
-        this.setBackgroundColor(participants[i].name, nameContainers, `#36b847`, `#da3131a4`);
+        this.setBackgroundColor(participants[i].name, nameContainers, `#36b847`, `#fd0303`);
       } else {
-        this.setBackgroundColor(participants[i + 1].name, nameContainers, `#36b847`, `#da3131a4`);
+        this.setBackgroundColor(participants[i + 1].name, nameContainers, `#36b847`, `#fd0303`);
       }
     }
   }

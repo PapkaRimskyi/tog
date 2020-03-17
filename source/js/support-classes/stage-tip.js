@@ -8,33 +8,28 @@ export default class StageTip extends ParticipantsListMethods {
   }
 
   stageTipInteraction() {
-    this.getElement().querySelector(`.stage-tip`).addEventListener(`mouseover`, (evt) => {
+    this.getElement().querySelector(`.stage-tip`).addEventListener(`click`, (evt) => {
       evt.preventDefault();
-      this.stageTipHoverHandler(evt);
-      this.stageTip.addEventListener(`mouseout`, this.stageTipHoverOutHandler);
+      this.stageTipHoverHandler();
     });
   }
 
-  stageTipHoverHandler(evt) {
-    let stageLvlTip = null;
-    let stageContainer = this.determineStageLvl(evt);
-    for (let elemClass of stageContainer.classList) {
-      for (let key of this.tipInfoInstance.getTipCollection().keys()) {
-        if (elemClass === key) {
-          stageLvlTip = this.tipInfoInstance.getTipForStage(elemClass);
-          break;
+  stageTipHoverHandler() {
+    if (!this.getElement().querySelector(`.stage-tip`).children.length) {
+      let stageLvlTip = null;
+      let stageContainer = this.determineStageLvl();
+      for (let elemClass of stageContainer.classList) {
+        for (let key of this.tipInfoInstance.getTipCollection().keys()) {
+          if (elemClass === key) {
+            stageLvlTip = this.tipInfoInstance.getTipForStage(elemClass);
+            break;
+          }
         }
       }
+      this.appendTipInfo(stageLvlTip);
+    } else {
+      Array.from(this.getElement().querySelector(`.stage-tip`).children).forEach((child) => child.remove());
     }
-    this.appendTipInfo(stageLvlTip);
-  }
-
-  stageTipHoverOutHandler() {
-    for (let child of this.children) {
-      child.remove();
-    }
-    this.removeEventListener(`mouseover`, this.stageTipHoverHandler);
-    this.removeEventListener(`mouseout`, this.stageTipHoverOutHandler);
   }
 
   appendTipInfo(stageLvlTip) {
@@ -57,8 +52,8 @@ export default class StageTip extends ParticipantsListMethods {
     return status;
   }
 
-  determineStageLvl(evt) {
-    let stageContainer = evt.target;
+  determineStageLvl() {
+    let stageContainer = event.target;
     while(this.hasStageClass(stageContainer)) {
       stageContainer = stageContainer.parentElement;
     }

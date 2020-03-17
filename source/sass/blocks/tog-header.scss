@@ -7,8 +7,8 @@
   &__title {
     margin: $margin-auto;
     margin-bottom: 25px;
-    font-size: 34px;
-    line-height: 34px;
+    font-size: 3vmax;
+    line-height: 3vmax;
     text-shadow: 5px -5px 15px darkred;
     text-align: center;
     word-wrap: break-word;
@@ -32,12 +32,6 @@
     margin-bottom: 150px;
     max-width: $tablet-width;
 
-    &__title {
-      width: 530px;
-      font-size: 40px;
-      line-height: 40px;
-    }
-
     &__container {
       width: $tablet-width - 40px;
       flex-direction: row;
@@ -51,11 +45,6 @@
   .tog-header {
     margin-bottom: 145px;
     max-width: $max-desktop-width;
-
-    &__title {
-      font-size: 50px;
-      line-height: 50px;
-    }
 
     &__container {
       width: $desktop-width - 40px;

@@ -2,13 +2,13 @@
   margin: $margin-auto;
   padding: 10px 15px;
   display: block;
-  background-color: #daa94e;
+  background-color: $button-stage-color;
   border: 2px solid transparent;
   cursor: crosshair;
 
   &:hover,
   &:focus {
-    border-color: #b61156;
+    border-color: $button-stage-border-color;
   }
 
   &:active {

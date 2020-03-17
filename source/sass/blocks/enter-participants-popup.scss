@@ -1,6 +1,7 @@
 .enter-participants-popup {
   position: absolute;
-  top: 18%;
+  top: 17vh;
+  left: calc(50% - (#{$mobile-width} - 10px) / 2);
   width: $mobile-width - 10px;
   background-color: $white-color;
   box-shadow: 0 9px 22.72px 9.28px rgba(27, 27, 27, 0.2);
@@ -53,24 +54,24 @@
     padding: 30px 0;
     width: 120px;
     border: none;
-    background-color: #f2f2f2;
     background-image: url("../img/agutin-button.png");
     background-repeat: no-repeat;
+    background-position: center;
     background-size: cover;
-    background-position: -7px 0;
+    background-color: #f2f2f2;
     color: $white-color;
     cursor: pointer;
 
     &:hover {
       background-image: url("../img/agutin-gif.gif");
-      background-position: center;
     }
   }
 }
 
 @media (min-width: $tablet-width) {
   .enter-participants-popup {
-    top: 15%;
+    top: 15vh;
+    left: calc(50% - 450px / 2);
     width: 450px;
 
     &__headline {
@@ -89,6 +90,8 @@
 
 @media (min-width: $desktop-width) {
   .enter-participants-popup {
+    top: 16vh;
+    left: calc(50% - 518px / 2);
     width: 518px;
 
     &__headline {

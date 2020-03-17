@@ -36,7 +36,7 @@ export default class Stage1Controller extends StageController {
         stageButton.textContent = `${launchCount + 1} бросок`;
       } else {
         stageButton.textContent = this._nextButtonStage;
-        this.stageInstance.highlightingGroupStageWinners(cellNames, 4, `points`);
+        this.stageInstance.highlightingGroupStageWinners(cellNames, 4);
       }
     } else {
       removeHandler();

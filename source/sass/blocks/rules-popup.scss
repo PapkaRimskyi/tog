@@ -1,6 +1,7 @@
 .rules-popup {
   position: absolute;
-  top: 17%;
+  top: 17vh;
+  left: calc(50% - (#{$mobile-width} - 20px) / 2);
   width: $mobile-width - 20px;
   background-color: $white-color;
   box-shadow: 0 9px 22.72px 9.28px rgba(27, 27, 27, 0.2);
@@ -33,7 +34,8 @@
 
 @media (min-width: $tablet-width) {
   .rules-popup {
-    top: 15%;
+    top: 15vh;
+    left: calc(50% - (#{$tablet-width} - 100px) / 2);
     width: $tablet-width - 100px;
 
     &__container {
@@ -45,11 +47,9 @@
 @media (min-width: $desktop-width) {
   .rules-popup {
     position: absolute;
-    top: 15%;
-    width: 600px;
-    background-color: $white-color;
-    box-shadow: 0 9px 22.72px 9.28px rgba(27, 27, 27, 0.2);
-    z-index: 1;
+    top: 16vh;
+    left: calc(50% - (#{$desktop-width} - 130px) / 2);
+    width: $desktop-width - 100px;
 
     &__container {
       padding: 25px 40px;

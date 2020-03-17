@@ -9,6 +9,7 @@ import { renderMarkup } from '../../utils.js';
 
 export default class HeaderController {
   constructor(mainControlllerInstance) {
+
     //main html component
     this.headerComponent = new Header();
     //main controller instance
@@ -20,6 +21,7 @@ export default class HeaderController {
     //other values
     this.documentBody = document.body;
     this.header = null;
+    this.openPopupMarkup = null;
 
     this.timeData = {
       date: null,
@@ -47,14 +49,14 @@ export default class HeaderController {
     for (let popup of this.popupCollection.keys()) {
       if (popup === elem.id) {
         const popup = this.popupCollection.get(`${elem.id}`);
-        if (!this.header.querySelector(`.${popup.getElement().className}`)) {
+        this.openPopupMarkup = popup.getElement();
+        if (!this.header.querySelector(`.${this.openPopupMarkup.className}`)) {
           this.closeOtherPopup(popup);
           renderMarkup(this.header, popup, `beforeend`);
           this.setCrossButtonHandler(popup);
           this.setFormHandler(popup, elem);
-          this.setPopupCoord(popup.getElement());
         } else {
-          this.crossButtonHandler.call(popup, this.removeFormHandlers.bind(popup));
+          this.crossButtonHandler.call(popup, this.removeFormHandlers.bind(this));
         }
       }
     }
@@ -118,10 +120,6 @@ export default class HeaderController {
         }
       }
     }
-  }
-
-  setPopupCoord(elem) {
-    elem.style.left = `${(document.documentElement.clientWidth - elem.clientWidth) / 2}px`;
   }
 
   updateTime() {

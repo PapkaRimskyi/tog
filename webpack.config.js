@@ -56,7 +56,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.(png|jpe?g|svg|gif)$/,
+        test: /\.(png|jpe?g|svg|gif|ico)$/,
         use: [
           {
             loader: 'file-loader',
@@ -95,6 +95,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: `./index.html`,
       template: `${PATHS.src}/index.html`,
+      favicon: `./source/img/favicon/favicon.ico`,
     }),
     new MiniCssExtractPlugin({
       filename: `${PATHS.assets}css/style.css`,
@@ -105,6 +106,7 @@ module.exports = {
     ]),
   ],
   devServer: {
+    host: `192.168.1.70`,
     contentBase: `build/`,
     port: 8081,
     open: true,
