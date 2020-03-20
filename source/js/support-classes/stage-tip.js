@@ -1,20 +1,20 @@
 import TipInfo from '../models/tip-models.js';
-import ParticipantsListMethods from './participants-list-methods.js';
+import AbstractClass from './abstract-class.js';
 
-export default class StageTip extends ParticipantsListMethods {
+export default class StageTip extends AbstractClass {
   constructor() {
     super();
     this.tipInfoInstance = new TipInfo();
+
+    this.stageTipHandler = this.stageTipHandler.bind(this);
   }
 
   stageTipInteraction() {
-    this.getElement().querySelector(`.stage-tip`).addEventListener(`click`, (evt) => {
-      evt.preventDefault();
-      this.stageTipHoverHandler();
-    });
+    this.getElement().querySelector(`.stage-tip`).addEventListener(`click`, this.stageTipHandler);
   }
 
-  stageTipHoverHandler() {
+  stageTipHandler() {
+    event.preventDefault();
     if (!this.getElement().querySelector(`.stage-tip`).children.length) {
       let stageLvlTip = null;
       let stageContainer = this.determineStageLvl();
@@ -58,5 +58,10 @@ export default class StageTip extends ParticipantsListMethods {
       stageContainer = stageContainer.parentElement;
     }
     return stageContainer;
+  }
+
+  removeTipHandler() {
+    Array.from(this.getElement().querySelector(`.stage-tip`).children).forEach((child) => child.remove());
+    this.getElement().querySelector(`.stage-tip`).removeEventListener(`click`, this.stageTipHandler);
   }
 }

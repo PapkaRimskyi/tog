@@ -4,19 +4,11 @@ import Stage2 from '../../components/main-component/stage-2.js';
 import Stage3Controller from './stage3-controller.js';
 import { renderMarkup } from '../../utils.js';
 
-const buttonStatus = {
-  multiple: `Мультимножитель!`,
-  nextParticipants: `Следующие участники!`,
-  nextStage: `Следующий этап!`,
-}
-
 export default class Stage2Controller extends StageController {
   constructor(participantsList) {
     super(new StageModel(participantsList));
-    this.COUNT_OF_PARTICIPANTS_QUARTER_FINAL = 4;
     this.MIN_MULTIPLE = 1;
     this.MAX_MULTIPLE = 3;
-    this.modifiedParticipantList(0, this.COUNT_OF_PARTICIPANTS_QUARTER_FINAL);
     this.setStageInstance(new Stage2(this.stageModel.getParticipantsList()));
 
     this.stageButtonHandler = this.stageButtonHandler.bind(this);
@@ -26,74 +18,80 @@ export default class Stage2Controller extends StageController {
 
   renderStage() {
     renderMarkup(this.mainTag, this.stageInstance, `beforeend`);
-    this.stageInstance.renderParticipant();
+    this.stageInstance.renderParticipant(this.stageModel.getParticipantsList());
     this.stageInstance.stageTipInteraction();
     this.stageInstance.stageButtonInteraction(this.stageButtonHandler);
   }
 
-  renderNextParticipant(participantContainer, stageButton) {
+  renderNextParticipant(participantContainer, stageButton, multipleStatus) {
     this.deletePreviousParticipants(participantContainer);
-    this.stageInstance.renderParticipant();
-    this.stageInstance.setMultipleStatus(true);
-    stageButton.textContent = buttonStatus.multiple;
+    this.stageInstance.renderParticipant(this.stageModel.getParticipantsList());
+    stageButton.textContent = multipleStatus;
   }
 
   //Handler
 
-  stageButtonHandler(participantsList, nameContainers, participantsCompleted, participantNumber, participantsContainer, stageButton, multipleStatus, removeHandler) {
-    if (stageButton.textContent !== buttonStatus.nextStage) {
-      if (multipleStatus) {
-        this.getMultiple(participantsList, nameContainers, participantsCompleted, stageButton);
-        this.stageInstance.highlightingStageWinner(participantsList, nameContainers, `points`);
-      } else {
-        if (participantNumber !== participantsList.length) {
-          this.renderNextParticipant(participantsContainer, stageButton);
-        }
-      }
+  stageButtonHandler() {
+    event.preventDefault();
+    const {stageButton, stageButtonStatus, multipleStatus, nameContainers, participantsIndex, completedParticipant, participantsContainer} = this.stageInstance.getParamHandler();
+    const participantsList = this.stageModel.getParticipantsList();
+    if (stageButton.textContent !== stageButtonStatus.nextStage) {
+      this.checkStageButtonStatus(multipleStatus, participantsList, nameContainers, completedParticipant, stageButton, stageButtonStatus, participantsIndex, participantsContainer);
     } else {
-      removeHandler();
+      stageButton.removeEventListener(`click`, this.stageButtonHandler);
+      this.stageInstance.removeTipHandler();
       this.stageInstance.deleteElement(document.querySelector(`.stage-2`));
-      this.stageInstance.sortParticipantsList(participantsList, `points`);
-      const participants = {
-        finalStage: participantsList.slice(0, 1),
-        semifinalStage: participantsList.slice(1, 3),
-      }
-      this.setNextStageControllerInstance(new Stage3Controller(participants));
+      this.setNextStageControllerInstance(new Stage3Controller(this.distributeParticipantsToStages(participantsList)));
       this.nextStageControllerInstance.renderStage();
     }
   }
 
   //Support methods
 
-  getMultiple(participantsList, nameContainers, participantsCompleted, stageButton) {
+  checkStageButtonStatus(multipleStatus, participantsList, nameContainers, completedParticipant, stageButton, stageButtonStatus, participantsIndex, participantsContainer) {
+    if (multipleStatus) {
+      this.getMultiple(participantsList, nameContainers);
+      this.stageInstance.setMultipleStatus(false);
+      this.isAllParticipantsCounted(completedParticipant, participantsList, stageButton, stageButtonStatus);
+      this.highlightingStageWinner(participantsList, nameContainers, `points`);
+    } else {
+      if (participantsIndex !== participantsList.length) {
+        this.renderNextParticipant(participantsContainer, stageButton, stageButtonStatus.multiple);
+        this.stageInstance.setMultipleStatus(true);
+      }
+    }
+  }
+
+  getMultiple(participantsList, nameContainers) {
     for (let name of nameContainers) {
       const resultContainer = name.parentElement.nextElementSibling;
-      for (let participant of participantsList) {
+      participantsList.forEach((participant) => {
         if (name.textContent === participant.name) {
-          participant.multiple = this.randomMultiple();
+          participant.multiple = this.randomNumber(this.MIN_MULTIPLE, this.MAX_MULTIPLE);
           resultContainer.textContent = `${participant.points} * ${participant.multiple} = ${participant.points * participant.multiple}`;
           participant.points = participant.points * participant.multiple;
         }
-      }
+      });
     }
-    this.stageInstance.setMultipleStatus(false);
-    this.isAllParticipantsCounted(participantsCompleted, participantsList, stageButton);
   }
 
-  deletePreviousParticipants(participantContainer) {
-    Array.from(participantContainer.children).forEach((participant) => participant.remove());
-  }
-
-  randomMultiple() {
-    return Math.floor(this.MIN_MULTIPLE + Math.random() * (this.MAX_MULTIPLE + 1 - this.MIN_MULTIPLE));
-  }
-
-
-  isAllParticipantsCounted(participantCount, participantsList, button) {
-    if (participantCount === participantsList.length) {
+  isAllParticipantsCounted(completedParticipant, participantsList, button, buttonStatus) {
+    if (completedParticipant === participantsList.length) {
       button.textContent = buttonStatus.nextStage;
     } else {
       button.textContent = buttonStatus.nextParticipants;
     }
+  }
+
+  distributeParticipantsToStages(participantsList) {
+    this.sortParticipantsList(participantsList);
+    return {
+      finalStage: participantsList.slice(0, 1),
+      semifinalStage: participantsList.slice(1, 3),
+    }
+  }
+
+  deletePreviousParticipants(participantContainer) {
+    Array.from(participantContainer.children).forEach((participant) => participant.remove());
   }
 }

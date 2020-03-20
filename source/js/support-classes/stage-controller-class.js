@@ -1,5 +1,8 @@
-export default class StageController {
+import ParticipantsListMethods from './participants-list-methods.js';
+
+export default class StageController extends ParticipantsListMethods {
   constructor(participantsList) {
+    super();
     this.mainTag = document.querySelector(`.tog-main`);
 
     this.stageModel = participantsList;

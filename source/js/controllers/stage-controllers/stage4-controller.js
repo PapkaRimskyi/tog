@@ -9,6 +9,9 @@ export default class Stage4Controller extends StageController {
   constructor(participantsList) {
     super(new StageModel(participantsList));
 
+    this.LAUNCH_COUNT_LESS_THAN = 6;
+    this.LAUNCH_COUNT = 1;
+
     this.setStageInstance(new Stage4(this.stageModel.getParticipantsList()));
 
     this.stageButtonHandler = this.stageButtonHandler.bind(this);
@@ -18,36 +21,52 @@ export default class Stage4Controller extends StageController {
 
   renderStage() {
     renderMarkup(this.mainTag, this.stageInstance, `beforeend`);
-    this.stageInstance.renderParticipant();
+    this.stageInstance.renderParticipant(this.stageModel.getParticipantsList());
     this.stageInstance.stageTipInteraction();
     this.stageInstance.stageButtonInteraction(this.stageButtonHandler);
   }
 
   //Handler
 
-  stageButtonHandler(participantsList, button, launchCount, maxLaunchCount, pointsContainer, nameContainers) {
-    if (button.textContent !== `У нас есть победитель!`) {
-      this.stageInstance.throwCube(participantsList, `finalPoints`, false);
+  stageButtonHandler() {
+    event.preventDefault();
+    const {stageButton, pointsContainer, namesContainer, winnerIsDeterminated} = this.stageInstance.getParamHandler();
+    const participantsList = this.stageModel.getParticipantsList();
+    if (stageButton.textContent !== winnerIsDeterminated) {
+      this.throwCube(participantsList, `finalPoints`, this.LAUNCH_COUNT, this.LAUNCH_COUNT_LESS_THAN, false);
       this.addFinalPoints(pointsContainer, participantsList);
-      if (launchCount + 1 < maxLaunchCount) {
-        button.textContent = `${launchCount + 1} бросок`;
-      } else {
-        this.stageInstance.highlightingStageWinner(participantsList, nameContainers, `finalPoints`);
-        button.textContent = `У нас есть победитель!`;
-        button.disabled = true;
-      }
+      this.setFinalButtonName(stageButton, participantsList, namesContainer, winnerIsDeterminated);
+      this.setWinnerText(stageButton, namesContainer);
     }
   }
 
   //Support methods
 
-  addSecondParticipant(secondParticipant) {
-    this.stageInstance.pushParticipant(secondParticipant);
+  addSecondParticipant(finalParticipantsList, secondParticipant) {
+    this.stageInstance.pushParticipant(finalParticipantsList, secondParticipant);
   }
 
   addFinalPoints(pointsContainer, participantsList) {
     for (let i = 0; i < pointsContainer.length; i++) {
       pointsContainer[i].textContent = participantsList[i].finalPoints;
+    }
+  }
+
+  setFinalButtonName(stageButton, participantsList, namesContainer, winnerIsDeterminated) {
+    if (this.LAUNCH_COUNT + 1 < this.LAUNCH_COUNT_LESS_THAN) {
+      stageButton.textContent = `${this.LAUNCH_COUNT + 1} бросок`;
+      this.LAUNCH_COUNT++;
+    } else {
+      this.highlightingStageWinner(participantsList, namesContainer, `finalPoints`);
+      stageButton.textContent = winnerIsDeterminated;
+      stageButton.disabled = true;
+    }
+  }
+
+  setWinnerText(stageButton, namesContainer) {
+    if (stageButton.disabled) {
+      namesContainer.forEach((nameContainer) => this.rgbToHex(nameContainer.style.backgroundColor) === this.GREEN_COLOR ? nameContainer.parentElement.nextElementSibling.textContent = `Winner`
+        : nameContainer.parentElement.nextElementSibling.textContent = `lOoSeeeR`);
     }
   }
 }
