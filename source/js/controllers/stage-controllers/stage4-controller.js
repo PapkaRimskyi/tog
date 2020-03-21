@@ -33,7 +33,7 @@ export default class Stage4Controller extends StageController {
     const {stageButton, pointsContainer, namesContainer, winnerIsDeterminated} = this.stageInstance.getParamHandler();
     const participantsList = this.stageModel.getParticipantsList();
     if (stageButton.textContent !== winnerIsDeterminated) {
-      this.throwCube(participantsList, `finalPoints`, this.LAUNCH_COUNT, this.LAUNCH_COUNT_LESS_THAN, false);
+      this.throwCube(participantsList, `finalPoints`, false);
       this.addFinalPoints(pointsContainer, participantsList);
       this.setFinalButtonName(stageButton, participantsList, namesContainer, winnerIsDeterminated);
       this.setWinnerText(stageButton, namesContainer);

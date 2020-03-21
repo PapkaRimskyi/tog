@@ -7,18 +7,20 @@ export default class ParticipantsListMethods {
 
   //Random number generation operations
 
-  throwCube(list, pointsType, launchCount, maxLaunchCount, sortFunction = true) {
-    if (launchCount !== maxLaunchCount) {
-      list.forEach((participant) => {
-        if (isNaN(participant[`${pointsType}`])) {
-          participant[`${pointsType}`] = 0;
-        }
-        participant[`${pointsType}`] += Math.floor(Math.random() * this.MAX_CUBE_POINTS);
-      });
-    }
+  throwCube(list, pointsType, sortFunction = true) {
+    list.forEach((participant) => {
+      if (isNaN(participant[`${pointsType}`])) {
+        participant[`${pointsType}`] = 0;
+      }
+      participant[`${pointsType}`] += this.randomCubePoints();
+    });
     if (sortFunction) {
       this.sortParticipantsList(list, pointsType);
     }
+  }
+
+  randomCubePoints() {
+    return Math.floor(Math.random() * this.MAX_CUBE_POINTS);
   }
 
   randomNumber(min, max) {
