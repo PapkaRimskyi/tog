@@ -50,7 +50,7 @@ export default class Stage2Controller extends StageController {
 
   checkStageButtonStatus(multipleStatus, participantsList, nameContainers, completedParticipant, stageButton, stageButtonStatus, participantsIndex, participantsContainer) {
     if (multipleStatus) {
-      this.getMultiple(participantsList, nameContainers);
+      this.writeParticipantsResult(participantsList, nameContainers);
       this.stageInstance.setMultipleStatus(false);
       this.isAllParticipantsCounted(completedParticipant, participantsList, stageButton, stageButtonStatus);
       this.highlightingStageWinner(participantsList, nameContainers, `points`);
@@ -62,17 +62,37 @@ export default class Stage2Controller extends StageController {
     }
   }
 
-  getMultiple(participantsList, nameContainers) {
-    for (let name of nameContainers) {
+  writeParticipantsResult(participantsList, nameContainers) {
+    do {
+      this.getMultiple(participantsList, nameContainers);
+    } while (this.checkForSimilarPoints(participantsList, nameContainers));
+    nameContainers.forEach((name) => {
       const resultContainer = name.parentElement.nextElementSibling;
       participantsList.forEach((participant) => {
         if (name.textContent === participant.name) {
-          participant.multiple = this.randomNumber(this.MIN_MULTIPLE, this.MAX_MULTIPLE);
           resultContainer.textContent = `${participant.points} * ${participant.multiple} = ${participant.points * participant.multiple}`;
           participant.points = participant.points * participant.multiple;
         }
+      })
+    })
+  }
+
+  getMultiple(participantsList, nameContainers) {
+    nameContainers.forEach((name) => {
+      participantsList.forEach((participant) => name.textContent === participant.name ? participant.multiple = this.randomNumber(this.MIN_MULTIPLE, this.MAX_MULTIPLE) : false);
+    });
+  }
+
+  checkForSimilarPoints(participantsList, nameContainers) {
+    const participantCouple = [];
+    nameContainers.forEach((name) => {
+      participantsList.forEach((participant) => {
+        if (name.textContent === participant.name) {
+          participantCouple.push(participant);
+        }
       });
-    }
+    });
+    return participantCouple[0].points * participantCouple[0].multiple === participantCouple[participantCouple.length - 1].points * participantCouple[participantCouple.length - 1].multiple ? true : false;
   }
 
   isAllParticipantsCounted(completedParticipant, participantsList, button, buttonStatus) {

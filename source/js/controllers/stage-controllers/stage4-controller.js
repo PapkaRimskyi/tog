@@ -33,7 +33,9 @@ export default class Stage4Controller extends StageController {
     const {stageButton, pointsContainer, namesContainer, winnerIsDeterminated} = this.stageInstance.getParamHandler();
     const participantsList = this.stageModel.getParticipantsList();
     if (stageButton.textContent !== winnerIsDeterminated) {
-      this.throwCube(participantsList, `finalPoints`, false);
+      this.throwCube(participantsList, `finalPoints`, false, false);
+      this.LAUNCH_COUNT++;
+      this.writeParticipantsResult(participantsList, pointsContainer);
       this.addFinalPoints(pointsContainer, participantsList);
       this.setFinalButtonName(stageButton, participantsList, namesContainer, winnerIsDeterminated);
       this.setWinnerText(stageButton, namesContainer);
@@ -42,8 +44,21 @@ export default class Stage4Controller extends StageController {
 
   //Support methods
 
-  addSecondParticipant(finalParticipantsList, secondParticipant) {
-    this.stageInstance.pushParticipant(finalParticipantsList, secondParticipant);
+  writeParticipantsResult(participantsList, pointsContainer) {
+    if (this.LAUNCH_COUNT + 1 === this.LAUNCH_COUNT_LESS_THAN) {
+      while(this.checkForSimilarPoints(participantsList)) {
+        for (let i = 0; i < this.LAUNCH_COUNT_LESS_THAN; i++) {
+          this.throwCube(participantsList, `finalPoints`, true, false);
+        }
+      }
+      this.addFinalPoints(pointsContainer, participantsList);
+    }
+  }
+
+  checkForSimilarPoints(participantsList) {
+    for (let i = 0; i < participantsList.length; i++) {
+      return participantsList[0].finalPoints === participantsList[participantsList.length - 1].finalPoints ? true : false;
+    }
   }
 
   addFinalPoints(pointsContainer, participantsList) {
@@ -55,7 +70,6 @@ export default class Stage4Controller extends StageController {
   setFinalButtonName(stageButton, participantsList, namesContainer, winnerIsDeterminated) {
     if (this.LAUNCH_COUNT + 1 < this.LAUNCH_COUNT_LESS_THAN) {
       stageButton.textContent = `${this.LAUNCH_COUNT + 1} бросок`;
-      this.LAUNCH_COUNT++;
     } else {
       this.highlightingStageWinner(participantsList, namesContainer, `finalPoints`);
       stageButton.textContent = winnerIsDeterminated;
@@ -68,5 +82,9 @@ export default class Stage4Controller extends StageController {
       namesContainer.forEach((nameContainer) => this.rgbToHex(nameContainer.style.backgroundColor) === this.GREEN_COLOR ? nameContainer.parentElement.nextElementSibling.textContent = `Winner`
         : nameContainer.parentElement.nextElementSibling.textContent = `lOoSeeeR`);
     }
+  }
+
+  addSecondParticipant(finalParticipantsList, secondParticipant) {
+    this.stageInstance.pushParticipant(finalParticipantsList, secondParticipant);
   }
 }

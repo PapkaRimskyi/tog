@@ -21,4 +21,12 @@ export default class StageController extends ParticipantsListMethods {
   modifiedParticipantList(min, max) {
     this.stageModel.cropParticipantsList(min, max);
   }
+
+  checkForSimilarPoints() {
+    throw new Error(`Need to rewrite under stage-controller.`);
+  }
+
+  writeParticipantsResult() {
+    throw new Error(`Need to rewrite under stage-controller.`);
+  }
 }

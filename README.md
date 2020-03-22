@@ -38,7 +38,8 @@ TODO:
 - [X] Disabling button "Вписать новых участников" until game not be ended.
 - [ ] When winner appear - need to add button, which restart all game.
 - [ ] Visualization (set animation i mean) when winner appear.
-- [ ] When participants in the end of throws have same points (or finalPoints, depends from stage), they do rethrows until they get a different points.
+- [X] When participants in the end of throws have same points (or finalPoints, depends from stage), they do rethrows until they get a different points.
 - [ ] To do something with "Гороскоп" item. Maybe to plug some interesting API.
+---
 Bugs:
 - [ ] Bug with clock. Does not change date, when time changes from 23:59:59 to 00:00:00 next day.

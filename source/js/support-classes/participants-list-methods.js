@@ -7,9 +7,9 @@ export default class ParticipantsListMethods {
 
   //Random number generation operations
 
-  throwCube(list, pointsType, sortFunction = true) {
+  throwCube(list, pointsType, droppingPoints = false, sortFunction = true) {
     list.forEach((participant) => {
-      if (isNaN(participant[`${pointsType}`])) {
+      if (isNaN(participant[`${pointsType}`]) || droppingPoints) {
         participant[`${pointsType}`] = 0;
       }
       participant[`${pointsType}`] += this.randomCubePoints();
@@ -32,6 +32,13 @@ export default class ParticipantsListMethods {
       return `+`;
     }
     return `-`;
+  }
+
+  getRandomNumber(min, max, participant) {
+    if (participant.sign === `-`) {
+      return this.randomNumber(min, participant.points);
+    }
+    return this.randomNumber(min, max);
   }
 
   // Manipulation with participantsList or with background-color value
