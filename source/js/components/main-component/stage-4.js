@@ -43,6 +43,7 @@ export default class Stage4 extends Stage {
       pointsContainer: this.participantsPointsContainer,
       namesContainer: this.participantsNamesContainer,
       winnerIsDeterminated: this.winnerIsDeterminated,
+      crownMarkup: this.markupConstructorInstance.crownSvg(),
     }
   }
 }

@@ -21,6 +21,13 @@
       text-align: center;
     }
   }
+
+  &__winner {
+    position: absolute;
+    top: -2.6vh;
+    left: -12%;
+    transform: rotate(-20deg);
+  }
 }
 
 @media (min-width: $tablet-width) {
@@ -36,6 +43,12 @@
         padding: 0 25px;
       }
     }
+
+    &__winner {
+      animation: crownAnimation 1s ease-out .2s;
+      animation-fill-mode: forwards;
+      opacity: 0;
+    }
   }
 }
 
@@ -46,5 +59,16 @@
     &__participant {
       width: 500px;
     }
+  }
+}
+
+@keyframes crownAnimation {
+  from {
+    left: -12%;
+    opacity: 0;
+  }
+  to {
+    left: 28%;
+    opacity: 1;
   }
 }

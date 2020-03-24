@@ -11,6 +11,7 @@
   border: 2px solid $black-color;
   color: $black-color;
   background-color: $white-color;
+  z-index: 100;
 }
 
 @media (min-width: $tablet-width) {

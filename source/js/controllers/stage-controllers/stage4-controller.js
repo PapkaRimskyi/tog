@@ -30,7 +30,7 @@ export default class Stage4Controller extends StageController {
 
   stageButtonHandler() {
     event.preventDefault();
-    const {stageButton, pointsContainer, namesContainer, winnerIsDeterminated} = this.stageInstance.getParamHandler();
+    const {stageButton, pointsContainer, namesContainer, winnerIsDeterminated, crownMarkup} = this.stageInstance.getParamHandler();
     const participantsList = this.stageModel.getParticipantsList();
     if (stageButton.textContent !== winnerIsDeterminated) {
       this.throwCube(participantsList, `finalPoints`, false, false);
@@ -38,7 +38,7 @@ export default class Stage4Controller extends StageController {
       this.writeParticipantsResult(participantsList, pointsContainer);
       this.addFinalPoints(pointsContainer, participantsList);
       this.setFinalButtonName(stageButton, participantsList, namesContainer, winnerIsDeterminated);
-      this.setWinnerText(stageButton, namesContainer);
+      this.setWinnerText(stageButton, namesContainer, crownMarkup);
     }
   }
 
@@ -68,8 +68,8 @@ export default class Stage4Controller extends StageController {
   }
 
   setFinalButtonName(stageButton, participantsList, namesContainer, winnerIsDeterminated) {
-    if (this.LAUNCH_COUNT + 1 < this.LAUNCH_COUNT_LESS_THAN) {
-      stageButton.textContent = `${this.LAUNCH_COUNT + 1} бросок`;
+    if (this.LAUNCH_COUNT < this.LAUNCH_COUNT_LESS_THAN) {
+      stageButton.textContent = `${this.LAUNCH_COUNT} бросок`;
     } else {
       this.highlightingStageWinner(participantsList, namesContainer, `finalPoints`);
       stageButton.textContent = winnerIsDeterminated;
@@ -77,10 +77,26 @@ export default class Stage4Controller extends StageController {
     }
   }
 
-  setWinnerText(stageButton, namesContainer) {
+  setWinnerText(stageButton, namesContainer, crownMarkup) {
     if (stageButton.disabled) {
-      namesContainer.forEach((nameContainer) => this.rgbToHex(nameContainer.style.backgroundColor) === this.GREEN_COLOR ? nameContainer.parentElement.nextElementSibling.textContent = `Winner`
-        : nameContainer.parentElement.nextElementSibling.textContent = `lOoSeeeR`);
+      namesContainer.forEach((nameContainer) => {
+        const resultContainer = nameContainer.parentElement.nextElementSibling;
+        if (this.rgbToHex(nameContainer.style.backgroundColor) === this.GREEN_COLOR) {
+          resultContainer.textContent = `Winner`;
+          this.setAnimationToWinner(resultContainer.textContent, resultContainer, crownMarkup);
+        } else {
+          resultContainer.textContent = `lOoSeeeR`;
+        }
+      });
+    }
+  }
+
+  setAnimationToWinner(participantStatus, resultContainer, crownMarkup) {
+    switch (participantStatus) {
+      case `Winner`:
+        resultContainer.style.position = `relative`;
+        renderMarkup(resultContainer, crownMarkup, `beforeend`, true);
+        break;
     }
   }
 
