@@ -102,7 +102,7 @@ export default class HeaderController {
   //Support methods
 
   removeFormHandlers() {
-    if (Object.hasOwnProperty.call(Object.getPrototypeOf(this), `inputValidation`) && Object.hasOwnProperty.call(Object.getPrototypeOf(this), `submitForm`)) {
+    if (this.inputValidation && this.submitForm) {
       for (let elem of this.getHandlerCollection()) {
         elem.context.removeEventListener(`${elem.event}`, ...elem.list);
       }

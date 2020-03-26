@@ -7,6 +7,8 @@ export default class Stage4 extends Stage {
     super(firstParticipant);
 
     this.winnerIsDeterminated = `У нас есть победитель!`;
+
+    this.reloadButton = null;
   }
 
   //Template
@@ -23,6 +25,12 @@ export default class Stage4 extends Stage {
     }
     this.participantsNamesContainer = this.getElement().querySelectorAll(`.one-v-one__participant-name`);
     this.participantsPointsContainer = this.getElement().querySelectorAll(`.one-v-one__participant-points`);
+  }
+
+  renderReloadButton(handler) {
+    renderMarkup(document.querySelector(`.tog-main`), this.markupConstructorInstance.reloadButtonGame(), `beforeend`, true);
+    this.reloadButton = document.querySelector(`.button--reload`);
+    this.reloadButton.addEventListener(`click`, handler);
   }
 
   //Button interaction
@@ -44,6 +52,7 @@ export default class Stage4 extends Stage {
       namesContainer: this.participantsNamesContainer,
       winnerIsDeterminated: this.winnerIsDeterminated,
       crownMarkup: this.markupConstructorInstance.crownSvg(),
+      reloadButton: this.reloadButton,
     }
   }
 }

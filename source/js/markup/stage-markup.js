@@ -53,6 +53,10 @@ export default class MarkupConstructor {
     `;
   }
 
+  reloadButtonGame() {
+    return `<button class="button button--reload" aria-label="Перезагрузка игры"></button>`;
+  }
+
   checkTypeStage(type = `!tableMarkup`) {
     switch(type) {
       case `tableMarkup`:

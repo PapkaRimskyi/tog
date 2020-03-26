@@ -2,6 +2,7 @@ import StageController from '../../support-classes/stage-controller-class.js';
 import StageModel from '../../models/stage-model.js';
 import Stage4 from '../../components/main-component/stage-4.js';
 import '../../../img/crown.svg';
+import '../../../img/arrow.png';
 
 import { renderMarkup } from '../../utils.js';
 
@@ -15,6 +16,7 @@ export default class Stage4Controller extends StageController {
     this.setStageInstance(new Stage4(this.stageModel.getParticipantsList()));
 
     this.stageButtonHandler = this.stageButtonHandler.bind(this);
+    this.reloadButtonHandler = this.reloadButtonHandler.bind(this);
   }
 
   //Render
@@ -40,6 +42,17 @@ export default class Stage4Controller extends StageController {
       this.setFinalButtonName(stageButton, participantsList, namesContainer, winnerIsDeterminated);
       this.setWinnerText(stageButton, namesContainer, crownMarkup);
     }
+  }
+
+  reloadButtonHandler() {
+    event.preventDefault();
+    const {stageButton, reloadButton} = this.stageInstance.getParamHandler();
+    stageButton.removeEventListener(`click`, this.stageButtonHandler);
+    this.stageInstance.removeTipHandler();
+    this.stageInstance.deleteElement(document.querySelector(`.stage-4`));
+    reloadButton.removeEventListener(`click`, this.reloadButtonHandler);
+    this.stageInstance.deleteElement(reloadButton);
+    document.getElementById(`participants-popup`).disabled = false;
   }
 
   //Support methods
@@ -74,6 +87,8 @@ export default class Stage4Controller extends StageController {
       this.highlightingStageWinner(participantsList, namesContainer, `finalPoints`);
       stageButton.textContent = winnerIsDeterminated;
       stageButton.disabled = true;
+      stageButton.style.marginBottom = `10px`;
+      this.stageInstance.renderReloadButton(this.reloadButtonHandler);
     }
   }
 
