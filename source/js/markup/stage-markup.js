@@ -1,9 +1,11 @@
-export default class MarkupConstructor {
+export default class stageMarkup {
   constructor(participantsList) {
     this.participantsList = participantsList;
   }
 
-  stageMarkup(numberOfStage, stageName, defaultButtonText, type) {
+  //Markup
+
+  getStageLevelMarkup(numberOfStage, stageName, defaultButtonText, type) {
   return `<section class="tournament stage stage-${numberOfStage}">
   <h1 class="stage__headline stage-${numberOfStage}__headline--color">
     <span class="stage__headline-name">
@@ -16,7 +18,7 @@ export default class MarkupConstructor {
   </section>`;
   }
 
-  tableMarkup() {
+  getTableMarkup() {
   return `<table class="stage__table">
   ${this.participantsList.map((participant) => {
     return `<tr>
@@ -31,11 +33,11 @@ export default class MarkupConstructor {
   </table>`;
   }
 
-  oneVersusOneMarkup() {
+  getOneVersusOneMarkup() {
     return `<div class="one-v-one"></div>`;
   }
 
-  stageParticipantsMarkup(participant, zeroPoints = false) {
+  getStageParticipantsMarkup(participant, zeroPoints = false) {
   return `<div class="one-v-one__participant">
   <div class="one-v-one__participant-info">
     <p class="one-v-one__participant-name">${participant.name}</p>
@@ -44,6 +46,8 @@ export default class MarkupConstructor {
   <p class="one-v-one__participant-stage-result">Result here</p>
   </div>`;
   }
+
+  //Support methods
 
   crownSvg() {
     return `<svg class="one-v-one__winner" width="50" height="50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 90" fill="#D4AF37">
@@ -60,9 +64,9 @@ export default class MarkupConstructor {
   checkTypeStage(type = `!tableMarkup`) {
     switch(type) {
       case `tableMarkup`:
-        return this.tableMarkup();
+        return this.getTableMarkup();
       case `!tableMarkup`:
-        return this.oneVersusOneMarkup();
+        return this.getOneVersusOneMarkup();
     }
   }
 }

@@ -12,14 +12,14 @@ export default class Stage3 extends Stage {
   //Template
 
   getTemplate() {
-    return this.markupConstructorInstance.stageMarkup(3, `Полуфинал`, `Мне повезет!`);
+    return this.markupConstructorInstance.getStageLevelMarkup(3, `Полуфинал`, `Мне повезет!`);
   }
 
   //Render
 
   renderParticipant(participantsList) {
     for (let i = 0; i < participantsList.length; i++) {
-      renderMarkup(this.participantContainer, this.markupConstructorInstance.stageParticipantsMarkup(participantsList[i]), `beforeend`, true);
+      renderMarkup(this.participantContainer, this.markupConstructorInstance.getStageParticipantsMarkup(participantsList[i]), `beforeend`, true);
     }
     this.participantsNamesContainer = this.getElement().querySelectorAll(`.one-v-one__participant-name`);
   }

@@ -21,7 +21,7 @@ export default class Stage2 extends Stage {
   //Template
 
   getTemplate() {
-    return this.markupConstructorInstance.stageMarkup(2, `Четвертьфинал`, `Мультимножитель!`);
+    return this.markupConstructorInstance.getStageLevelMarkup(2, `Четвертьфинал`, `Мультимножитель!`);
   }
 
   //Render
@@ -29,7 +29,7 @@ export default class Stage2 extends Stage {
   renderParticipant(participantsList) {
     this.numberOfParticipantsCompleted = this.participantIndex + 2;
     for (this.participantIndex; this.participantIndex < this.numberOfParticipantsCompleted; this.participantIndex++) {
-      renderMarkup(this.participantContainer, this.markupConstructorInstance.stageParticipantsMarkup(participantsList[this.participantIndex]), `beforeend`, true);
+      renderMarkup(this.participantContainer, this.markupConstructorInstance.getStageParticipantsMarkup(participantsList[this.participantIndex]), `beforeend`, true);
     }
     this.participantsNameContainer = this.getElement().querySelectorAll(`.one-v-one__participant-name`);
   }

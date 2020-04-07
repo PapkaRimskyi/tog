@@ -26,8 +26,4 @@ export default class AbstractClass {
       elem.remove();
     }
   }
-
-  clearElement() {
-    this._element = null;
-  }
 }

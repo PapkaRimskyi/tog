@@ -1,11 +1,11 @@
 import StageTip from './stage-tip.js';
-import MarkupConstructor from '../markup/stage-markup.js';
+import stageMarkup from '../markup/stage-markup.js';
 
 export default class Stage extends StageTip {
   constructor(participantsList) {
     super();
 
-    this.markupConstructorInstance = new MarkupConstructor(participantsList);
+    this.markupConstructorInstance = new stageMarkup(participantsList);
 
     this.participantsNamesContainer = null;
     this.participantsPointsContainer = null;

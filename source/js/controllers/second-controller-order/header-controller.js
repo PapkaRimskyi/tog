@@ -1,3 +1,5 @@
+import HeaderMarkup from '../../markup/header-markup.js';
+
 import Header from '../../components/header-components/header.js';
 import RulesPopup from '../../components/header-components/rules-popup.js';
 import Music from '../../components/header-components/music-tab.js';
@@ -9,27 +11,27 @@ import { renderMarkup } from '../../utils.js';
 
 export default class HeaderController {
   constructor(mainControlllerInstance) {
-
-    //main html component
-    this.headerComponent = new Header();
-    //main controller instance
     this.mainControllerInstance = mainControlllerInstance;
-    //popups component
-    this.participantsPopup = new ParticipantsPopup();
-    this.rulesPopup = new RulesPopup();
-    this.music = new Music();
-    //other values
+
+    this.headerMarkupInstance = new HeaderMarkup();
+
+    this.headerComponent = new Header(this.headerMarkupInstance.getHeaderMarkup());
+
+    this.participantsPopup = new ParticipantsPopup(this.headerMarkupInstance.getParticipantsPopupMarkup());
+    this.rulesPopup = new RulesPopup(this.headerMarkupInstance.getRulesPopupMarkup());
+    this.music = new Music(this.headerMarkupInstance.getMusicMarkup());
+
     this.documentBody = document.body;
     this.header = null;
-    this.openPopupMarkup = null;
 
     this.timeData = {
       date: null,
       time: null,
     }
+
     //popup map collection
     this.popupCollection = null;
-    //functions bind by this context
+
     this.headerHandler = this.headerHandler.bind(this);
   }
 
@@ -49,8 +51,8 @@ export default class HeaderController {
     for (let popup of this.popupCollection.keys()) {
       if (popup === elem.id) {
         const popup = this.popupCollection.get(`${elem.id}`);
-        this.openPopupMarkup = popup.getElement();
-        if (!this.header.querySelector(`.${this.openPopupMarkup.className}`)) {
+        const openPopupMarkup = popup.getElement();
+        if (!this.header.querySelector(`.${openPopupMarkup.className}`)) {
           this.closeOtherPopup(popup);
           renderMarkup(this.header, popup, `beforeend`);
           this.setCrossButtonHandler(popup);
@@ -95,7 +97,8 @@ export default class HeaderController {
       removeFormHandler();
       button.disabled = true;
       this.deleteElement();
-      this.clearElement();
+      this.input.value = ``;
+      this.getHandlerCollection().forEach((context) => delete context.list);
     }
   }
 

@@ -13,7 +13,7 @@ export default class Stage1 extends Stage {
   //Template
 
   getTemplate() {
-    return this.markupConstructorInstance.stageMarkup(1, `Групповой этап`, `1 бросок`, `tableMarkup`);
+    return this.markupConstructorInstance.getStageLevelMarkup(1, `Групповой этап`, `1 бросок`, `tableMarkup`);
   }
 
   //Button interaction
