@@ -1,26 +1,74 @@
 .one-v-one {
   margin: $margin-auto;
-  width: 600px;
+  width: $mobile-width;
   display: flex;
   justify-content: center;
 
   &__participant {
     margin: 10px 0;
     padding: 0 10px;
-    width: 500px;
     box-sizing: border-box;
 
     &-info {
-      border-bottom: 1px solid black;
+      border-bottom: 1px solid $black-color;
     }
 
     &-name,
     &-points,
     &-stage-result {
       margin-top: 0;
-      padding: 0 25px;
+      padding: 0 20px;
       text-align: center;
+    }
+  }
+
+  &__winner {
+    position: absolute;
+    top: -2.6vh;
+    left: -12%;
+    transform: rotate(-20deg);
+  }
+}
+
+@media (min-width: $tablet-width) {
+  .one-v-one {
+    width: 500px;
+
+    &__participant {
+      width: 400px;
+
+      &-name,
+      &-points,
+      &-stage-result {
+        padding: 0 25px;
+      }
+    }
+
+    &__winner {
+      animation: crownAnimation 1s ease-out .2s;
+      animation-fill-mode: forwards;
+      opacity: 0;
     }
   }
 }
 
+@media (min-width: $desktop-width) {
+  .one-v-one {
+    width: 600px;
+
+    &__participant {
+      width: 500px;
+    }
+  }
+}
+
+@keyframes crownAnimation {
+  from {
+    left: -12%;
+    opacity: 0;
+  }
+  to {
+    left: 28%;
+    opacity: 1;
+  }
+}

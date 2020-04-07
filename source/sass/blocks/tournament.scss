@@ -1,4 +1,16 @@
 .tournament {
   margin: $margin-auto;
-  width: 800px;
+  max-width: $mobile-width - 10px;
+}
+
+@media (min-width: $tablet-width) {
+  .tournament {
+    max-width: $tablet-width;
+  }
+}
+
+@media (min-width: $desktop-width) {
+  .tournament {
+    max-width: $desktop-width;
+  }
 }

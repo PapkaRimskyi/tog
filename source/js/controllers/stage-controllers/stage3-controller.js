@@ -6,7 +6,7 @@ import { renderMarkup } from '../../utils.js';
 
 export default class Stage3Controller extends StageController {
   constructor(participantsList) {
-    super(new StageModel(participantsList), new Stage3(participantsList.semifinalStage));
+    super(new StageModel(participantsList));
 
     this.setStageInstance(new Stage3(this.stageModel.getSemifinalParticipants()));
 
@@ -19,59 +19,73 @@ export default class Stage3Controller extends StageController {
 
   renderStage() {
     renderMarkup(this.mainTag, this.stageInstance, `beforeend`);
-    this.stageInstance.renderParticipant();
+    this.stageInstance.renderParticipant(this.stageModel.getSemifinalParticipants());
     this.stageInstance.stageTipInteraction();
     this.stageInstance.stageButtonInteraction(this.stageButtonHandler);
   }
 
   //Handler
 
-  stageButtonHandler(participantsList, nameContainers, button, removeHandler) {
-    if (button.textContent !== 'К финалу!') {
-      this.randomValues(participantsList, nameContainers);
-      button.textContent = `К финалу!`;
-      this.stageInstance.sortParticipantsList(participantsList, `points`);
-      this.stageInstance.highlightingStageWinner(participantsList, nameContainers, `points`);
+  stageButtonHandler() {
+    event.preventDefault();
+    const {stageButton, nameContainers, finalStatus} = this.stageInstance.getParamHandler();
+    const participantsList = this.stageModel.getSemifinalParticipants();
+    if (stageButton.textContent !== finalStatus) {
+      this.writeParticipantsResult(participantsList, nameContainers);
+      stageButton.textContent = finalStatus;
+      this.sortParticipantsList(participantsList, `points`);
+      this.highlightingStageWinner(participantsList, nameContainers, `points`);
     } else {
-      removeHandler();
+      stageButton.removeEventListener(`click`, this.stageButtonHandler);
+      this.stageInstance.removeTipHandler();
       this.stageInstance.deleteElement(document.querySelector(`.stage-3`));
-      this.nextStageControllerInstance.addSecondParticipant(participantsList[0]);
+      this.nextStageControllerInstance.addSecondParticipant(this.stageModel.getFinalParticipants(), participantsList[0]);
       this.nextStageControllerInstance.renderStage();
     }
   }
 
   //Support methods
 
-  randomValues(participantsList, nameContainers) {
-    for (let name of nameContainers) {
+  writeParticipantsResult(participantsList, nameContainers) {
+    do {
+      this.randomValues(participantsList, nameContainers);
+    } while (this.checkForSimilarPoints(participantsList, nameContainers));
+    nameContainers.forEach((name) => {
       const resultContainer = name.parentElement.nextElementSibling;
-      for (let participant of participantsList) {
+      participantsList.forEach((participant) => {
         if (name.textContent === participant.name) {
-          this.setRandomValues(participant, resultContainer);
+          this.setParticipantResult(participant, resultContainer);
         }
-      }
-    }
+      })
+    })
   }
 
-  setRandomValues(participant, resultContainer) {
-    participant.sign = this.getRandomSign(1, 10);
-    participant.randomNumber = this.getRandomNumber(0, 100, participant);
+  randomValues(participantsList, nameContainers) {
+    nameContainers.forEach((name) => {
+      participantsList.forEach((participant) => {
+        if (name.textContent === participant.name) {
+          participant.sign = this.getRandomSign(1, 10);
+          participant.randomNumber = this.getRandomNumber(0, 100, participant);
+        }
+      });
+    });
+  }
+
+  checkForSimilarPoints(participantsList, nameContainers) {
+    const participantCouple = [];
+    nameContainers.forEach((name) => {
+      participantsList.forEach((participant) => {
+        if (name.textContent === participant.name) {
+          participantCouple.push(participant);
+        }
+      });
+    });
+    return this.calculateResult(participantCouple[0]) === this.calculateResult(participantCouple[participantCouple.length - 1]) ? true : false;
+  }
+
+  setParticipantResult(participant, resultContainer) {
     resultContainer.textContent = `${participant.points} ${participant.sign} ${participant.randomNumber} = ${this.calculateResult(participant)}`;
     participant.points = this.calculateResult(participant);
-  }
-
-  getRandomSign(minValue, maxValue) {
-    if (this.randomNumber(minValue, maxValue) % 2 === 0) {
-      return `+`;
-    }
-    return `-`;
-  }
-
-  getRandomNumber(min, max, participant) {
-    if (participant.sign === `-`) {
-      return this.randomNumber(min, participant.points);
-    }
-    return this.randomNumber(min, max);
   }
 
   calculateResult(participant) {
@@ -79,9 +93,5 @@ export default class Stage3Controller extends StageController {
       return participant.points - participant.randomNumber;
     }
     return participant.points + participant.randomNumber;
-  }
-
-  randomNumber(min, max) {
-    return Math.floor(min + Math.random() * (max + 1 - min));
   }
 }

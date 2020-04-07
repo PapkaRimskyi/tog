@@ -2,17 +2,32 @@
   margin: $margin-auto;
   padding: 10px 15px;
   display: block;
-  background-color: #daa94e;
+  background-color: $button-stage-color;
   border: 2px solid transparent;
   cursor: crosshair;
 
   &:hover,
   &:focus {
-    border-color: #b61156;
+    border-color: $button-stage-border-color;
   }
 
   &:active {
     border-color: transparent;
     box-shadow: 1px 0 13px -2px $black-color inset;
+  }
+
+  &--reload {
+    padding: 20px;
+    background-color: transparent;
+    background-image: url('../img/arrow.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    transition: transform 1s;
+    border: none;
+
+    &:hover,
+    &:focus {
+      transform: rotate(360deg);
+    }
   }
 }

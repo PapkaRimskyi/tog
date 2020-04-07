@@ -1,5 +1,15 @@
-.time-and-data__info {
-  margin-top: 0;
-  margin-bottom: 0;
-  width: 185px;
+.time-and-data {
+  margin-bottom: 20px;
+
+  &__info {
+    margin: $margin-auto;
+    width: 185px;
+  }
+}
+
+@media (min-width: $tablet-width) {
+  .time-and-data {
+    margin-bottom: 0;
+    flex-grow: 1;
+  }
 }

@@ -1,5 +1,19 @@
 .tog-main {
-  margin-bottom: 250px;
-  width: 1600px;
-  min-height: 330px;
+  margin-bottom: 120px;
+  max-width: $mobile-width;
+  flex: 1;
+}
+
+@media (min-width: $tablet-width) {
+  .tog-main {
+    margin-bottom: 270px;
+    max-width: $tablet-width;
+  }
+}
+
+@media (min-width: $desktop-width) {
+  .tog-main {
+    margin-bottom: 250px;
+    max-width: $max-desktop-width;
+  }
 }

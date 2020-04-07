@@ -1,5 +1,3 @@
-import { stageMarkup, stageParticipantsMarkup } from '../../markup/stage-markup.js';
-
 import Stage from '../../support-classes/stage-class.js';
 
 import { renderMarkup} from '../../utils.js';
@@ -8,38 +6,53 @@ export default class Stage4 extends Stage {
   constructor(firstParticipant) {
     super(firstParticipant);
 
-    this.LAUNCH_COUNT_LESS_THAN = 6;
-    this.LAUNCH_COUNT = 1;
+    this.winnerIsDeterminated = `У нас есть победитель!`;
+
+    this.reloadButton = null;
   }
 
   //Template
 
   getTemplate() {
-    return stageMarkup(4, `Финал`, `1 бросок`);
+    return this.markupConstructorInstance.getStageLevelMarkup(4, `Финал`, `1 бросок`);
   }
 
   //Render
 
-  renderParticipant() {
-    for (let i = 0; i < this.participantsList.length; i++) {
-      renderMarkup(this.participantContainer, stageParticipantsMarkup(this.participantsList[i], true), `beforeend`, true);
+  renderParticipant(participantsList) {
+    for (let i = 0; i < participantsList.length; i++) {
+      renderMarkup(this.participantContainer, this.markupConstructorInstance.getStageParticipantsMarkup(participantsList[i], true), `beforeend`, true);
     }
-    this.participantsNameContainer = this.getElement().querySelectorAll(`.one-v-one__participant-name`);
+    this.participantsNamesContainer = this.getElement().querySelectorAll(`.one-v-one__participant-name`);
     this.participantsPointsContainer = this.getElement().querySelectorAll(`.one-v-one__participant-points`);
+  }
+
+  renderReloadButton(handler) {
+    renderMarkup(document.querySelector(`.tog-main`), this.markupConstructorInstance.reloadButtonGame(), `beforeend`, true);
+    this.reloadButton = document.querySelector(`.button--reload`);
+    this.reloadButton.addEventListener(`click`, handler);
   }
 
   //Button interaction
 
   stageButtonInteraction(handler) {
-    this.stageButton.addEventListener(`click`, (evt) => {
-      evt.preventDefault();
-      handler(this.participantsList, this.stageButton, this.LAUNCH_COUNT, this.LAUNCH_COUNT_LESS_THAN, this.participantsPointsContainer, this.participantsNameContainer);
-    });
+    this.stageButton.addEventListener(`click`, handler);
   }
 
   //Support methods
 
-  pushParticipant(secondParticipant) {
-    this.participantsList.push(secondParticipant);
+  pushParticipant(finalParticipantsList, secondParticipant) {
+    finalParticipantsList.push(secondParticipant);
+  }
+
+  getParamHandler() {
+    return {
+      stageButton: this.stageButton,
+      pointsContainer: this.participantsPointsContainer,
+      namesContainer: this.participantsNamesContainer,
+      winnerIsDeterminated: this.winnerIsDeterminated,
+      crownMarkup: this.markupConstructorInstance.crownSvg(),
+      reloadButton: this.reloadButton,
+    }
   }
 }

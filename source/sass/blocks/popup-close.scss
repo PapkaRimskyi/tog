@@ -1,7 +1,27 @@
-.popup__close {
+.popup-close {
   margin-left: auto;
-  margin-bottom: 25px;
+  margin-bottom: 10px;
   width: 35px;
   display: flex;
   justify-content: flex-end;
+  transition: transform 1s;
+
+  &:hover,
+  &:focus {
+    opacity: 0.5;
+    transform: rotate(50deg);
+  }
+}
+
+@media (min-width: $tablet-width) {
+  .popup-close {
+    margin-bottom: 15px;
+  }
+}
+
+
+@media (min-width: $desktop-width) {
+  .popup-close {
+    margin-bottom: 25px;
+  }
 }

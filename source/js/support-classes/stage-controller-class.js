@@ -1,5 +1,8 @@
-export default class StageController {
+import ParticipantsListMethods from './participants-list-methods.js';
+
+export default class StageController extends ParticipantsListMethods {
   constructor(participantsList) {
+    super();
     this.mainTag = document.querySelector(`.tog-main`);
 
     this.stageModel = participantsList;
@@ -17,5 +20,13 @@ export default class StageController {
 
   modifiedParticipantList(min, max) {
     this.stageModel.cropParticipantsList(min, max);
+  }
+
+  checkForSimilarPoints() {
+    throw new Error(`Need to rewrite under stage-controller.`);
+  }
+
+  writeParticipantsResult() {
+    throw new Error(`Need to rewrite under stage-controller.`);
   }
 }

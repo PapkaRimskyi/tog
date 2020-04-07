@@ -1,30 +1,35 @@
-import { stageMarkup, stageParticipantsMarkup } from '../../markup/stage-markup.js';
-
 import Stage from '../../support-classes/stage-class.js';
 
-import { renderMarkup} from '../../utils.js';
+import { renderMarkup } from '../../utils.js';
 
 export default class Stage2 extends Stage {
   constructor(participantsList) {
     super(participantsList);
 
-    this.participantNumber = 0;
-    this.participantsCompleted = 0;
+    this.STAGE_BUTTON_STATUS = {
+      multiple: `Мультимножитель!`,
+      nextParticipants: `Следующие участники`,
+      nextStage: `Следующий этап`,
+    }
+
+    this.participantIndex = 0;
+    this.numberOfParticipantsCompleted = null;
+
     this.isMultipleStatus = true;
   }
 
   //Template
 
   getTemplate() {
-    return stageMarkup(2, `Четвертьфинал`, `Мультимножитель!`);
+    return this.markupConstructorInstance.getStageLevelMarkup(2, `Четвертьфинал`, `Мультимножитель!`);
   }
 
   //Render
 
-  renderParticipant() {
-    this.participantsCompleted = this.participantNumber + 2;
-    for (this.participantNumber; this.participantNumber < this.participantsCompleted; this.participantNumber++) {
-      renderMarkup(this.participantContainer, stageParticipantsMarkup(this.participantsList[this.participantNumber]), `beforeend`, true);
+  renderParticipant(participantsList) {
+    this.numberOfParticipantsCompleted = this.participantIndex + 2;
+    for (this.participantIndex; this.participantIndex < this.numberOfParticipantsCompleted; this.participantIndex++) {
+      renderMarkup(this.participantContainer, this.markupConstructorInstance.getStageParticipantsMarkup(participantsList[this.participantIndex]), `beforeend`, true);
     }
     this.participantsNameContainer = this.getElement().querySelectorAll(`.one-v-one__participant-name`);
   }
@@ -32,16 +37,24 @@ export default class Stage2 extends Stage {
   //Button interaction
 
   stageButtonInteraction(handler) {
-    this.stageButton.addEventListener(`click`, (evt) => {
-      evt.preventDefault();
-      this.setButtonHandler(handler);
-      handler(this.participantsList, this.participantsNameContainer, this.participantsCompleted, this.participantNumber, this.participantContainer, this.stageButton, this.isMultipleStatus, this.removeButtonHandler);
-    });
+    this.stageButton.addEventListener(`click`, handler);
   }
 
   //Support methods
 
   setMultipleStatus(boolean) {
     this.isMultipleStatus = boolean;
+  }
+
+  getParamHandler() {
+    return {
+      stageButtonStatus: this.STAGE_BUTTON_STATUS,
+      stageButton: this.stageButton,
+      multipleStatus: this.isMultipleStatus,
+      nameContainers: this.participantsNameContainer,
+      participantsIndex: this.participantIndex,
+      participantsContainer: this.participantContainer,
+      completedParticipant: this.numberOfParticipantsCompleted,
+    }
   }
 }
