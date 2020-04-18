@@ -19,16 +19,16 @@ export default class HeaderMarkup {
       <nav class="header-nav">
         <ul class="header-nav__list">
           <li class="header-nav__item">
-            <button class="header-nav__link rules" id="rules-popup">Правила</button>
+            <button class="header-nav__link" id="rules-popup">Правила</button>
           </li>
           <li class="header-nav__item">
-            <button class="header-nav__link audio-player" id="audio-popup">Плеер</button>
+            <button class="header-nav__link" id="audio-popup">Плеер</button>
           </li>
           <li class="header-nav__item">
-            <button class="header-nav__link">Гороскоп</button>
+            <button class="header-nav__link" id="developer-popup">О разработчике</button>
           </li>
           <li class="header-nav__item">
-            <button class="header-nav__link participants" id="participants-popup">Вписать участников</button>
+            <button class="header-nav__link" id="participants-popup">Вписать участников</button>
           </li>
         </ul>
       </nav>
@@ -87,6 +87,33 @@ export default class HeaderMarkup {
       </ol>
     </div>
     </section>
+    `;
+  }
+
+  getAboutDeveloperPopup(gitHubData) {
+    const {login, html_url: url, location,} = gitHubData;
+    return `<section class="developer-popup">
+    <div class="developer-popup__container">
+      <a class="popup-close developer-close" href="#">
+        <svg class="popup-close__svg" xmlns="http://www.w3.org/2000/svg" width="34.31" height="38.25" viewBox="0 0 35 39" fill="none" stroke="#242424" stroke-width="2">
+          <path d="M.99 35.94L31.77 1.02m-29.24 0L33.3 35.94"/>
+        </svg>
+      </a>
+      <h2 class="visually-hidden">Окно с информацией о разработчике</h2>
+      <ul class="developer-popup__info-list">
+          <li class="developer-popup__info-item">Меня зовут <i>Георгий</i>.</li>
+          <li class="developer-popup__info-item">
+            Ссылка на github профиль -
+            <a href="${url}" class="developer-popup__info-link" target="_blank"><strong>${login}</strong></a>
+          </li>
+          <li class="developer-popup__info-item">Страна проживания: <i>${location}</i>.</li>
+          <li class="developer-popup__info-item">
+            <a href="https://github.com/PapkaRimskyi/tog" class="developer-popup__info-link" target="_blank"><b>Ссылка</b></a>
+            на репозиторий этого проекта.
+          </li>
+        </ul>
+    </div>
+  </section>
     `;
   }
 

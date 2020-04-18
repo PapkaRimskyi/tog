@@ -3,6 +3,7 @@ import HeaderMarkup from '../../markup/header-markup.js';
 import Header from '../../components/header-components/header.js';
 import RulesPopup from '../../components/header-components/rules-popup.js';
 import Music from '../../components/header-components/music-tab.js';
+import DeveloperPopup from '../../components/header-components/developer-popup.js';
 import ParticipantsPopup from '../../components/header-components/participants-popup.js';
 
 import DateTime from '../../support-classes/date-time-class.js';
@@ -17,9 +18,10 @@ export default class HeaderController {
 
     this.headerComponent = new Header(this.headerMarkupInstance.getHeaderMarkup());
 
-    this.participantsPopup = new ParticipantsPopup(this.headerMarkupInstance.getParticipantsPopupMarkup());
     this.rulesPopup = new RulesPopup(this.headerMarkupInstance.getRulesPopupMarkup());
     this.music = new Music(this.headerMarkupInstance.getMusicMarkup());
+    this.developerPopup = null;
+    this.participantsPopup = new ParticipantsPopup(this.headerMarkupInstance.getParticipantsPopupMarkup());
 
     this.documentBody = document.body;
     this.header = null;
@@ -28,6 +30,8 @@ export default class HeaderController {
       date: null,
       time: null,
     }
+
+    this.githubUrl = `https://api.github.com/users/papkarimskyi`;
 
     //popup map collection
     this.popupCollection = null;
@@ -40,25 +44,25 @@ export default class HeaderController {
   render() {
     renderMarkup(this.documentBody, this.headerComponent, `afterbegin`);
     this.header = this.documentBody.querySelector(`.tog-header`);
-    this.popupCollection = new Map([[`rules-popup`, this.rulesPopup], [`audio-popup`, this.music], [`participants-popup`, this.participantsPopup]]);
+    this.popupCollection = new Map([[`rules-popup`, this.rulesPopup], [`audio-popup`, this.music], [`developer-popup`, this.developerPopup], [`participants-popup`, this.participantsPopup]]);
     this.headerComponent.headerDelegation(this.headerHandler);
     this.updateTime();
   }
 
   //Handler
 
-  headerHandler(elem) {
+  async headerHandler(elem) {
     for (let popup of this.popupCollection.keys()) {
       if (popup === elem.id) {
-        const popup = this.popupCollection.get(`${elem.id}`);
-        const openPopupMarkup = popup.getElement();
-        if (!this.header.querySelector(`.${openPopupMarkup.className}`)) {
-          this.closeOtherPopup(popup);
-          renderMarkup(this.header, popup, `beforeend`);
-          this.setCrossButtonHandler(popup);
-          this.setFormHandler(popup, elem);
+        await this.isClickedOnDevPopup(popup);
+        const popupClass = this.popupCollection.get(`${popup}`);
+        if (!this.header.querySelector(`.${popupClass.getElement().className}`)) {
+          this.closeOtherPopup(popupClass);
+          renderMarkup(this.header, popupClass, `beforeend`);
+          this.setCrossButtonHandler(popupClass);
+          this.setFormHandler(popupClass, elem);
         } else {
-          this.crossButtonHandler.call(popup, this.removeFormHandlers.bind(this));
+          this.crossButtonHandler.call(popupClass, this.removeFormHandlers.bind(this));
         }
       }
     }
@@ -86,6 +90,14 @@ export default class HeaderController {
     }
   }
 
+  removeFormHandlers() {
+    if (this.inputValidation && this.submitForm) {
+      for (let elem of this.getHandlerCollection()) {
+        elem.context.removeEventListener(`${elem.event}`, ...elem.list);
+      }
+    }
+  }
+
   participantsInputHandler() {
     this.setListPassedChecks(this.checkValidation());
   }
@@ -104,24 +116,32 @@ export default class HeaderController {
 
   //Support methods
 
-  removeFormHandlers() {
-    if (this.inputValidation && this.submitForm) {
-      for (let elem of this.getHandlerCollection()) {
-        elem.context.removeEventListener(`${elem.event}`, ...elem.list);
-      }
-    }
-  }
-
   closeOtherPopup(popupInstance) {
     if (popupInstance !== this.music) {
       for (let popup of this.popupCollection.values()) {
-        if (popup !== this.music) {
+        if (popup !== this.music && popup) {
           if (this.header.querySelector(`.${popup.getElement().className}`)) {
             popup.getElement().querySelector(`.popup-close`).removeEventListener(`click`, popup.getCrossHandler());
             popup.deleteElement();
           }
         }
       }
+    }
+  }
+
+  async isClickedOnDevPopup(button) {
+    switch(button) {
+      case `developer-popup`:
+        if (!document.querySelector(`.${button}`)) {
+          this.developerPopup = await fetch(this.githubUrl)
+            .then((serverRespond) => serverRespond.json())
+            .then((developerData) => new DeveloperPopup(this.headerMarkupInstance.getAboutDeveloperPopup(developerData)))
+            .catch((err) => alert(`Произошла ошибка при запросе данных. ${err}`));
+          this.popupCollection.set(`${button}`, this.developerPopup);
+        }
+        break;
+      default:
+        break;
     }
   }
 
