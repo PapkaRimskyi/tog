@@ -130,7 +130,7 @@ export default class HeaderController {
   }
 
   async isClickedOnDevPopup(button) {
-    switch(button) {
+    switch (button) {
       case `developer-popup`:
         if (!document.querySelector(`.${button}`)) {
           this.developerPopup = await fetch(this.githubUrl)

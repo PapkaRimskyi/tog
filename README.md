@@ -31,7 +31,7 @@ In view (components) always be this structure:
   third - button interaction/event listener,
   fourth - support methods.
 
-Assembly folder - <b>build</b>.
+Assembly folder - <b>docs</b>.
 
 
 TODO:
@@ -39,7 +39,4 @@ TODO:
 - [X] When winner appear - need to add button, which restart all game.
 - [X] Visualization (set animation i mean) when winner appear.
 - [X] When participants in the end of throws have same points (or finalPoints, depends from stage), they do rethrows until they get a different points.
-- [ ] To do something with "Гороскоп" item. Maybe to plug some interesting API.
----
-Bugs:
-- [ ] Bug with clock. Does not change date, when time changes from 23:59:59 to 00:00:00 next day.
+- [X] To do something with "Гороскоп" item. Maybe to plug some interesting API.

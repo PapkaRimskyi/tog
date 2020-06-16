@@ -7,7 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const PATHS = {
   src: path.resolve(__dirname, `./source`),
-  build: path.resolve(__dirname, `./build`),
+  build: path.resolve(__dirname, `./docs`),
   assets: `assets/`,
 }
 
@@ -25,7 +25,16 @@ module.exports = {
         use: {
           loader: `babel-loader`,
           options: {
-            presets: [`@babel/preset-env`],
+            plugins: ["@babel/plugin-transform-runtime"],
+            presets: [
+              [
+                `@babel/preset-env`,
+                {
+                  useBuiltIns: `usage`,
+                  corejs: '3',
+                }
+              ]
+            ],
           },
         },
       },
@@ -81,9 +90,6 @@ module.exports = {
                 quality: 70,
                 progressive: true,
               },
-              webp: {
-                quality: 70,
-              },
             },
           },
         ],
@@ -102,7 +108,7 @@ module.exports = {
     }),
     new CopyPlugin([
       { from: `${PATHS.src}/fonts`, to: `${PATHS.assets}fonts` },
-      { from :`${PATHS.src}/music`, to: `${PATHS.assets}music`},
+      { from: `${PATHS.src}/music`, to: `${PATHS.assets}music` },
     ]),
   ],
   devServer: {

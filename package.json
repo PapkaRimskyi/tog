@@ -62,5 +62,8 @@
     "url": "https://github.com/PapkaRimskyi/tog/issues"
   },
   "homepage": "https://github.com/PapkaRimskyi/tog#readme",
-  "dependencies": {}
+  "dependencies": {
+    "core-js": "^3.6.5",
+    "whatwg-fetch": "^3.0.0"
+  }
 }
